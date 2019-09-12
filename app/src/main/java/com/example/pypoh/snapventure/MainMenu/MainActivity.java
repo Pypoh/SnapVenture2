@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setFragment(adventureFragment);
     }
 
-    private void setFragment(Fragment fragment){
+    public void setFragment(Fragment fragment){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.main_frame,fragment);
 //        ft.addToBackStack(null);
