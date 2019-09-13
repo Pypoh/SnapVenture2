@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.github.florent37.expansionpanel.ExpansionHeader
+        android:id="@+id/sampleHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:expansion_headerIndicator="@id/headerIndicator"
+        app:expansion_layout="@id/expansionLayout"
+        app:expansion_toggleOnClick="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/text_educational_level_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:text="Elementary School"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/headerIndicator"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="24dp"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+                tools:ignore="VectorDrawableCompat" />
+
+        </RelativeLayout>
+
+    </com.github.florent37.expansionpanel.ExpansionHeader>
+
+    <com.github.florent37.expansionpanel.ExpansionLayout
+        android:id="@+id/expansionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:expansion_expanded="false">
+
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="24dp"
+            android:paddingRight="32dp"
+            android:paddingLeft="32dp">
+
+           <TextView
+               android:textSize="16sp"
+               android:id="@+id/text_educational_level1"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="16dp"
+               android:text="\u25CF Elemtary school level of difficulty"/>
+
+            <TextView
+                android:textSize="16sp"
+                android:id="@+id/text_educational_level2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="\u25CF Elemtary school level of difficulty"
+                android:layout_below="@id/text_educational_level1"/>
+
+            <TextView
+                android:textSize="16sp"
+                android:id="@+id/text_educational_level3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="\u25CF Elemtary school level of difficulty"
+                android:layout_below="@id/text_educational_level2"/>
+
+            <Button
+                android:id="@+id/button_educational_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                android:background="@drawable/rounded_button_full"
+                android:textColor="@color/white"
+                android:text="Select"
+                android:layout_below="@id/text_educational_level3"/>
+
+        </RelativeLayout>
+
+    </com.github.florent37.expansionpanel.ExpansionLayout>
+</LinearLayout>

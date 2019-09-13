@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Camera">
 
-    <com.otaliastudios.cameraview.CameraView
-        android:id="@+id/camera_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        app:cameraFlash="off">
-    </com.otaliastudios.cameraview.CameraView>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,9 +16,16 @@
             android:id="@+id/snap_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ckrek">
-        </Button>
+            android:text="Ckrek" />
 
     </RelativeLayout>
+
+    <com.otaliastudios.cameraview.CameraView
+        android:id="@+id/camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        app:cameraFlash="off"
+        app:cameraPlaySounds="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

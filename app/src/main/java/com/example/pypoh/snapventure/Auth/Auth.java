@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.pypoh.snapventure.EducationLevel;
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.R;
 
@@ -41,7 +42,7 @@ public class Auth extends AppCompatActivity {
         _btnGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playAsGuest = new Intent(Auth.this, MainActivity.class);
+                Intent playAsGuest = new Intent(Auth.this, EducationLevel.class);
                 playAsGuest.putExtra("AuthCode", "3");
                 startActivity(playAsGuest);
             }

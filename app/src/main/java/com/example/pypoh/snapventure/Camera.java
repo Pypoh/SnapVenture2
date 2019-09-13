@@ -61,9 +61,6 @@ public class Camera extends AppCompatActivity {
             public void onPictureTaken(@NonNull PictureResult result) {
                 super.onPictureTaken(result);
                 Log.i("Picture", "Picture Taken");
-                // Picture was taken!
-                // If planning to show a Bitmap, we will take care of
-                // EXIF rotation and background threading for you...
                 result.toBitmap(new BitmapCallback() {
                     @Override
                     public void onBitmapReady(@Nullable Bitmap bitmap) {
@@ -83,34 +80,23 @@ public class Camera extends AppCompatActivity {
             public void accept(boolean internet) {
                 if (internet) {
                     Log.i("Picture", "Internet Ready");
-                    FirebaseVisionCloudDetectorOptions options =
-                            new FirebaseVisionCloudDetectorOptions.Builder()
-                                    .setMaxResults(10)
-                                    .build();
-
-
-//                    FirebaseVisionCloudLabelDetector detector =
-//                            FirebaseVision.getInstance().getVisionCloudLabelDetector(options);
-
-//                    detector.detectInImage(image)
-//                            .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionCloudLabel>>() {
-//                                @Override
-//                                public void onSuccess(List<FirebaseVisionCloudLabel> firebaseVisionCloudLabels) {
-//                                    Log.d("Bitmap",String.valueOf(bitmap));
-//                                    processDataResultCloud(firebaseVisionCloudLabels, bitmap);
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.d("ErrorOccured", e.getMessage());
-//                        }
-//                    });
-
+                    FirebaseVisionImageLabeler detectOnline = FirebaseVision.getInstance().getCloudImageLabeler();
+                    detectOnline.processImage(image).addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
+                        @Override
+                        public void onSuccess(List<FirebaseVisionImageLabel> firebaseVisionImageLabels) {
+                            Log.i("Picture", "Vision Processing, Online");
+                            for (FirebaseVisionImageLabel result : firebaseVisionImageLabels) {
+                                Toast.makeText(Camera.this, "Result Online : " + result.getText(), Toast.LENGTH_SHORT).show();
+                                Log.i("Picture", "Result Online Debug : " + result.getText() + " Confidence : " + result.getConfidence());
+                            }
+                        }
+                    });
+                } else {
                     FirebaseVisionImageLabeler detect = FirebaseVision.getInstance().getOnDeviceImageLabeler();
                     detect.processImage(image).addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                         @Override
                         public void onSuccess(List<FirebaseVisionImageLabel> firebaseVisionImageLabels) {
-                            Log.i("Picture", "Vision Processing");
+                            Log.i("Picture", "Vision Processing, Offline");
                             for (FirebaseVisionImageLabel result : firebaseVisionImageLabels) {
                                 Toast.makeText(Camera.this, "Result : " + result.getText(), Toast.LENGTH_SHORT).show();
                             }
@@ -121,27 +107,6 @@ public class Camera extends AppCompatActivity {
                             Log.i("Picture", "Vision Failed : " + e.toString());
                         }
                     });
-
-                } else {
-//                    FirebaseVisionLabelDetectorOptions options =
-//                            new FirebaseVisionLabelDetectorOptions.Builder()
-//                                    .setConfidenceThreshold(0.5f)
-//                                    .build();
-//                    FirebaseVisionLabelDetector detector =
-//                            FirebaseVision.getInstance().getVisionLabelDetector(options);
-//
-//                    detector.detectInImage(image)
-//                            .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionLabel>>() {
-//                                @Override
-//                                public void onSuccess(List<FirebaseVisionLabel> firebaseVisionLabels) {
-//                                    processDataResult(firebaseVisionLabels, bitmap);
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.d("ErrorOccured", e.getMessage());
-//                        }
-//                    });
                 }
             }
         });
