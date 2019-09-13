@@ -16,7 +16,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="200dp"
             android:background="@color/colorPrimary">
 
             <TextView
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="24dp"
-                android:text="Elementary School"
+                android:text="level_name"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
