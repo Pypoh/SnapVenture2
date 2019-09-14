@@ -52,8 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:expansion_openOnlyOne="true"
-                android:focusable="true">
+                app:expansion_openOnlyOne="true">
 
                 <include layout="@layout/expansion_panel_educational_level" android:id="@+id/elementary_level" />
 

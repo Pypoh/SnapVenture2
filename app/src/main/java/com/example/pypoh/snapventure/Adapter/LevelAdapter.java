@@ -1,13 +1,13 @@
 package com.example.pypoh.snapventure.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +38,9 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull LevelAdapter.ViewHolder holder, int position) {
 
+        LevelModel levelModel = dataSet.get(position);
+        holder.levelItemAdapter = new LevelItemAdapter(mContext, levelModel);
+        holder.levelRecycler.setAdapter(holder.levelItemAdapter);
     }
 
     @Override
@@ -47,25 +50,16 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public CardView levelCard;
-        public ImageView levelImage;
         public RecyclerView levelRecycler;
         public LevelItemAdapter levelItemAdapter;
-
-        List<LevelModel> tempData = new ArrayList<>();
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tempData.add(new LevelModel());
-            tempData.add(new LevelModel());
-
-            levelItemAdapter = new LevelItemAdapter(mContext, tempData);
             levelRecycler = itemView.findViewById(R.id.item_recycler_parent);
             levelRecycler.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
-            levelRecycler.setAdapter(levelItemAdapter);
-//            levelCard = itemView.findViewById(R.id.card_level);
-//            levelImage = itemView.findViewById(R.id.image_level);
+            levelRecycler.setNestedScrollingEnabled(false);
+
         }
     }
 

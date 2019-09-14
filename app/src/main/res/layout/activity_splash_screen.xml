@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="256dp"
         android:layout_height="204dp"
-        android:src="@color/colorPrimary"
+        android:src="@drawable/logo_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"

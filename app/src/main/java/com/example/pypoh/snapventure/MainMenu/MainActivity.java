@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import com.example.pypoh.snapventure.Fragment.AdventureFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     // Utils
     boolean doubleBackToExitPressedOnce = false;
 
+    private Menu bottomMenu;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -33,15 +38,16 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_adventure:
                     setFragment(adventureFragment);
+                    changeIconStateBar(R.id.navigation_adventure, R.drawable.navbar_adventure_on);
                     return true;
                 case R.id.navigation_pronounciation:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    changeIconStateBar(R.id.navigation_pronounciation, R.drawable.navbar_pronounciation_on);
                     return true;
                 case R.id.navigation_vocabulary:
-                    mTextMessage.setText(R.string.title_notifications);
+                    changeIconStateBar(R.id.navigation_vocabulary, R.drawable.navbar_vocabulary_on);
                     return true;
                 case R.id.navigation_profile:
-                    mTextMessage.setText("");
+                    changeIconStateBar(R.id.navigation_profile, R.drawable.navbar_profile_on);
                     return true;
             }
             return false;
@@ -56,19 +62,37 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        bottomMenu = navView.getMenu();
+
         setFragment(adventureFragment);
     }
 
-    public void setFragment(Fragment fragment){
+    private void changeIconStateBar(int pathItem, int pathIcon) {
+        bottomMenu.findItem(R.id.navigation_adventure).setIcon(R.drawable.navbar_adventure_off);
+        bottomMenu.findItem(R.id.navigation_pronounciation).setIcon(R.drawable.navbar_pronounciation_off);
+        bottomMenu.findItem(R.id.navigation_vocabulary).setIcon(R.drawable.navbar_vocabulary_off);
+        bottomMenu.findItem(R.id.navigation_profile).setIcon(R.drawable.navbar_profile_off);
+
+        bottomMenu.findItem(pathItem).setIcon(pathIcon);
+    }
+
+    public void setFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_frame,fragment);
-//        ft.addToBackStack(null);
+        ft.replace(R.id.main_frame, fragment, "MAIN_FRAGMENT");
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void setSecondFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main_frame, fragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+        if (doubleBackToExitPressedOnce || !checkCurrentFragment()) {
             super.onBackPressed();
             return;
         }
@@ -80,8 +104,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
+
+    }
+
+    private boolean checkCurrentFragment() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag("MAIN_FRAGMENT");
+        return currentFragment != null && currentFragment.isVisible();
     }
 }

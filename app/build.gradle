@@ -42,4 +42,7 @@ dependencies {
 
     // Camera View
     implementation 'com.otaliastudios:cameraview:2.2.0'
+
+    // Circle Progress
+    implementation 'com.github.Adilhusen:circle-progress-ad-android-:1.0'
 }

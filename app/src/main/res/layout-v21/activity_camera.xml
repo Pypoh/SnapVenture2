@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ckrek" />
+
     </RelativeLayout>
 
     <com.otaliastudios.cameraview.CameraView
@@ -26,7 +27,6 @@
         android:layout_height="match_parent"
         android:keepScreenOn="true"
         app:cameraFlash="off"
-        app:cameraPlaySounds="false"
-        app:layout_constraintBottom_toTopOf="@id/snap_layout"/>
+        app:cameraPlaySounds="false"/>
 
 </RelativeLayout>

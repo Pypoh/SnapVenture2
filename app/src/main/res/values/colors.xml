@@ -5,4 +5,20 @@
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="white">#FFFFFF</color>
+
+    <color name="elementary_red">#D3351B</color>
+    <color name="middle_blue">#235299</color>
+    <color name="grey_high">#676767</color>
+
+    <color name="garden_green">#74AA2D</color>
+    <color name="kitchen_yellow">#F6A800</color>
+    <color name="classroom_red">#D3351B</color>
+    <color name="street_black">#393939</color>
+
+    <color name="hint_blue">#0190DF</color>
+    <color name="star_yellow">#F6DE00</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="grey_background">#9D9D9D</color>
 </resources>
