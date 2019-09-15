@@ -3,12 +3,21 @@ package com.example.pypoh.snapventure;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Helper.InternetCheck;
@@ -33,7 +42,16 @@ public class Camera extends AppCompatActivity {
 
     // Content
     private CameraView cameraView;
-    private Button captureButton;
+    private ImageView captureButton;
+    private ImageView questionButton;
+    private ImageView hintButton;
+    private ConstraintLayout snapLayout;
+
+    private LinearLayout questionLayout;
+
+    // Result Dialog
+    private Dialog resultDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +62,41 @@ public class Camera extends AppCompatActivity {
         cameraView = findViewById(R.id.camera_view);
         cameraView.setLifecycleOwner(this);
         captureButton = findViewById(R.id.snap_btn);
+        snapLayout = findViewById(R.id.snap_layout);
+        questionButton = findViewById(R.id.camera_question_button);
+        questionLayout = findViewById(R.id.question_popup);
+        hintButton = findViewById(R.id.camera_hint_button);
+
+        final Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        final Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+
+        questionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (questionLayout.getVisibility() == View.INVISIBLE) {
+                    questionLayout.setVisibility(View.VISIBLE);
+                    questionLayout.startAnimation(slideUp);
+                    Log.d("animationDebug", "SlideUp");
+                } else {
+                    questionLayout.setVisibility(View.INVISIBLE);
+                    questionLayout.startAnimation(slideDown);
+                    Log.d("animationDebug", "SlideDown");
+                }
+            }
+        });
+
+        hintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Camera.this, "Hints are under development", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraView.takePicture();
+//                cameraView.takePicture();
+                createDialog();
             }
         });
 
@@ -70,6 +118,39 @@ public class Camera extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void createDialog() {
+        resultDialog = new Dialog(this);
+        resultDialog.setContentView(R.layout.dialog_result);
+        resultDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        resultDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                snapLayout.setVisibility(View.GONE);
+                cameraView.close();
+            }
+        });
+
+        resultDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                snapLayout.setVisibility(View.VISIBLE);
+                cameraView.open();
+            }
+        });
+        resultDialog.show();
+
+
+
+        Button nextButton = resultDialog.findViewById(R.id.button_result_ok);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultDialog.dismiss();
+            }
+        });
+
     }
 
     private void checkImage(Bitmap bitmap) {

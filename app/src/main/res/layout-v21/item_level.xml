@@ -23,13 +23,13 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
-                <ImageView
-                    android:id="@+id/image_level"
+                <ViewStub
+                    android:id="@+id/viewstub_level"
                     android:layout_width="96dp"
                     android:layout_height="96dp" />
 
-                <ViewStub
-                    android:id="@+id/viewstub_level"
+                <ImageView
+                    android:id="@+id/image_level"
                     android:layout_width="96dp"
                     android:layout_height="96dp" />
 

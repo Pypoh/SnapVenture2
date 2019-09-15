@@ -60,13 +60,13 @@ public class LevelFragment extends Fragment {
         riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
         answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
         starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 1, 15, riddles.get(1), answers.get(1), starsStatus.get(1), 1));
+        tempDataset.add(new LevelModel("0", 2, 15, riddles.get(1), answers.get(1), starsStatus.get(1), 1));
 
         // Riddles 3
         riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
         answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
         starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 1, 15, riddles.get(2), answers.get(2), starsStatus.get(2), 2));
+        tempDataset.add(new LevelModel("0", 3, 15, riddles.get(2), answers.get(2), starsStatus.get(2), 2));
 
         // Riddles 4
         riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
@@ -78,15 +78,13 @@ public class LevelFragment extends Fragment {
         riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
         answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
         starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 1, 15, riddles.get(4), answers.get(4), starsStatus.get(4), 2));
+        tempDataset.add(new LevelModel("0", 2, 15, riddles.get(4), answers.get(4), starsStatus.get(4), 2));
 
         // Riddles 6
         riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
         answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
         starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 1, 15, riddles.get(5), answers.get(5), starsStatus.get(5), 1));
-
-
+        tempDataset.add(new LevelModel("0", 3, 15, riddles.get(5), answers.get(5), starsStatus.get(5), 1));
     }
 
 

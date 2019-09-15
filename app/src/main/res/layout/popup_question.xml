@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="6dp"
+    android:background="@drawable/popup_question_background">
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/question_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="Question 1/5"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel eros dolor. Mauris vel lobortis nulla. Donec eget maximus risus. Nulla aliquet nulla in nibh ultrices, vel efficitur ante tincidunt"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:gravity="end"
+        android:paddingRight="16dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="pass>"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

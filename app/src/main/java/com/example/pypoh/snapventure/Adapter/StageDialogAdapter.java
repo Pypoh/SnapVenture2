@@ -51,8 +51,13 @@ public class StageDialogAdapter extends RecyclerView.Adapter<StageDialogAdapter.
                 holder.star1.setImageResource(R.drawable.stage_star_bronze);
                 break;
             case 2:
-                holder.star1.setImageResource(R.drawable.stage_star_silver);
-                holder.star2.setImageResource(R.drawable.stage_star_silver);
+                if (mData.getSelected()[position]) {
+                    holder.star1.setImageResource(R.drawable.stage_star_silver_fix);
+                    holder.star2.setImageResource(R.drawable.stage_star_silver_fix);
+                } else {
+                    holder.star1.setImageResource(R.drawable.stage_star_silver);
+                    holder.star2.setImageResource(R.drawable.stage_star_silver);
+                }
                 break;
             case 3:
                 holder.star1.setImageResource(R.drawable.stage_star_gold);

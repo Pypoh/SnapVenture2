@@ -6,19 +6,59 @@
     android:layout_height="match_parent"
     tools:context=".Camera">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/snap_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:padding="16dp"
         android:translationZ="10dp">
 
-        <Button
-            android:id="@+id/snap_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ckrek" />
-    </RelativeLayout>
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginLeft="8dp"
+            android:padding="8dp"
+            android:src="@drawable/find_hint"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/camera_question_button"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginRight="8dp"
+            android:padding="8dp"
+            android:src="@drawable/find_question"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/rounded_button_camera"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/snap_btn"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="16dp"
+                android:src="@drawable/find_camera" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/camera_view"
@@ -27,6 +67,15 @@
         android:keepScreenOn="true"
         app:cameraFlash="off"
         app:cameraPlaySounds="false"
-        app:layout_constraintBottom_toTopOf="@id/snap_layout"/>
+        app:layout_constraintBottom_toTopOf="@id/snap_layout" />
+
+
+    <include
+        android:id="@+id/question_popup"
+        layout="@layout/popup_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/snap_layout"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

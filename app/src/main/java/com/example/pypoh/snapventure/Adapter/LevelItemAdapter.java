@@ -164,6 +164,7 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
         stageDialog.show();
 
         startButton = stageDialog.findViewById(R.id.dialog_stage_btn_start);
+        setStartButtonDisabled();
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
