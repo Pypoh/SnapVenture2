@@ -174,6 +174,7 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
     }
 
     private void toCamera() {
+        startButton.setEnabled(false);
         Intent toCamera = new Intent(mContext, Camera.class);
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED)

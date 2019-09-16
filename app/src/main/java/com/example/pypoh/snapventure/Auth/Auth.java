@@ -42,6 +42,7 @@ public class Auth extends AppCompatActivity {
         _btnGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                _btnGuest.setEnabled(false);
                 Intent playAsGuest = new Intent(Auth.this, EducationLevel.class);
                 playAsGuest.putExtra("AuthCode", "3");
                 startActivity(playAsGuest);

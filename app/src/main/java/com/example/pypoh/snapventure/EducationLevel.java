@@ -92,6 +92,7 @@ public class EducationLevel extends AppCompatActivity {
         elementaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                elementaryButton.setEnabled(false);
                 toMain();
             }
         });
@@ -99,6 +100,7 @@ public class EducationLevel extends AppCompatActivity {
         middleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                middleButton.setEnabled(false);
                 toMain();
             }
         });
@@ -106,6 +108,7 @@ public class EducationLevel extends AppCompatActivity {
         highButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                highButton.setEnabled(false);
                 toMain();
             }
         });

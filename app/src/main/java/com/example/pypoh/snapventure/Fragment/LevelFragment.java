@@ -34,7 +34,10 @@ public class LevelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level, container, false);
-        riddleSetup();
+
+        if (tempDataset.isEmpty()) {
+            riddleSetup();
+        }
 
         levelRecycler = view.findViewById(R.id.levelRecycler);
 

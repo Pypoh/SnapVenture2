@@ -67,21 +67,11 @@ public class Camera extends AppCompatActivity {
         questionLayout = findViewById(R.id.question_popup);
         hintButton = findViewById(R.id.camera_hint_button);
 
-        final Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-        final Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
 
         questionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (questionLayout.getVisibility() == View.INVISIBLE) {
-                    questionLayout.setVisibility(View.VISIBLE);
-                    questionLayout.startAnimation(slideUp);
-                    Log.d("animationDebug", "SlideUp");
-                } else {
-                    questionLayout.setVisibility(View.INVISIBLE);
-                    questionLayout.startAnimation(slideDown);
-                    Log.d("animationDebug", "SlideDown");
-                }
+                changeQuestionState();
             }
         });
 
@@ -96,6 +86,7 @@ public class Camera extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                cameraView.takePicture();
+                changeQuestionState();
                 createDialog();
             }
         });
@@ -118,6 +109,20 @@ public class Camera extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void changeQuestionState() {
+        final Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        final Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        if (questionLayout.getVisibility() == View.INVISIBLE) {
+            questionLayout.setVisibility(View.VISIBLE);
+            questionLayout.startAnimation(slideUp);
+            Log.d("animationDebug", "SlideUp");
+        } else {
+            questionLayout.setVisibility(View.INVISIBLE);
+            questionLayout.startAnimation(slideDown);
+            Log.d("animationDebug", "SlideDown");
+        }
     }
 
     private void createDialog() {

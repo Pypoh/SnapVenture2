@@ -83,7 +83,7 @@ public class AdventureFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) Objects.requireNonNull(getActivity())).setSecondFragment(levelFragment);
+                changeFragment(levelFragment);
             }
         });
 
@@ -95,6 +95,11 @@ public class AdventureFragment extends Fragment {
 
 
         return view;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void changeFragment(Fragment fragment) {
+        ((MainActivity) Objects.requireNonNull(getActivity())).setSecondFragment(fragment);
     }
 
     @SuppressLint("ResourceAsColor")
