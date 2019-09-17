@@ -2,6 +2,7 @@ package com.example.pypoh.snapventure;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -10,6 +11,7 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,9 +20,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.example.pypoh.snapventure.Helper.InternetCheck;
+import com.example.pypoh.snapventure.Model.LevelModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -46,17 +52,28 @@ public class Camera extends AppCompatActivity {
     private ImageView questionButton;
     private ImageView hintButton;
     private ConstraintLayout snapLayout;
+    private TextView passText;
 
     private LinearLayout questionLayout;
 
     // Result Dialog
     private Dialog resultDialog;
+    private TextSwitcher riddlesTextSwitch;
+
+    // Animation
+    private Animation slideLeft;
+    private Animation slideRight;
+
+    private LevelModel dataSet;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        // Get Data
+        dataSet = (LevelModel) getIntent().getSerializableExtra("dataClass");
 
         // Get Ids
         cameraView = findViewById(R.id.camera_view);
@@ -66,7 +83,41 @@ public class Camera extends AppCompatActivity {
         questionButton = findViewById(R.id.camera_question_button);
         questionLayout = findViewById(R.id.question_popup);
         hintButton = findViewById(R.id.camera_hint_button);
+        passText = findViewById(R.id.text_pass_button);
 
+        // Set Dialog Data
+        riddlesTextSwitch = questionLayout.findViewById(R.id.riddles_text_popup);
+        riddlesTextSwitch.setFactory(new ViewSwitcher.ViewFactory() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public View makeView() {
+                TextView riddleText = new TextView(questionLayout.getContext());
+                riddleText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                riddleText.setTextColor(getResources().getColor(R.color.white));
+                riddleText.setTextSize(16);
+                return riddleText;
+            }
+        });
+
+        slideLeft = AnimationUtils.loadAnimation(this, R.anim.slide_right);
+        slideRight = AnimationUtils.loadAnimation(this, R.anim.slide_left);
+        riddlesTextSwitch.setInAnimation(slideLeft);
+        riddlesTextSwitch.setOutAnimation(slideRight);
+
+        // Get nanti posisi
+//        riddlesTextSwitch.setText(dataSet.getRiddle().get(0)[0]);
+        riddlesTextSwitch.setText("TESSSSSSSSSSSSS SSSSSSSSSSS SSSSSSSSSSSSSSS SSSSSSSS SSSSSSSSSS SSSSS SSSSSSS SSSST");
+
+
+        final int[] count = {1};
+
+        passText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riddlesTextSwitch.setText("Test : " + count[0]);
+                count[0]++;
+            }
+        });
 
         questionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +165,7 @@ public class Camera extends AppCompatActivity {
     private void changeQuestionState() {
         final Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         final Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+
         if (questionLayout.getVisibility() == View.INVISIBLE) {
             questionLayout.setVisibility(View.VISIBLE);
             questionLayout.startAnimation(slideUp);
@@ -128,6 +180,7 @@ public class Camera extends AppCompatActivity {
     private void createDialog() {
         resultDialog = new Dialog(this);
         resultDialog.setContentView(R.layout.dialog_result);
+
         resultDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         resultDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -145,7 +198,6 @@ public class Camera extends AppCompatActivity {
             }
         });
         resultDialog.show();
-
 
 
         Button nextButton = resultDialog.findViewById(R.id.button_result_ok);

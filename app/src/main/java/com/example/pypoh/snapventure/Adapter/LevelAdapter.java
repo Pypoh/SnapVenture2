@@ -14,13 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pypoh.snapventure.Model.LevelModel;
 import com.example.pypoh.snapventure.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<LevelModel> dataSet = new ArrayList<>();
+    private List<LevelModel> dataSet;
 
     public LevelAdapter(Context mContext, List<LevelModel> dataSet) {
         this.mContext = mContext;

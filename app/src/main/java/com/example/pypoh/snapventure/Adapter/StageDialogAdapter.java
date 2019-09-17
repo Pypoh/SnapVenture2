@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pypoh.snapventure.Model.LevelModel;
 import com.example.pypoh.snapventure.R;
 
+import java.util.List;
+
 public class StageDialogAdapter extends RecyclerView.Adapter<StageDialogAdapter.ViewHolder> {
 
     private Context mContext;
@@ -45,8 +47,14 @@ public class StageDialogAdapter extends RecyclerView.Adapter<StageDialogAdapter.
 
         holder.bind(mData, OnItemClickListener, position);
         // Set Completed Star per Stage
-        int[] totalStarCompleted = mData.getTotalCompletedStar();
-        switch (totalStarCompleted[position]) {
+        List<Boolean[]> totalStarCompleted = mData.getTotalCompletedStar();
+        Boolean[] statusCompleted = totalStarCompleted.get(position);
+        int totalStar = 0;
+        // Count Total Star
+        for (Boolean status : statusCompleted) {
+            if (status) totalStar++;
+        }
+        switch (totalStar) {
             case 1:
                 holder.star1.setImageResource(R.drawable.stage_star_bronze);
                 break;
@@ -80,7 +88,7 @@ public class StageDialogAdapter extends RecyclerView.Adapter<StageDialogAdapter.
 
     @Override
     public int getItemCount() {
-        return mData.getRiddle().length;
+        return mData.getRiddle().size();
     }
 
     public interface OnItemClickListener {

@@ -21,7 +21,7 @@ import java.util.List;
 public class LevelFragment extends Fragment {
 
     private RecyclerView levelRecycler;
-    private List<LevelModel> tempDataset = new ArrayList<>();
+    public static List<LevelModel> tempDataset = new ArrayList<>();
 
     private LevelAdapter levelAdapter;
 
@@ -49,45 +49,33 @@ public class LevelFragment extends Fragment {
     }
 
     private void riddleSetup() {
-        List<String[]> riddles = new ArrayList<>();
-        List<String[]> answers = new ArrayList<>();
-        List<int[]> starsStatus = new ArrayList<>();
+//        List<String[]> riddles = new ArrayList<>();
+//        List<String[]> answers = new ArrayList<>();
+//        List<int[]> starsStatus = new ArrayList<>();
 
-        // Riddles 1
-        riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
-        answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
-        starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 1, 15, riddles.get(0), answers.get(0), starsStatus.get(0), 1));
+        List<List<String[]>> riddles = new ArrayList<>();
+        List<List<String[]>> answers = new ArrayList<>();
+        List<List<int[]>> starsStatus = new ArrayList<>();
 
-        // Riddles 2
-        riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
-        answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
-        starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 2, 15, riddles.get(1), answers.get(1), starsStatus.get(1), 1));
+        // Level 1
+        List<String[]> level1Riddle = new ArrayList<>();
+        List<String[]> level1Answer = new ArrayList<>();
+        List<Boolean[]> level1Status = new ArrayList<>();
+        // Riddles
+        level1Riddle.add(new String[]{"Riddle 1 Stage 1", "Riddle 2 Stage 1", "Riddle 3 Stage 1"});
+        level1Riddle.add(new String[]{"Riddle 1 Stage 2", "Riddle 2 Stage 2", "Riddle 3 Stage 2"});
+        level1Riddle.add(new String[]{"Riddle 1 Stage 3", "Riddle 2 Stage 3", "Riddle 3 Stage 3"});
+        // Answers
+        level1Answer.add(new String[]{"Answer 1 Stage 1", "Answer 2 Stage 2", "Answer 3 Stage 3"});
+        level1Answer.add(new String[]{"Answer 1 Stage 2", "Answer 2 Stage 2", "Answer 3 Stage 2"});
+        level1Answer.add(new String[]{"Answer 1 Stage 3", "Answer 2 Stage 3", "Answer 3 Stage 3"});
+        // Status
+        level1Status.add(new Boolean[]{false, false, false});
+        level1Status.add(new Boolean[]{false, false, false});
+        level1Status.add(new Boolean[]{false, false, false});
+        tempDataset.add(new LevelModel("id0", 1, 9, level1Riddle, level1Answer, level1Status, 1));
 
-        // Riddles 3
-        riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
-        answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
-        starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 3, 15, riddles.get(2), answers.get(2), starsStatus.get(2), 2));
 
-        // Riddles 4
-        riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
-        answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
-        starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 1, 15, riddles.get(3), answers.get(3), starsStatus.get(3), 1));
-
-        // Riddles 5
-        riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
-        answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
-        starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 2, 15, riddles.get(4), answers.get(4), starsStatus.get(4), 2));
-
-        // Riddles 6
-        riddles.add(new String[]{"My name is very similar with an animal, I usually used for pointing at monitor. Who am i?", "Subject 2", "Subject 3", "Subject 4", "Subject 5"});
-        answers.add(new String[]{"Mouse", "Mouse", "Mouse", "Mouse", "Mouse"});
-        starsStatus.add(new int[]{3, 3, 3, 2, 1});
-        tempDataset.add(new LevelModel("0", 3, 15, riddles.get(5), answers.get(5), starsStatus.get(5), 1));
     }
 
 

@@ -23,19 +23,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp" />
 
-    <TextView
+    <TextSwitcher
+        android:id="@+id/riddles_text_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:paddingLeft="32dp"
-        android:paddingRight="32dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel eros dolor. Mauris vel lobortis nulla. Donec eget maximus risus. Nulla aliquet nulla in nibh ultrices, vel efficitur ante tincidunt"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:paddingRight="32dp">
+
+    </TextSwitcher>
 
     <TextView
+        android:id="@+id/text_pass_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

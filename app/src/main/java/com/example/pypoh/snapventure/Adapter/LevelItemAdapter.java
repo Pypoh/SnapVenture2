@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.example.pypoh.snapventure.Camera;
 import com.example.pypoh.snapventure.Model.LevelModel;
 import com.example.pypoh.snapventure.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
     private List<LevelModel> dataSet = new ArrayList<>();
     private LevelModel mData;
     private View view;
+
+    // Dataset
+    List<LevelModel> data = new ArrayList<>();
 
     // Recycler Utils
     private RecyclerView dialogStageList;
@@ -85,8 +90,8 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
                 createDialog();
             }
         });
-        holder.levelProgressBar.setMax(5);
-        holder.levelProgressBar.setProgress(3);
+        holder.levelProgressBar.setMax(3);
+        holder.levelProgressBar.setProgress(0);
     }
 
     @Override
@@ -129,7 +134,6 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
             levelProgressBar = itemView.findViewById(R.id.custom_progress_bar_level);
 
 
-
         }
     }
 
@@ -138,11 +142,14 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
         stageDialog.setContentView(R.layout.dialog_stage);
         stageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        data = new ArrayList<>();
+
         dialogStageList = stageDialog.findViewById(R.id.dialog_stage_list);
         dialogStageList.setLayoutManager(new LinearLayoutManager(mContext));
         stageDialogAdapter = new StageDialogAdapter(mContext, mData, new StageDialogAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(LevelModel levelModel, int position) {
+                data.clear();
                 if (!stageDialogAdapter.isSelected(position)) {
                     stageDialogAdapter.setSelected(stageDialogAdapter.getPositionChecked(), false);
                     stageDialogAdapter.setSelected(position, true);
@@ -150,6 +157,7 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
                     stageDialogAdapter.notifyDataSetChanged();
                     selectedStatus = true;
                     setStartButtonEnabled();
+                    data.add(levelModel);
                     Log.i("SelectedStatus", "true");
                 } else {
                     stageDialogAdapter.setSelected(position, false);
@@ -168,7 +176,9 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toCamera();
+                if (!data.isEmpty()) {
+                    toCamera();
+                }
             }
         });
     }
@@ -179,6 +189,7 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED)
             ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA}, 100);
+        toCamera.putExtra("dataClass", data.get(0));
         mContext.startActivity(toCamera);
     }
 }
