@@ -2,7 +2,10 @@ package com.example.pypoh.snapventure.MainMenu;
 
 import android.os.Bundle;
 
-import com.example.pypoh.snapventure.Fragment.AdventureFragment;
+import com.example.pypoh.snapventure.Fragment.MainFragment.AdventureFragment;
+import com.example.pypoh.snapventure.Fragment.MainFragment.ProfileFragment;
+import com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment;
+import com.example.pypoh.snapventure.Fragment.MainFragment.VocabFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -24,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Fragment
     private AdventureFragment adventureFragment = new AdventureFragment();
+    private PronounceFragment pronounceFragment = new PronounceFragment();
+    private VocabFragment vocabFragment = new VocabFragment();
+    private ProfileFragment profileFragment = new ProfileFragment();
 
     // Utils
     boolean doubleBackToExitPressedOnce = false;
@@ -41,12 +46,15 @@ public class MainActivity extends AppCompatActivity {
                     changeIconStateBar(R.id.navigation_adventure, R.drawable.navbar_adventure_on);
                     return true;
                 case R.id.navigation_pronounciation:
+                    setFragment(pronounceFragment);
                     changeIconStateBar(R.id.navigation_pronounciation, R.drawable.navbar_pronounciation_on);
                     return true;
                 case R.id.navigation_vocabulary:
+                    setFragment(vocabFragment);
                     changeIconStateBar(R.id.navigation_vocabulary, R.drawable.navbar_vocabulary_on);
                     return true;
                 case R.id.navigation_profile:
+                    setFragment(profileFragment);
                     changeIconStateBar(R.id.navigation_profile, R.drawable.navbar_profile_on);
                     return true;
             }

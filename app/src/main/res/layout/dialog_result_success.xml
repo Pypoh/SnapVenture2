@@ -10,7 +10,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dialog_result_top_layout"
+        android:id="@+id/dialog_result_top_layout_success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/result_dialog_top"
@@ -103,7 +103,7 @@
         android:id="@+id/button_result_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/dialog_result_top_layout"
+        app:layout_constraintTop_toBottomOf="@id/dialog_result_top_layout_success"
         android:text="Next"
         android:textAllCaps="false"
         android:textColor="@color/white"

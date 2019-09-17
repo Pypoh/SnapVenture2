@@ -18,6 +18,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -70,8 +71,16 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull LevelItemAdapter.ViewHolder holder, int position) {
-
+        int completedStage = 0;
+        Boolean[] resultData = mData.getTotalCompletedStar().get(position);
         ViewStub viewStub = view.findViewById(R.id.viewstub_level);
+
+        // Set Level Count
+        for (Boolean result : resultData) {
+            if (result) completedStage++;
+        }
+
+        holder.levelCount.setText(completedStage + "/" + resultData.length);
 
         if (mData.getStar() == 1) {
             viewStub.setLayoutResource(R.layout.level_1_star);
@@ -90,8 +99,8 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
                 createDialog();
             }
         });
-        holder.levelProgressBar.setMax(3);
-        holder.levelProgressBar.setProgress(0);
+        holder.levelProgressBar.setMax(resultData.length);
+        holder.levelProgressBar.setProgress(completedStage);
     }
 
     @Override
@@ -116,28 +125,21 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
         CardView levelCard;
         ImageView levelImage;
         ProgressBar levelProgressBar;
+        TextView levelCount;
 //        public RecyclerView itemRecycler;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-//            itemRecycler = itemView.findViewById(R.id.recycler_level);
-//
-//            levelItemAdapter = new LevelItemAdapter(mContext, tempData);
-//            levelRecycler = itemView.findViewById(R.id.item_recycler_parent);
-//            levelRecycler.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
-//            levelRecycler.setAdapter(levelItemAdapter);
-
             levelCard = itemView.findViewById(R.id.card_level);
             levelImage = itemView.findViewById(R.id.image_level);
             levelProgressBar = itemView.findViewById(R.id.custom_progress_bar_level);
-
-
+            levelCount = itemView.findViewById(R.id.level_count);
         }
     }
 
-    private void createDialog() {
+    public void createDialog() {
         final Dialog stageDialog = new Dialog(mContext);
         stageDialog.setContentView(R.layout.dialog_stage);
         stageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -177,6 +179,7 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
             @Override
             public void onClick(View v) {
                 if (!data.isEmpty()) {
+                    stageDialog.dismiss();
                     toCamera();
                 }
             }
@@ -184,12 +187,14 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
     }
 
     private void toCamera() {
-        startButton.setEnabled(false);
+//        startButton.setEnabled(false);
         Intent toCamera = new Intent(mContext, Camera.class);
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED)
             ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA}, 100);
         toCamera.putExtra("dataClass", data.get(0));
+        toCamera.putExtra("position", stageDialogAdapter.getPositionChecked());
         mContext.startActivity(toCamera);
     }
+
 }

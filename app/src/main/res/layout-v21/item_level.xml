@@ -66,9 +66,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <TextView
+                    android:id="@+id/level_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3/5"
+                    android:text="0"
                     android:textColor="@color/white"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

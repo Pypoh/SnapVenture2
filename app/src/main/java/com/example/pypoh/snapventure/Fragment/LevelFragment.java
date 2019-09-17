@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,9 +19,9 @@ import java.util.List;
 public class LevelFragment extends Fragment {
 
     private RecyclerView levelRecycler;
-    public static List<LevelModel> tempDataset = new ArrayList<>();
+    public static List<LevelModel> tempGardenDataset = new ArrayList<>();
 
-    private LevelAdapter levelAdapter;
+    public static LevelAdapter levelAdapter;
 
 
     public LevelFragment() {
@@ -35,13 +33,13 @@ public class LevelFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level, container, false);
 
-        if (tempDataset.isEmpty()) {
+        if (tempGardenDataset.isEmpty()) {
             riddleSetup();
         }
 
         levelRecycler = view.findViewById(R.id.levelRecycler);
 
-        levelAdapter = new LevelAdapter(getContext(), tempDataset);
+        levelAdapter = new LevelAdapter(getContext(), tempGardenDataset);
         levelRecycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         levelRecycler.setAdapter(levelAdapter);
 
@@ -66,17 +64,21 @@ public class LevelFragment extends Fragment {
         level1Riddle.add(new String[]{"Riddle 1 Stage 2", "Riddle 2 Stage 2", "Riddle 3 Stage 2"});
         level1Riddle.add(new String[]{"Riddle 1 Stage 3", "Riddle 2 Stage 3", "Riddle 3 Stage 3"});
         // Answers
-        level1Answer.add(new String[]{"Answer 1 Stage 1", "Answer 2 Stage 2", "Answer 3 Stage 3"});
-        level1Answer.add(new String[]{"Answer 1 Stage 2", "Answer 2 Stage 2", "Answer 3 Stage 2"});
-        level1Answer.add(new String[]{"Answer 1 Stage 3", "Answer 2 Stage 3", "Answer 3 Stage 3"});
+        level1Answer.add(new String[]{"Mouse", "Cup", "Clock"});
+        level1Answer.add(new String[]{"Cup", "Answer 2 Stage 2", "Answer 3 Stage 2"});
+        level1Answer.add(new String[]{"Clock", "Answer 2 Stage 3", "Answer 3 Stage 3"});
         // Status
         level1Status.add(new Boolean[]{false, false, false});
         level1Status.add(new Boolean[]{false, false, false});
         level1Status.add(new Boolean[]{false, false, false});
-        tempDataset.add(new LevelModel("id0", 1, 9, level1Riddle, level1Answer, level1Status, 1));
+        tempGardenDataset.add(new LevelModel("id0", 1, 9, level1Riddle, level1Answer, level1Status, 1, "Garden", 1));
 
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.levelAdapter.notifyDataSetChanged();
+    }
 }

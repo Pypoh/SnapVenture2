@@ -17,10 +17,12 @@ public class LevelModel implements Serializable {
     private List<String[]> answer;
     private List<Boolean[]> totalCompletedStar;
     private int stageCount;
+    private String place;
+    private int level;
 
     private boolean[] selected;
 
-    public LevelModel(String id, int star, int totalStar, List<String[]> riddle, List<String[]> answer, List<Boolean[]> totalCompletedStar, int stageCount) {
+    public LevelModel(String id, int star, int totalStar, List<String[]> riddle, List<String[]> answer, List<Boolean[]> totalCompletedStar, int stageCount, String place, int level) {
         this.id = id;
         this.star = star;
         this.totalStar = totalStar;
@@ -28,8 +30,8 @@ public class LevelModel implements Serializable {
         this.answer = answer;
         this.totalCompletedStar = totalCompletedStar;
         this.stageCount = stageCount;
-
-
+        this.place = place;
+        this.level = level;
         this.selected = new boolean[riddle.size()];
     }
 
@@ -97,10 +99,31 @@ public class LevelModel implements Serializable {
         this.totalCompletedStar = totalCompletedStar;
     }
 
+    public void setTotalCompletedStar(Boolean[] totalCompletedStar, int position) {
+        this.totalCompletedStar.set(position, totalCompletedStar);
+    }
+
     public void setSelected(boolean[] selected) {
         this.selected = selected;
     }
-/*
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    /*
     @Override
     public int describeContents() {
         return 0;
