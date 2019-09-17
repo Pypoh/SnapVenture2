@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Fragment.LevelFragment;
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
@@ -62,7 +63,8 @@ public class AdventureFragment extends Fragment {
     private ImageView streetImage;
     private TextView streetText;
     private Button streetnGoBtn;
-    
+
+    public static int currentPlace;
 
     public AdventureFragment() {
         // Required empty public constructor
@@ -80,20 +82,13 @@ public class AdventureFragment extends Fragment {
         setupClassroom(view);
         setupStreet(view);
         
-        button = view.findViewById(R.id.go_btn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeFragment(levelFragment);
-            }
-        });
-
-        // TODO: Name and Level
-
-        // TODO: Energy, Total Stars
-
-        // TODO: Stage Chooser
-
+//        button = view.findViewById(R.id.go_btn);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changeFragment(levelFragment);
+//            }
+//        });
 
         return view;
     }
@@ -120,6 +115,14 @@ public class AdventureFragment extends Fragment {
         streetText.setText("Street");
         streetnGoBtn = streetView.findViewById(R.id.go_btn);
         streetnGoBtn.setTextColor(getResources().getColor(R.color.street_black));
+        streetnGoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                placeToast("Street");
+//                currentPlace = 3;
+//                changeFragment(levelFragment);
+            }
+        });
     }
 
     @SuppressLint("ResourceAsColor")
@@ -139,6 +142,13 @@ public class AdventureFragment extends Fragment {
         classroomText.setText("Classroom");
         classroomGoBtn = classroomView.findViewById(R.id.go_btn);
         classroomGoBtn.setTextColor(getResources().getColor(R.color.classroom_red));
+        classroomGoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentPlace = 2;
+                changeFragment(levelFragment);
+            }
+        });
     }
 
     @SuppressLint("ResourceAsColor")
@@ -158,6 +168,13 @@ public class AdventureFragment extends Fragment {
         kitchenText.setText("Kitchen");
         kitchenGoBtn = kitchenView.findViewById(R.id.go_btn);
         kitchenGoBtn.setTextColor(getResources().getColor(R.color.kitchen_yellow));
+        kitchenGoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentPlace = 1;
+                changeFragment(levelFragment);
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -176,7 +193,18 @@ public class AdventureFragment extends Fragment {
         gardenText.setText("Garden");
         gardenGoBtn = gardenView.findViewById(R.id.go_btn);
         gardenGoBtn.setTextColor(getResources().getColor(R.color.garden_green));
+        gardenGoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                placeToast("Garden");
+//                currentPlace = 0;
+//                changeFragment(levelFragment);
+            }
+        });
     }
 
+    private void placeToast(String place) {
+        Toast.makeText(this.getContext(), place + " riddles are not available", Toast.LENGTH_SHORT).show();
+    }
 
 }

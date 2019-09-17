@@ -15,23 +15,27 @@ public class LevelModel implements Serializable {
     private int totalStar;
     private List<String[]> riddle;
     private List<String[]> answer;
+    private List<String[]> pronounce;
     private List<Boolean[]> totalCompletedStar;
     private int stageCount;
     private String place;
     private int level;
+    private boolean lockStatus;
 
     private boolean[] selected;
 
-    public LevelModel(String id, int star, int totalStar, List<String[]> riddle, List<String[]> answer, List<Boolean[]> totalCompletedStar, int stageCount, String place, int level) {
+    public LevelModel(String id, int star, int totalStar, List<String[]> riddle, List<String[]> answer, List<String[]> pronounce, List<Boolean[]> totalCompletedStar, int stageCount, String place, int level, boolean lockStatus) {
         this.id = id;
         this.star = star;
         this.totalStar = totalStar;
         this.riddle = riddle;
         this.answer = answer;
+        this.pronounce = pronounce;
         this.totalCompletedStar = totalCompletedStar;
         this.stageCount = stageCount;
         this.place = place;
         this.level = level;
+        this.lockStatus = lockStatus;
         this.selected = new boolean[riddle.size()];
     }
 
@@ -121,6 +125,22 @@ public class LevelModel implements Serializable {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public boolean isLockStatus() {
+        return lockStatus;
+    }
+
+    public void setLockStatus(boolean lockStatus) {
+        this.lockStatus = lockStatus;
+    }
+
+    public List<String[]> getPronounce() {
+        return pronounce;
+    }
+
+    public void setPronounce(List<String[]> pronounce) {
+        this.pronounce = pronounce;
     }
 
     /*

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -71,35 +73,60 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull LevelItemAdapter.ViewHolder holder, int position) {
-        int completedStage = 0;
+        List<Boolean[]> resultAllStar = mData.getTotalCompletedStar();
         Boolean[] resultData = mData.getTotalCompletedStar().get(position);
         ViewStub viewStub = view.findViewById(R.id.viewstub_level);
 
-        // Set Level Count
-        for (Boolean result : resultData) {
-            if (result) completedStage++;
+        // Count Total Star
+        int totalStarInLevel = 0;
+        for (Boolean[] starList : resultAllStar) {
+            totalStarInLevel += starList.length;
         }
 
-        holder.levelCount.setText(completedStage + "/" + resultData.length);
+        // Count Collected Star
+        int completedStage = 0;
+        for (Boolean[] starList : resultAllStar) {
+            for (Boolean resultStar : starList) {
+                if (resultStar) completedStage++;
+            }
+        }
+
+        holder.levelCount.setText(completedStage + "/" + totalStarInLevel);
 
         if (mData.getStar() == 1) {
-            viewStub.setLayoutResource(R.layout.level_1_star);
+            if (mData.isLockStatus()) {
+                viewStub.setLayoutResource(R.layout.level_1_star);
+            } else {
+                viewStub.setLayoutResource(R.layout.level_1_star_locked);
+            }
             viewStub.inflate();
         } else if (mData.getStar() == 2) {
-            viewStub.setLayoutResource(R.layout.level_2_star);
+            if (mData.isLockStatus()) {
+                viewStub.setLayoutResource(R.layout.level_2_star);
+            } else {
+                viewStub.setLayoutResource(R.layout.level_2_star_locked);
+            }
             viewStub.inflate();
         } else {
-            viewStub.setLayoutResource(R.layout.level_3_star);
+            if (mData.isLockStatus()) {
+                viewStub.setLayoutResource(R.layout.level_3_star);
+            } else {
+                viewStub.setLayoutResource(R.layout.level_3_star_locked);
+            }
             viewStub.inflate();
         }
 
         holder.levelImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createDialog();
+                if (mData.isLockStatus()) {
+                    createDialog();
+                } else {
+                    Toast.makeText(mContext, "This Level is Locked", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        holder.levelProgressBar.setMax(resultData.length);
+        holder.levelProgressBar.setMax(totalStarInLevel);
         holder.levelProgressBar.setProgress(completedStage);
     }
 
@@ -184,6 +211,19 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
                 }
             }
         });
+
+        stageDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                setAllStageHighlightOff();
+            }
+        });
+    }
+
+    private void setAllStageHighlightOff() {
+        selectedStatus = false;
+        stageDialogAdapter.setSelected(stageDialogAdapter.getPositionChecked(), false);
+        stageDialogAdapter.notifyDataSetChanged();
     }
 
     private void toCamera() {

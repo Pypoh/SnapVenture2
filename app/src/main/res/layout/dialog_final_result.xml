@@ -13,9 +13,9 @@
         android:id="@+id/dialog_result_top_layout_final"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/result_dialog_top"
-        android:paddingBottom="24dp"
-        android:paddingTop="24dp">
+        android:background="@drawable/result_dialog_full"
+        android:paddingBottom="48dp"
+        android:paddingTop="48dp">
 
         <ImageView
             android:id="@+id/badge_result"

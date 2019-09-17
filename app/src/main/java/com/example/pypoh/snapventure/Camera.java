@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,7 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.example.pypoh.snapventure.Adapter.LevelAdapter;
 import com.example.pypoh.snapventure.Fragment.LevelFragment;
+import com.example.pypoh.snapventure.Fragment.MainFragment.AdventureFragment;
 import com.example.pypoh.snapventure.Helper.InternetCheck;
 import com.example.pypoh.snapventure.Model.LevelModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,6 +46,7 @@ import com.otaliastudios.cameraview.gesture.Gesture;
 import com.otaliastudios.cameraview.gesture.GestureAction;
 
 import java.util.List;
+import java.util.Locale;
 
 public class Camera extends AppCompatActivity {
 
@@ -56,6 +60,7 @@ public class Camera extends AppCompatActivity {
     private TextView passText;
 
     private LinearLayout questionLayout;
+    private TextView questionHeader;
 
     // Result Dialog
     private Dialog resultDialog;
@@ -72,6 +77,9 @@ public class Camera extends AppCompatActivity {
 
     private int state = 0;
     private Boolean[] statusRiddle;
+
+    // Text to Speech
+    private TextToSpeech textToSpeech;
 
     int position = 0;
 
@@ -109,6 +117,9 @@ public class Camera extends AppCompatActivity {
             }
         });
 
+        // Set Question State
+        questionHeader = questionLayout.findViewById(R.id.question_header);
+
         slideLeft = AnimationUtils.loadAnimation(this, R.anim.slide_right);
         slideRight = AnimationUtils.loadAnimation(this, R.anim.slide_left);
         riddlesTextSwitch.setInAnimation(slideRight);
@@ -121,7 +132,15 @@ public class Camera extends AppCompatActivity {
         passText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (state < dataSet.getRiddle().get(position).length) {
+                    statusRiddle[state] = false;
+                }
                 changeRiddle();
+                if (state == dataSet.getRiddle().get(position).length) {
+                    // Create Final Result Dialog
+                    createFinalResultDialog();
+                    Log.d("resultDialog", "Result Riddle Pressed");
+                }
             }
         });
 
@@ -131,6 +150,7 @@ public class Camera extends AppCompatActivity {
                 changeQuestionState();
             }
         });
+        changeQuestionHeaderText();
 
         hintButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +166,7 @@ public class Camera extends AppCompatActivity {
                 Log.d("stateProgress", state + "");
                 if (state < dataSet.getRiddle().get(position).length) {
                     cameraView.takePicture();
+                    captureButton.setEnabled(false);
                 } else {
                     // Create Result Dialog & return to level
                 }
@@ -179,6 +200,7 @@ public class Camera extends AppCompatActivity {
         increaseState(1);
         if (state < dataSet.getRiddle().get(position).length) {
             riddlesTextSwitch.setText(dataSet.getRiddle().get(position)[state]);
+            changeQuestionHeaderText();
         }
         Log.d("stateProgress", this.state + "Change Riddle");
     }
@@ -210,9 +232,29 @@ public class Camera extends AppCompatActivity {
         resultDialog = new Dialog(this);
         resultDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        // Re-Enable Capture Button
+        captureButton.setEnabled(true);
+
         // Setting Result
         if (result.equalsIgnoreCase("Success")) {
             resultDialog.setContentView(R.layout.dialog_result_success);
+            resultDialog.setCancelable(false);
+            resultDialog.setCanceledOnTouchOutside(false);
+            // Setup Pronounce Text
+            TextView pronounce1 = resultDialog.findViewById(R.id.pronounce_1);
+            TextView pronounce2 = resultDialog.findViewById(R.id.pronounce_2);
+            pronounce1.setText(dataSet.getAnswer().get(position)[state]);
+            pronounce2.setText(dataSet.getPronounce().get(position)[state]);
+            // Text to Speech
+            textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if(status != TextToSpeech.ERROR) {
+                        textToSpeech.setLanguage(Locale.US);
+                    }
+                }
+            });
+            // Button
             Button nextButton = resultDialog.findViewById(R.id.button_result_ok);
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -222,12 +264,22 @@ public class Camera extends AppCompatActivity {
                     if (state == dataSet.getRiddle().get(position).length) {
                         // Create Final Result Dialog
                         createFinalResultDialog();
+                        Log.d("resultDialog", "Result Button Pressed");
                     }
-                    Log.d("resultDialog", "Result Button Pressed");
+
+                }
+            });
+            ImageView speechButton = resultDialog.findViewById(R.id.button_result_voice);
+            speechButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    textToSpeech.speak(dataSet.getAnswer().get(position)[state-1], TextToSpeech.QUEUE_FLUSH, null);
                 }
             });
         } else {
             resultDialog.setContentView(R.layout.dialog_result_fail);
+            resultDialog.setCancelable(false);
+            resultDialog.setCanceledOnTouchOutside(false);
             Button nextButton = resultDialog.findViewById(R.id.button_result_ok);
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -255,14 +307,23 @@ public class Camera extends AppCompatActivity {
         });
 
         resultDialog.show();
-
-
     }
 
     private void createFinalResultDialog() {
         finalResultDialog = new Dialog(this);
         finalResultDialog.setContentView(R.layout.dialog_final_result);
         finalResultDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        finalResultDialog.setCancelable(false);
+        finalResultDialog.setCanceledOnTouchOutside(false);
+
+        finalResultDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                snapLayout.setVisibility(View.INVISIBLE);
+                questionLayout.setVisibility(View.INVISIBLE);
+                cameraView.close();
+            }
+        });
 
         ImageView resultBadge = finalResultDialog.findViewById(R.id.badge_result);
         Button doneButton = finalResultDialog.findViewById(R.id.btn_result_done);
@@ -270,6 +331,8 @@ public class Camera extends AppCompatActivity {
 
         int starCollected = 0;
         // Count result
+
+        Log.d("statusRiddle", statusRiddle[0] + " : " + statusRiddle[1] + " : " + statusRiddle[2]);
         for (Boolean result : statusRiddle) {
             if (result) starCollected++;
         }
@@ -291,7 +354,20 @@ public class Camera extends AppCompatActivity {
         int level = dataSet.getLevel();
 
         // Nembak data ke LevelFragment
-        LevelFragment.tempGardenDataset.get(level-1).setTotalCompletedStar(statusRiddle, position);
+        switch (AdventureFragment.currentPlace) {
+            case 0:
+                LevelFragment.tempGardenDataset.get(level - 1).setTotalCompletedStar(statusRiddle, position);
+                break;
+            case 1:
+                LevelFragment.tempKitchenDataset.get(level - 1).setTotalCompletedStar(statusRiddle, position);
+                break;
+            case 2:
+                LevelFragment.tempClassroomDataset.get(level - 1).setTotalCompletedStar(statusRiddle, position);
+                break;
+            case 3:
+                LevelFragment.tempStreetDataset.get(level - 1).setTotalCompletedStar(statusRiddle, position);
+                break;
+        }
         LevelFragment.levelAdapter.notifyDataSetChanged();
 
         doneButton.setOnClickListener(new View.OnClickListener() {
@@ -372,6 +448,12 @@ public class Camera extends AppCompatActivity {
         this.finish();
     }
 
+    private void changeQuestionHeaderText() {
+        int totalRiddles = dataSet.getRiddle().get(position).length;
+        questionHeader.setText("Question " + (state+1) + "/" + totalRiddles);
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -380,8 +462,13 @@ public class Camera extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
         super.onPause();
         cameraView.close();
+
     }
 
     @Override
