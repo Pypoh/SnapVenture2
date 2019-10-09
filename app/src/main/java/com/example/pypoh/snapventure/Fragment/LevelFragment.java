@@ -37,35 +37,36 @@ public class LevelFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level, container, false);
 
-        if (tempGardenDataset.isEmpty()) {
-            riddleGardenSetup();
-        }
-        if (tempKitchenDataset.isEmpty()) {
-            riddleKitchenSetup();
-        }
-        if (tempClassroomDataset.isEmpty()) {
-            riddleClassroomSetup();
-        }
-        if (tempStreetDataset.isEmpty()) {
-            riddleStreetSetup();
-        }
-
-        levelRecycler = view.findViewById(R.id.levelRecycler);
+        // Setup Riddle and Insert Data to ArrayList
         switch (AdventureFragment.currentPlace) {
             case 0:
+                if (tempGardenDataset.isEmpty()) {
+                    riddleGardenSetup();
+                }
                 levelAdapter = new LevelAdapter(getContext(), tempGardenDataset);
                 break;
             case 1:
+                if (tempKitchenDataset.isEmpty()) {
+                    riddleKitchenSetup();
+                }
                 levelAdapter = new LevelAdapter(getContext(), tempKitchenDataset);
                 break;
             case 2:
+                if (tempClassroomDataset.isEmpty()) {
+                    riddleClassroomSetup();
+                }
                 levelAdapter = new LevelAdapter(getContext(), tempClassroomDataset);
                 break;
             case 3:
+                if (tempStreetDataset.isEmpty()) {
+                    riddleStreetSetup();
+                }
                 levelAdapter = new LevelAdapter(getContext(), tempStreetDataset);
                 break;
         }
 
+        // Setup RecyclerView
+        levelRecycler = view.findViewById(R.id.levelRecycler);
         levelRecycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         levelRecycler.setAdapter(levelAdapter);
 
@@ -318,42 +319,52 @@ public class LevelFragment extends Fragment {
         List<String[]> level2Answer = new ArrayList<>();
         List<String[]> level2Pronounce = new ArrayList<>();
         List<Boolean[]> level2Status = new ArrayList<>();
+//        // Riddles
+//        level2Riddle.add(new String[]{"I’m something that you can write with\n" +
+//                "When I’ve been used I’m not as long\n" +
+//                "I often have an eraser\n" +
+//                "In case you write down something wrong", "This might have a back and legs\n" +
+//                "But never has an armpit\n" +
+//                "But it can come after arm\n" +
+//                "For something on which you’d sit", "When you are feeling hungry\n" +
+//                "Then you will often eat at this\n" +
+//                "When you are playing ping pong\n" +
+//                "It comes before the word ‘tennis’"});
+//        level2Riddle.add(new String[]{"This thing has a cover\n" +
+//                "But it is not a bed\n" +
+//                "It has many pages\n" +
+//                "And is something that’s read", "I'm white, but some black\n" +
+//                "Some marker may scratch me\n" +
+//                "Or if you like you can use a chalk\n" +
+//                "Don't forget to clean me up", "I’m not a razor\n" +
+//                "But have a blade\n" +
+//                "I unblunt items\n" +
+//                "That have a grade"});
+//        level2Riddle.add(new String[]{"I’m something that is often round\n" +
+//                "But I’m not a pizza base\n" +
+//                "I have hands but don’t have fingers\n" +
+//                "And have numbers on my face", "I sometimes have lines on me\n" +
+//                "And other times I am blank\n" +
+//                "I’m made from a cut down tree\n" +
+//                "Although I am not a plank", "These are things that have tongues\n" +
+//                "But don’t have any faces\n" +
+//                "You wear them on your feet\n" +
+//                "And they’re done up with laces"});
+//        // Answers
+//        level2Answer.add(new String[]{"Mouse", "Cup", "Clock"});
+////        level2Answer.add(new String[]{"Pencil", "Chair", "Table"});
+//        level2Answer.add(new String[]{"Book", "Whiteboard", "Sharpener"});
+//        level2Answer.add(new String[]{"Clock", "Paper", "Shoes"});
+
         // Riddles
-        level2Riddle.add(new String[]{"I’m something that you can write with\n" +
-                "When I’ve been used I’m not as long\n" +
-                "I often have an eraser\n" +
-                "In case you write down something wrong", "This might have a back and legs\n" +
-                "But never has an armpit\n" +
-                "But it can come after arm\n" +
-                "For something on which you’d sit", "When you are feeling hungry\n" +
-                "Then you will often eat at this\n" +
-                "When you are playing ping pong\n" +
-                "It comes before the word ‘tennis’"});
-        level2Riddle.add(new String[]{"This thing has a cover\n" +
-                "But it is not a bed\n" +
-                "It has many pages\n" +
-                "And is something that’s read", "I'm white, but some black\n" +
-                "Some marker may scratch me\n" +
-                "Or if you like you can use a chalk\n" +
-                "Don't forget to clean me up", "I’m not a razor\n" +
-                "But have a blade\n" +
-                "I unblunt items\n" +
-                "That have a grade"});
-        level2Riddle.add(new String[]{"I’m something that is often round\n" +
-                "But I’m not a pizza base\n" +
-                "I have hands but don’t have fingers\n" +
-                "And have numbers on my face", "I sometimes have lines on me\n" +
-                "And other times I am blank\n" +
-                "I’m made from a cut down tree\n" +
-                "Although I am not a plank", "These are things that have tongues\n" +
-                "But don’t have any faces\n" +
-                "You wear them on your feet\n" +
-                "And they’re done up with laces"});
+        level2Riddle.add(new String[]{"Mouse", "Cup", "Clock"});
+        level2Riddle.add(new String[]{"Keyboard", "Monitor", "Laptop"});
+        level2Riddle.add(new String[]{"Fan", "Backpack", "Glasses"});
         // Answers
         level2Answer.add(new String[]{"Mouse", "Cup", "Clock"});
-//        level2Answer.add(new String[]{"Pencil", "Chair", "Table"});
-        level2Answer.add(new String[]{"Book", "Whiteboard", "Sharpener"});
-        level2Answer.add(new String[]{"Clock", "Paper", "Shoes"});
+        level2Answer.add(new String[]{"Keyboard", "Monitor", "Laptop"});
+        level2Answer.add(new String[]{"Fan", "Backpack", "Glasses"});
+        
         // Pronounce
         level2Pronounce.add(new String[]{"/ˈpen.səl/", "/tʃer/", "/ˈteɪ.bəl/"});
         level2Pronounce.add(new String[]{"/bʊk/", "/ˈwaɪt.bɔːrd/", "/ˈʃɑːr.pən.ɚ/"});
@@ -389,13 +400,13 @@ public class LevelFragment extends Fragment {
         List<String[]> level4Pronounce = new ArrayList<>();
         List<Boolean[]> level4Status = new ArrayList<>();
         // Riddles
-        level4Riddle.add(new String[]{"Riddle 1 Stage 1", "Riddle 2 Stage 1", "Riddle 3 Stage 1"});
-        level4Riddle.add(new String[]{"Riddle 1 Stage 2", "Riddle 2 Stage 2", "Riddle 3 Stage 2"});
-        level4Riddle.add(new String[]{"Riddle 1 Stage 3", "Riddle 2 Stage 3", "Riddle 3 Stage 3"});
+        level4Riddle.add(new String[]{"Mouse", "Cup", "Riddle 3 Clock"});
+        level4Riddle.add(new String[]{"Keyboard", "Monitor", "Laptop"});
+        level4Riddle.add(new String[]{"Fan", "Backpack", "Glasses"});
         // Answers
         level4Answer.add(new String[]{"Mouse", "Cup", "Clock"});
-        level4Answer.add(new String[]{"Cup", "Answer 2 Stage 2", "Answer 3 Stage 2"});
-        level4Answer.add(new String[]{"Clock", "Answer 2 Stage 3", "Answer 3 Stage 3"});
+        level4Answer.add(new String[]{"Keyboard", "Monitor", "Laptop"});
+        level4Answer.add(new String[]{"Fan", "Backpack", "Glasses"});
         // Status
         level4Status.add(new Boolean[]{false, false, false});
         level4Status.add(new Boolean[]{false, false, false});

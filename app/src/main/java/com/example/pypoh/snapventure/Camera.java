@@ -81,6 +81,9 @@ public class Camera extends AppCompatActivity {
     // Text to Speech
     private TextToSpeech textToSpeech;
 
+    // Pass Dialog
+    private Dialog passDialog;
+
     int position = 0;
 
     @Override
@@ -132,15 +135,8 @@ public class Camera extends AppCompatActivity {
         passText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (state < dataSet.getRiddle().get(position).length) {
-                    statusRiddle[state] = false;
-                }
-                changeRiddle();
-                if (state == dataSet.getRiddle().get(position).length) {
-                    // Create Final Result Dialog
-                    createFinalResultDialog();
-                    Log.d("resultDialog", "Result Riddle Pressed");
-                }
+                createPassDialog();
+
             }
         });
 
@@ -155,7 +151,7 @@ public class Camera extends AppCompatActivity {
         hintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Camera.this, "Hints are under development", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Camera.this, "Hints and Translate are under development", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -194,6 +190,43 @@ public class Camera extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void createPassDialog() {
+        passDialog = new Dialog(this);
+        passDialog.setContentView(R.layout.dialog_pass);
+        passDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        passDialog.setCancelable(false);
+        passDialog.setCanceledOnTouchOutside(false);
+
+        passDialog.show();
+
+        Button passYes = passDialog.findViewById(R.id.button_pass_ya);
+        Button passNo = passDialog.findViewById(R.id.button_pass_no);
+
+        passYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (state < dataSet.getRiddle().get(position).length) {
+                    statusRiddle[state] = false;
+                }
+                changeRiddle();
+                if (state == dataSet.getRiddle().get(position).length) {
+                    // Create Final Result Dialog
+                    createFinalResultDialog();
+                    Log.d("resultDialog", "Result Riddle Pressed");
+                }
+                passDialog.dismiss();
+            }
+        });
+
+        passNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passDialog.dismiss();
+            }
+        });
+
     }
 
     private void changeRiddle() {
@@ -403,7 +436,7 @@ public class Camera extends AppCompatActivity {
                         public void onSuccess(List<FirebaseVisionImageLabel> firebaseVisionImageLabels) {
                             Log.i("Picture", "Vision Processing, Online");
                             for (FirebaseVisionImageLabel result : firebaseVisionImageLabels) {
-                                Toast.makeText(Camera.this, "Result Online : " + result.getText(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Camera.this, "Result Online : " + result.getText(), Toast.LENGTH_SHORT).show();
                                 Log.i("Picture", "Result Online Debug : " + result.getText() + " Confidence : " + result.getConfidence());
                                 Log.d("resultImage", dataSet.getAnswer().get(position)[state] + "" + result.getText());
                                 // Check Image
@@ -430,7 +463,7 @@ public class Camera extends AppCompatActivity {
                         public void onSuccess(List<FirebaseVisionImageLabel> firebaseVisionImageLabels) {
                             Log.i("Picture", "Vision Processing, Offline");
                             for (FirebaseVisionImageLabel result : firebaseVisionImageLabels) {
-                                Toast.makeText(Camera.this, "Result : " + result.getText(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Camera.this, "Result : " + result.getText(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {

@@ -5,6 +5,7 @@
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="defaultTextColor">#808080</color>
 
     <color name="elementary_red">#D3351B</color>
     <color name="middle_blue">#235299</color>
@@ -15,6 +16,8 @@
     <color name="classroom_red">#D3351B</color>
     <color name="street_black">#393939</color>
 
+    <color name="grey_backgrond_profile">#EBEBEB</color>
+
     <color name="hint_blue">#0190DF</color>
     <color name="star_yellow">#F6DE00</color>
 
@@ -22,4 +25,5 @@
 
     <color name="grey_background">#9D9D9D</color>
     <color name="grey_locked">#C6C6C6</color>
+
 </resources>

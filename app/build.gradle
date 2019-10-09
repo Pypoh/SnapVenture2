@@ -5,7 +5,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.pypoh.snapventure"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -45,5 +45,11 @@ dependencies {
 
     // Circle Progress
     implementation 'com.github.Adilhusen:circle-progress-ad-android-:1.0'
+
+    // Circle Image
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    // Visualizer
+    implementation 'com.github.bogerchan:Nier-Visualizer:v0.1.3'
 
 }
