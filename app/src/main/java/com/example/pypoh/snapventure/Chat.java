@@ -2,11 +2,29 @@ package com.example.pypoh.snapventure;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Adapter.AnswerAdapter;
 import com.example.pypoh.snapventure.Adapter.ChatAdapter;
@@ -17,9 +35,13 @@ import com.example.pypoh.snapventure.Model.ChatModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import static com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment.currentState;
+import static com.example.pypoh.snapventure.LevelPronounceFragment.addTempChapterOneState;
 import static com.example.pypoh.snapventure.LevelPronounceFragment.dataConversation;
+import static com.example.pypoh.snapventure.LevelPronounceFragment.removeLastTempChapterOneState;
 import static com.example.pypoh.snapventure.LevelPronounceFragment.tempChapterOneState;
 
 public class Chat extends AppCompatActivity {
@@ -33,9 +55,26 @@ public class Chat extends AppCompatActivity {
     private List<String> answerMessageList = new ArrayList<>();
     private List<String> emptyList = new ArrayList<>();
 
+    // Component
+    private Button recordButton;
+
+    // Speech Recognition
+    private SpeechRecognizer speechRecognizer;
+    private Intent mSpeechRecognizerIntent;
+
+    private String resultString;
+    private boolean stateResult;
+    private boolean stateRecord;
+    private String filteredAnswer;
+    private String filteredResult;
+
+    // Animation
+    private Animation shakeAnimation;
+
 
     public static int currentUserState = 0; // 0 bot, 1 user
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +83,16 @@ public class Chat extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Chapter Number");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        checkPermission();
+        setupSpeechRecognizer();
 
         // Setup RecyclerView
         chatRecycler = findViewById(R.id.recycler_chat);
-        chatRecycler.setLayoutManager(new LinearLayoutManager(this));
-        chatAdapter = new ChatAdapter(this, tempChapterOneState);
-        chatRecycler.setAdapter(chatAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        chatRecycler.setLayoutManager(linearLayoutManager);
+        setRVAdapter();
 
         answerRecycler = findViewById(R.id.recycler_answer);
         answerRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -62,7 +105,7 @@ public class Chat extends AppCompatActivity {
 
             // Getting data match with bot chat state
             for (HashMap.Entry<String, ChatModel> entry : dataConversation.entrySet()) {
-                if (entry.getValue().checkLayer() == LevelPronounceFragment.checkLayer()+1) {
+                if (entry.getValue().checkLayer() == LevelPronounceFragment.checkLayer() + 1) {
                     answerMessageList.add(entry.getKey());
                 }
             }
@@ -73,12 +116,223 @@ public class Chat extends AppCompatActivity {
         }
         answerRecycler.setAdapter(answerAdapter);
 
-        // TODO: voice recognition using partial result with button onkey up/down listener (use android intent speech recognition)
-        //  show it in chat bubble. after that, check if the answer is different from chat data or not
+        // Button Speech Record
+        recordButton = findViewById(R.id.btn_record);
+        final Handler handlerDelay = new Handler();
+        stateRecord = false;
+        final Runnable runRecord = new Runnable() {
+            @Override
+            public void run() {
+                Log.d("motionButton", "downpressed");
+                if (tempChapterOneState.get(tempChapterOneState.size() - 1).equalsIgnoreCase("4")) {
+                    removeLastTempChapterOneState();
+                }
+                addTempChapterOneState("3");
+                chatAdapter.notifyDataSetChanged();
+                speechRecognizer.startListening(mSpeechRecognizerIntent);
+                stateRecord = true;
+            }
+        };
+        final Runnable fetchResultRecord = new Runnable() {
+            @Override
+            public void run() {
+                Log.d("motionButton", "uppressed");
+                speechRecognizer.stopListening();
+                removeLastTempChapterOneState();
+                chatAdapter.notifyDataSetChanged();
+//                        processSpeechRecord(resultString);
+            }
+        };
+        recordButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        if (stateRecord) {
+                            Log.d("motionButton", "uppressed");
+                            speechRecognizer.stopListening();
+                            removeLastTempChapterOneState();
+                            chatAdapter.notifyDataSetChanged();
+                            stateRecord = false;
+                            recursiveCheck();
+                        } else {
+                            handlerDelay.removeCallbacks(runRecord);
+                        }
+                        break;
 
+                    case MotionEvent.ACTION_DOWN:
+                        handlerDelay.postDelayed(runRecord, 1000);
+                        break;
+                }
+
+
+                return false;
+            }
+        });
+    }
+
+    private void recursiveCheck() {
+        if (stateResult) {
+            processSpeechRecord(resultString);
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    recursiveCheck();
+                }
+            }, 500);
+        }
+    }
+
+    private void setRVAdapter() {
+        chatAdapter = new ChatAdapter(this, tempChapterOneState);
+        chatRecycler.setAdapter(chatAdapter);
+        chatRecycler.smoothScrollToPosition(chatAdapter.getItemCount() - 1);
+    }
+
+    private void processSpeechRecord(final String result) {
+        // Show Speech Record Result
+        dataConversation.get("4").setMessage(result);
+        addTempChapterOneState("4");
+        chatAdapter.notifyDataSetChanged();
+
+        // get answer key
+        final String selectedAnswerKey = answerAdapter.getSelectedAnswer();
+
+        // filtering answer message
+        filteredAnswer = null;
+        filteredResult = null;
+        if (result != null && !result.equals(""))
+            filteredAnswer = dataConversation.get(selectedAnswerKey).getMessage().replaceAll("[^a-zA-Z0-9\\s+]", "");
+            filteredResult = result.replaceAll("[^a-zA-Z0-9\\s+]", "");
+
+
+        Log.d("filteredSelectedAns", filteredAnswer);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Show if the result match with answer
+                if (selectedAnswerKey != null && !selectedAnswerKey.equals("")) {
+                    if (filteredResult.equalsIgnoreCase(filteredAnswer)) {
+                        // Remove temp record result chat bubble
+                        LevelPronounceFragment.removeLastTempChapterOneState();
+                        chatAdapter.notifyDataSetChanged();
+
+                        // Set bubble animation to right selected answer
+                        Objects.requireNonNull(dataConversation.get(selectedAnswerKey)).setBubbleAnimation(true);
+
+                        // Add right selected answer to chat bubble
+                        addTempChapterOneState(selectedAnswerKey);
+                        chatAdapter.notifyDataSetChanged();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Objects.requireNonNull(dataConversation.get(selectedAnswerKey)).setBubbleAnimation(false);
+                                resultString = "";
+                            }
+                        }, 2000);
+
+                        // add new event delay for bot to chat
+                        // TODO: Add chat bot response
+
+                    } else {
+                        Objects.requireNonNull(dataConversation.get("4")).setAnswerStatus(false);
+                        resultString = "";
+                        chatAdapter.notifyDataSetChanged();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Objects.requireNonNull(dataConversation.get("4")).setAnswerStatus(true);
+                            }
+                        }, 2000);
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "You haven't choose an answer yet", Toast.LENGTH_SHORT).show();
+                    tempChapterOneState.remove(tempChapterOneState.size() - 1);
+                    chatAdapter.notifyDataSetChanged();
+                }
+            }
+        }, 1000);
+
+
+    }
+
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED)) {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
+                finish();
+            }
+        }
     }
 
     public static void refreshData() {
         answerAdapter.notifyDataSetChanged();
+    }
+
+    private void setupSpeechRecognizer() {
+        mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
+                Locale.getDefault());
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        speechRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle params) {
+
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+
+            }
+
+            @Override
+            public void onRmsChanged(float rmsdB) {
+
+            }
+
+            @Override
+            public void onBufferReceived(byte[] buffer) {
+
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+
+            }
+
+            @Override
+            public void onError(int error) {
+
+            }
+
+            @Override
+            public void onResults(Bundle results) {
+                ArrayList<String> matches = results
+                        .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+
+                if (matches != null) {
+                    Log.d("speechRecogResult", matches.get(0));
+                    resultString = matches.get(0);
+                }
+                stateResult = true;
+            }
+
+            @Override
+            public void onPartialResults(Bundle partialResults) {
+
+            }
+
+            @Override
+            public void onEvent(int eventType, Bundle params) {
+
+            }
+        });
     }
 }

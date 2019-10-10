@@ -9,6 +9,8 @@ public class ChatModel {
     private String message;
 
     private boolean selected;
+    private boolean answerStatus = true;
+    private boolean bubbleAnimation = false;
 
     public ChatModel(String key, int user, String message) {
         this.key = key;
@@ -46,6 +48,22 @@ public class ChatModel {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public boolean isAnswerStatus() {
+        return answerStatus;
+    }
+
+    public void setAnswerStatus(boolean answerStatus) {
+        this.answerStatus = answerStatus;
+    }
+
+    public boolean isBubbleAnimation() {
+        return bubbleAnimation;
+    }
+
+    public void setBubbleAnimation(boolean bubbleAnimation) {
+        this.bubbleAnimation = bubbleAnimation;
     }
 
     public int checkLayer() {

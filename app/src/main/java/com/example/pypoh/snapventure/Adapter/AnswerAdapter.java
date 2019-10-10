@@ -74,6 +74,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
         return mDataSet.size();
     }
 
+    public String getSelectedAnswer() {
+        return selectedKey;
+    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
