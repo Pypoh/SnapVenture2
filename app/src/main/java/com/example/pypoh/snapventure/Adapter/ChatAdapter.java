@@ -55,6 +55,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 break;
             case 1:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_me, parent, false);
+                break;
+            case -1:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_end, parent, false);
+                break;
             default:
         }
         ViewHolder viewHolder = new ViewHolder(view);
@@ -104,7 +108,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         char[] stateToArray = currentState.toCharArray();
         Log.d("currentLayourState", currentState + "");
         for (char item : stateToArray) {
-            if (item == '3' || item == '4') {
+            if (item == '3' || item == '4' || item == '5') {
                 currentLayerCount++;
                 if (tempChapterOneState.size() != 1) {
                     currentState = tempChapterOneState.get(tempChapterOneState.size() - 2);

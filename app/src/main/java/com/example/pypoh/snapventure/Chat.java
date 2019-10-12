@@ -96,25 +96,9 @@ public class Chat extends AppCompatActivity {
 
         answerRecycler = findViewById(R.id.recycler_answer);
         answerRecycler.setLayoutManager(new LinearLayoutManager(this));
+
         // get current active user
-        char[] currentStateArray = PronounceFragment.currentState.toCharArray();
-        char lastUser = currentStateArray[currentStateArray.length - 1];
-        Log.d("lastUser", lastUser + "");
-        if (lastUser == '0') {
-            answerMessageList.clear();
-
-            // Getting data match with bot chat state
-            for (HashMap.Entry<String, ChatModel> entry : dataConversation.entrySet()) {
-                if (entry.getValue().checkLayer() == LevelPronounceFragment.checkLayer() + 1) {
-                    answerMessageList.add(entry.getKey());
-                }
-            }
-
-            answerAdapter = new AnswerAdapter(this, answerMessageList);
-        } else {
-            answerAdapter = new AnswerAdapter(this, emptyList);
-        }
-        answerRecycler.setAdapter(answerAdapter);
+        setRVAnswerAdapter();
 
         // Button Speech Record
         recordButton = findViewById(R.id.btn_record);
@@ -171,6 +155,34 @@ public class Chat extends AppCompatActivity {
         });
     }
 
+    private void setRVAnswerAdapter() {
+        char[] currentStateArray = PronounceFragment.currentState.toCharArray();
+        char lastUser = currentStateArray[currentStateArray.length - 1];
+        if (lastUser == '0' || lastUser == '3' || lastUser == '4') {
+            answerMessageList.clear();
+
+            // Getting data match with bot chat state
+            for (HashMap.Entry<String, ChatModel> entry : dataConversation.entrySet()) {
+                if (entry.getValue().checkLayer() == LevelPronounceFragment.checkLayer() + 1) {
+                    // Check if same with lastState
+                    String stateString = entry.getKey().substring(0,  entry.getKey().length() - 2);
+                    if (stateString.equalsIgnoreCase(currentState)) {
+                        answerMessageList.add(entry.getKey());
+                    }
+                }
+            }
+
+            answerAdapter = new AnswerAdapter(this, answerMessageList);
+        } else {
+            answerAdapter = new AnswerAdapter(this, emptyList);
+        }
+        answerRecycler.setAdapter(answerAdapter);
+    }
+
+    private boolean checkDataMap(String key) {
+        return dataConversation.containsKey(key);
+    }
+
     private void recursiveCheck() {
         if (stateResult) {
             processSpeechRecord(resultString);
@@ -199,63 +211,87 @@ public class Chat extends AppCompatActivity {
         // get answer key
         final String selectedAnswerKey = answerAdapter.getSelectedAnswer();
 
-        // filtering answer message
-        filteredAnswer = null;
-        filteredResult = null;
-        if (result != null && !result.equals(""))
-            filteredAnswer = dataConversation.get(selectedAnswerKey).getMessage().replaceAll("[^a-zA-Z0-9\\s+]", "");
-            filteredResult = result.replaceAll("[^a-zA-Z0-9\\s+]", "");
+        // Show if the result match with answer
+        if (selectedAnswerKey != null && !selectedAnswerKey.equals("")) {
+            // filtering answer message
+            filteredAnswer = null;
+            filteredResult = null;
+            if (result != null && !result.equals("")) {
+                filteredAnswer = dataConversation.get(selectedAnswerKey).getMessage().replaceAll("[^a-zA-Z0-9\\s+]", "");
+                filteredResult = result.replaceAll("[^a-zA-Z0-9\\s+]", "");
+            }
+            if (filteredResult == null) {
+                Toast.makeText(Chat.this, "Jangan cepet cepet lepasnya ya", Toast.LENGTH_SHORT).show();
+                LevelPronounceFragment.removeLastTempChapterOneState();
+                chatAdapter.notifyDataSetChanged();
+                return;
+            }
+            if (filteredResult.equalsIgnoreCase(filteredAnswer)) {
+                // Remove temp record result chat bubble
+                LevelPronounceFragment.removeLastTempChapterOneState();
+                chatAdapter.notifyDataSetChanged();
 
+                // Set bubble animation to right selected answer
+                Objects.requireNonNull(dataConversation.get(selectedAnswerKey)).setBubbleAnimation(true);
 
-        Log.d("filteredSelectedAns", filteredAnswer);
+                // Add right selected answer to chat bubble
+                addTempChapterOneState(selectedAnswerKey);
+                chatAdapter.notifyDataSetChanged();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Objects.requireNonNull(dataConversation.get(selectedAnswerKey)).setBubbleAnimation(false);
+                        resultString = "";
+                    }
+                }, 2000);
+
+                // add new event delay for bot to chat
+                addBotResponse();
+
+            } else {
+                Objects.requireNonNull(dataConversation.get("4")).setAnswerStatus(false);
+                resultString = "";
+                chatAdapter.notifyDataSetChanged();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Objects.requireNonNull(dataConversation.get("4")).setAnswerStatus(true);
+                    }
+                }, 2000);
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "You haven't choose an answer yet", Toast.LENGTH_SHORT).show();
+            tempChapterOneState.remove(tempChapterOneState.size() - 1);
+            chatAdapter.notifyDataSetChanged();
+        }
+    }
+
+    // Bot Response
+    boolean loadingBotRead;
+
+    private void addBotResponse() {
+        setRVAnswerAdapter();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                addTempChapterOneState("5");
+//                loadingBotRead = true;
+//            }
+//        }, 3000);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Show if the result match with answer
-                if (selectedAnswerKey != null && !selectedAnswerKey.equals("")) {
-                    if (filteredResult.equalsIgnoreCase(filteredAnswer)) {
-                        // Remove temp record result chat bubble
-                        LevelPronounceFragment.removeLastTempChapterOneState();
-                        chatAdapter.notifyDataSetChanged();
-
-                        // Set bubble animation to right selected answer
-                        Objects.requireNonNull(dataConversation.get(selectedAnswerKey)).setBubbleAnimation(true);
-
-                        // Add right selected answer to chat bubble
-                        addTempChapterOneState(selectedAnswerKey);
-                        chatAdapter.notifyDataSetChanged();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Objects.requireNonNull(dataConversation.get(selectedAnswerKey)).setBubbleAnimation(false);
-                                resultString = "";
-                            }
-                        }, 2000);
-
-                        // add new event delay for bot to chat
-                        // TODO: Add chat bot response
-
-                    } else {
-                        Objects.requireNonNull(dataConversation.get("4")).setAnswerStatus(false);
-                        resultString = "";
-                        chatAdapter.notifyDataSetChanged();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Objects.requireNonNull(dataConversation.get("4")).setAnswerStatus(true);
-                            }
-                        }, 2000);
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "You haven't choose an answer yet", Toast.LENGTH_SHORT).show();
-                    tempChapterOneState.remove(tempChapterOneState.size() - 1);
+                currentState += "-0";
+                if (!checkDataMap(currentState)) {
+                    addTempChapterOneState("-1");
                     chatAdapter.notifyDataSetChanged();
+                    return;
                 }
+                addTempChapterOneState(currentState);
+                setRVAnswerAdapter();
             }
-        }, 1000);
-
-
+        }, 3000);
     }
 
     private void checkPermission() {
@@ -320,8 +356,8 @@ public class Chat extends AppCompatActivity {
                 if (matches != null) {
                     Log.d("speechRecogResult", matches.get(0));
                     resultString = matches.get(0);
+                    stateResult = true;
                 }
-                stateResult = true;
             }
 
             @Override

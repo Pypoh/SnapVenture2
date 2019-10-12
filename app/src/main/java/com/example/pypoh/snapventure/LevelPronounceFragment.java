@@ -62,13 +62,15 @@ public class LevelPronounceFragment extends Fragment {
 
     private void chapterOneChatSetup() {
         dataConversation.put("3", new ChatModel("3",1, "Typing..."));
+        dataConversation.put("-1", new ChatModel("-1",-1, "This is the end of this conversation"));
+//        dataConversation.put("5", new ChatModel("5",0, "Typing..."));
         dataConversation.put("4", new ChatModel("4",1, "*result*"));
-        dataConversation.put("0", new ChatModel("0",0, "Hey Guest, Im Sherazet. You can call me Shera. I'm the girl that ask your phone number at school today. Do you mind if i chat you because i'm lonely"));
+        dataConversation.put("0", new ChatModel("0",0, "Hey Guest, Im Snappy. You can call me Snappy. I'm the girl that ask your phone number at school today. Do you mind if i chat you because i'm lonely"));
         dataConversation.put("0-1", new ChatModel("0-1",1, "Of course, We can be friends"));
         dataConversation.put("0-2", new ChatModel("0-2",1, "I am sorry, i'm still busy right now"));
         dataConversation.put("0-1-0", new ChatModel("0-1-0",0, "Thank you so much. So, how about your first day of school?"));
         dataConversation.put("0-2-0", new ChatModel("0-2-0",0, "Uhh sorry, i didn't mean to disturb you. But, can we chat later? i'm gonna text you a moment later"));
-        dataConversation.put("0-1-0-1", new ChatModel("0-1-0-1",1, "That is great, i made some new friends"));
+        dataConversation.put("0-1-0-1", new ChatModel("0-1-0-1",1, "That is great, i have made some new friends"));
         dataConversation.put("0-1-0-2", new ChatModel("0-1-0-2",1, "Not great, i got bored because i don't have any friends"));
         dataConversation.put("0-2-0-1", new ChatModel("0-2-0-1",1, "Nevermind, you can chat me right now"));
         dataConversation.put("0-2-0-2", new ChatModel("0-2-0-2", 1, "Okay. Got to go"));

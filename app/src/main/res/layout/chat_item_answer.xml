@@ -3,7 +3,9 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="12dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:layout_marginLeft="24dp"
+    android:layout_marginRight="24dp">
 
     <LinearLayout
         android:id="@+id/layout_answer"
@@ -20,6 +22,7 @@
             android:layout_height="wrap_content"
             android:text="this is an example for anwser"
             android:textSize="14sp"
+            android:textAlignment="center"
             android:layout_marginLeft="8dp"
             android:layout_gravity="center_vertical"/>
 
