@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
 
@@ -93,7 +94,8 @@ public class EducationLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 elementaryButton.setEnabled(false);
-                toMain();
+                Toast.makeText(EducationLevel.this, "Under Development, Available: Middle", Toast.LENGTH_SHORT).show();
+//                toMain();
             }
         });
         middleButton = middleView.findViewById(R.id.button_educational_level);
@@ -109,7 +111,8 @@ public class EducationLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 highButton.setEnabled(false);
-                toMain();
+                Toast.makeText(EducationLevel.this, "Under Development, Available: Middle", Toast.LENGTH_SHORT).show();
+//                toMain();
             }
         });
     }

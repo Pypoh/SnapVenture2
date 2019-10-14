@@ -1,6 +1,7 @@
 package com.example.pypoh.snapventure.Adapter;
 
 import android.content.Context;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.pypoh.snapventure.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder> {
 
@@ -26,9 +28,21 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     private int selectedPosition = -1;
     private String selectedKey = "";
 
+    // Text to Speech
+    private TextToSpeech textToSpeech;
+
     public AnswerAdapter(Context mContext, List<String> mDataSet) {
         this.mContext = mContext;
         this.mDataSet = mDataSet;
+        // Text to Speech
+        textToSpeech = new TextToSpeech(mContext, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.US);
+                }
+            }
+        });
     }
 
     @NonNull
@@ -66,6 +80,13 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
                     Chat.setButtonOff();
                 }
                 Chat.refreshData();
+            }
+        });
+
+        holder.voiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textToSpeech.speak(message.getMessage(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
     }

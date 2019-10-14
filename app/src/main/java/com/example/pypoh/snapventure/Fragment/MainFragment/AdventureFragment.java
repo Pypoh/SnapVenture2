@@ -66,6 +66,8 @@ public class AdventureFragment extends Fragment {
 
     public static int currentPlace;
 
+    private ImageView leaderboardIcon;
+
     public AdventureFragment() {
         // Required empty public constructor
     }
@@ -81,6 +83,14 @@ public class AdventureFragment extends Fragment {
         setupKitchen(view);
         setupClassroom(view);
         setupStreet(view);
+
+        leaderboardIcon = view.findViewById(R.id.leaderboard_icon);
+        leaderboardIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new LeaderboardFragment());
+            }
+        });
         
 //        button = view.findViewById(R.id.go_btn);
 //        button.setOnClickListener(new View.OnClickListener() {

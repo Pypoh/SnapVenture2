@@ -5,10 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -120,6 +124,9 @@ public class Camera extends AppCompatActivity {
             }
         });
 
+        // Ask Permission
+        askPermission();
+
         // Set Dialog Data
         riddlesTextSwitch = questionLayout.findViewById(R.id.riddles_text_popup);
         riddlesTextSwitch.setFactory(new ViewSwitcher.ViewFactory() {
@@ -206,6 +213,13 @@ public class Camera extends AppCompatActivity {
         });
 
         questionLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void askPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 100);
+        }
     }
 
     private void createPassDialog() {

@@ -1,21 +1,27 @@
 package com.example.pypoh.snapventure.Fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pypoh.snapventure.Adapter.LevelAdapter;
 import com.example.pypoh.snapventure.Fragment.MainFragment.AdventureFragment;
+import com.example.pypoh.snapventure.Fragment.MainFragment.LeaderboardFragment;
+import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.Model.LevelModel;
 import com.example.pypoh.snapventure.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LevelFragment extends Fragment {
 
@@ -27,15 +33,30 @@ public class LevelFragment extends Fragment {
 
     public static LevelAdapter levelAdapter;
 
+    private ImageView leaderboardIcon;
+
 
     public LevelFragment() {
         // Required empty public constructor
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void changeFragment(Fragment fragment) {
+        ((MainActivity) Objects.requireNonNull(getActivity())).setSecondFragment(fragment);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level, container, false);
+
+        leaderboardIcon = view.findViewById(R.id.leaderboard_icon);
+        leaderboardIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new LeaderboardFragment());
+            }
+        });
 
         // Setup Riddle and Insert Data to ArrayList
         switch (AdventureFragment.currentPlace) {

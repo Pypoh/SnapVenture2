@@ -2,6 +2,7 @@ package com.example.pypoh.snapventure;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -104,7 +105,7 @@ public class Chat extends AppCompatActivity {
 
         setupData(currentActiveChapter);
 
-//        checkPermission();
+        askPermission();
         setupSpeechRecognizer();
 
 
@@ -179,6 +180,13 @@ public class Chat extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void askPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 100);
+        }
     }
 
     private void setupData(int chapterNumber) {
@@ -262,6 +270,7 @@ public class Chat extends AppCompatActivity {
 
     private void recursiveCheck() {
         if (stateResult) {
+            Log.d("motionButtonRec", resultString);
             processSpeechRecord(resultString);
         } else {
             new Handler().postDelayed(new Runnable() {

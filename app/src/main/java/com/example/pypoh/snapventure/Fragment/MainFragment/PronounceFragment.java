@@ -77,6 +77,14 @@ public class PronounceFragment extends Fragment {
         chapterOneChatSetup();
         setupChapterRecycler();
 
+        ImageView leaderboardIcon = view.findViewById(R.id.leaderboard_icon);
+        leaderboardIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new LeaderboardFragment());
+            }
+        });
+
         return view;
     }
 
@@ -100,7 +108,7 @@ public class PronounceFragment extends Fragment {
         chapterOneDataConversation.put("0-1-0", new ChatModel("0-1-0", 0, "Great! By they way, let me ask you something. Are you a student?"));
         chapterOneDataConversation.put("0-2-0", new ChatModel("0-2-0", 0, "Uhh sorry, i didn't mean to disturb you. But, can we chat later? i'm gonna text you a moment later"));
         chapterOneDataConversation.put("0-1-0-1", new ChatModel("0-1-0-1", 1, "Yes, i am a student"));
-        chapterOneDataConversation.put("0-1-0-2", new ChatModel("0-1-0-2", 1, "No, i can not tell you"));
+        chapterOneDataConversation.put("0-1-0-2", new ChatModel("0-1-0-2", 1, "No, i cannot tell you"));
         chapterOneDataConversation.put("0-2-0-1", new ChatModel("0-2-0-1", 1, "Nevermind, you can chat me right now"));
         chapterOneDataConversation.put("0-2-0-2", new ChatModel("0-2-0-2", 1, "Okay. Got to go"));
 
