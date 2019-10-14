@@ -12,9 +12,9 @@
         android:title="Pronounce" />
 
     <item
-        android:id="@+id/navigation_vocabulary"
-        android:icon="@drawable/navbar_vocabulary_off"
-        android:title="Vocabulary" />
+        android:id="@+id/navigation_multiplayer"
+        android:icon="@drawable/navbar_multiplayer_off"
+        android:title="Multiplayer" />
 
     <item
         android:id="@+id/navigation_profile"

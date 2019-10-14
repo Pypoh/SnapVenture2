@@ -13,7 +13,8 @@ public class LevelModel implements Serializable {
     private String id;
     private int star;
     private int totalStar;
-    private List<String[]> riddle;
+    private List<String[]> riddleEn;
+    private List<String[]> riddleId;
     private List<String[]> answer;
     private List<String[]> pronounce;
     private List<Boolean[]> totalCompletedStar;
@@ -24,11 +25,12 @@ public class LevelModel implements Serializable {
 
     private boolean[] selected;
 
-    public LevelModel(String id, int star, int totalStar, List<String[]> riddle, List<String[]> answer, List<String[]> pronounce, List<Boolean[]> totalCompletedStar, int stageCount, String place, int level, boolean lockStatus) {
+    public LevelModel(String id, int star, int totalStar, List<String[]> riddleEn, List<String[]> riddleId, List<String[]> answer, List<String[]> pronounce, List<Boolean[]> totalCompletedStar, int stageCount, String place, int level, boolean lockStatus) {
         this.id = id;
         this.star = star;
         this.totalStar = totalStar;
-        this.riddle = riddle;
+        this.riddleEn = riddleEn;
+        this.riddleId = riddleId;
         this.answer = answer;
         this.pronounce = pronounce;
         this.totalCompletedStar = totalCompletedStar;
@@ -36,7 +38,7 @@ public class LevelModel implements Serializable {
         this.place = place;
         this.level = level;
         this.lockStatus = lockStatus;
-        this.selected = new boolean[riddle.size()];
+        this.selected = new boolean[riddleEn.size()];
     }
 
     public String getId() {
@@ -79,12 +81,20 @@ public class LevelModel implements Serializable {
         this.stageCount = stageCount;
     }
 
-    public List<String[]> getRiddle() {
-        return riddle;
+    public List<String[]> getRiddleEn() {
+        return riddleEn;
     }
 
-    public void setRiddle(List<String[]> riddle) {
-        this.riddle = riddle;
+    public void setRiddleEn(List<String[]> riddleEn) {
+        this.riddleEn = riddleEn;
+    }
+
+    public List<String[]> getRiddleId() {
+        return riddleId;
+    }
+
+    public void setRiddleId(List<String[]> riddleId) {
+        this.riddleId = riddleId;
     }
 
     public List<String[]> getAnswer() {
@@ -142,24 +152,5 @@ public class LevelModel implements Serializable {
     public void setPronounce(List<String[]> pronounce) {
         this.pronounce = pronounce;
     }
-
-    /*
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeInt(this.star);
-        dest.writeInt(this.totalStar);
-        dest.writeList(this.riddle);
-        dest.writeList(this.answer);
-        dest.writeList(this.totalCompletedStar);
-        dest.writeInt(this.stageCount);
-        dest.writeBooleanArray(this.selected);
-    }
-    */
 
 }

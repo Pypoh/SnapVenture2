@@ -14,8 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment;
-import com.example.pypoh.snapventure.LevelPronounceFragment;
+import com.example.pypoh.snapventure.Chat;
 import com.example.pypoh.snapventure.Model.ChatModel;
 import com.example.pypoh.snapventure.R;
 
@@ -68,14 +67,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         String key = mDataSet.get(position);
-        ChatModel message = LevelPronounceFragment.dataConversation.get(key);
+        ChatModel message = Chat.dataConversation.get(key);
         return message.getUser();
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String key = mDataSet.get(position);
-        ChatModel message = LevelPronounceFragment.dataConversation.get(key);
+        ChatModel message = Chat.dataConversation.get(key);
         TextView messageText;
         View inflatedStub;
 //        if (message.getUser() == 0) {
@@ -100,8 +99,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-//        return currentLayerCount;
-        return tempChapterOneState.size();
+        return mDataSet.size();
     }
 
     private void checkLayer() {

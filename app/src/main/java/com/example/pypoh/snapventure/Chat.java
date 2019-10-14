@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Adapter.AnswerAdapter;
@@ -39,9 +40,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import static com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment.currentState;
-import static com.example.pypoh.snapventure.LevelPronounceFragment.addTempChapterOneState;
 import static com.example.pypoh.snapventure.LevelPronounceFragment.dataConversation;
-import static com.example.pypoh.snapventure.LevelPronounceFragment.removeLastTempChapterOneState;
 import static com.example.pypoh.snapventure.LevelPronounceFragment.tempChapterOneState;
 
 public class Chat extends AppCompatActivity {
@@ -56,7 +55,7 @@ public class Chat extends AppCompatActivity {
     private List<String> emptyList = new ArrayList<>();
 
     // Component
-    private Button recordButton;
+    private static Button recordButton;
 
     // Speech Recognition
     private SpeechRecognizer speechRecognizer;
@@ -71,8 +70,12 @@ public class Chat extends AppCompatActivity {
     // Animation
     private Animation shakeAnimation;
 
-
+    private int currentActiveChapter = 0;
     public static int currentUserState = 0; // 0 bot, 1 user
+
+    // Main Data
+    private List<String> tempChapterOneState;
+    public static HashMap<String, ChatModel> dataConversation;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -85,8 +88,25 @@ public class Chat extends AppCompatActivity {
         getSupportActionBar().setTitle("Chapter Number");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        Bundle extras = getIntent().getExtras();
+        Log.d("chatAdapterCountIntasd", "asdfasdf");
+        if (extras != null) {
+            currentActiveChapter = extras.getInt("chapterNumber");
+            Log.d("chatAdapterCountInt", currentActiveChapter + "");
+            Log.d("chatAdapterCountInt", "sdfgsdfg");
+//                tempChapterOneState = (List<String>) extras.getSerializable("dataState");
+//                dataConversation = (HashMap<String, ChatModel>) extras.getSerializable("dataConversation");
+        }
+
+        // Button Speech Record
+        recordButton = findViewById(R.id.btn_record);
+
+        setupData(currentActiveChapter);
+
 //        checkPermission();
         setupSpeechRecognizer();
+
 
         // Setup RecyclerView
         chatRecycler = findViewById(R.id.recycler_chat);
@@ -100,8 +120,6 @@ public class Chat extends AppCompatActivity {
         // get current active user
         setRVAnswerAdapter();
 
-        // Button Speech Record
-        recordButton = findViewById(R.id.btn_record);
         final Handler handlerDelay = new Handler();
         stateRecord = false;
         final Runnable runRecord = new Runnable() {
@@ -111,6 +129,7 @@ public class Chat extends AppCompatActivity {
                 if (tempChapterOneState.get(tempChapterOneState.size() - 1).equalsIgnoreCase("4")) {
                     removeLastTempChapterOneState();
                 }
+                recordButton.setBackgroundResource(R.drawable.mic_active);
                 addTempChapterOneState("3");
                 chatAdapter.notifyDataSetChanged();
                 speechRecognizer.startListening(mSpeechRecognizerIntent);
@@ -134,6 +153,7 @@ public class Chat extends AppCompatActivity {
                     case MotionEvent.ACTION_UP:
                         if (stateRecord) {
                             Log.d("motionButton", "uppressed");
+                            recordButton.setBackgroundResource(R.drawable.mic_on);
                             speechRecognizer.stopListening();
                             removeLastTempChapterOneState();
                             chatAdapter.notifyDataSetChanged();
@@ -145,7 +165,13 @@ public class Chat extends AppCompatActivity {
                         break;
 
                     case MotionEvent.ACTION_DOWN:
-                        handlerDelay.postDelayed(runRecord, 1000);
+                        if (!answerAdapter.getSelectedAnswer().equalsIgnoreCase("")) {
+                            Log.d("motionButton", "if");
+                            handlerDelay.postDelayed(runRecord, 1000);
+                        } else {
+                            Log.d("motionButton", "else");
+                            Toast.makeText(Chat.this, "You haven't choose an answer yet", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                 }
 
@@ -155,28 +181,79 @@ public class Chat extends AppCompatActivity {
         });
     }
 
+    private void setupData(int chapterNumber) {
+        switch (chapterNumber) {
+            case 1:
+                this.tempChapterOneState = PronounceFragment.tempChapterOneState;
+                this.dataConversation = PronounceFragment.chapterOneDataConversation;
+                Log.d("chatAdapterCountState", tempChapterOneState.size() + "");
+                Log.d("chatAdapterCountData", dataConversation.size() + "");
+                break;
+
+        }
+    }
+
+    public void addTempChapterOneState(String input) {
+        tempChapterOneState.add(input);
+        currentState = tempChapterOneState.get(tempChapterOneState.size() - 1);
+    }
+
+    public void removeLastTempChapterOneState() {
+        tempChapterOneState.remove(tempChapterOneState.size() - 1);
+        currentState = tempChapterOneState.get(tempChapterOneState.size() - 1);
+    }
+
+    public static int checkLayer() {
+        int layerCount = 0;
+        char[] stateToArray = currentState.toCharArray();
+        for (char item : stateToArray) {
+            if (item == '0' || item == '1' || item == '2') {
+                layerCount++;
+            }
+        }
+        return layerCount;
+    }
+
+    private void setRVAdapter() {
+        chatAdapter = new ChatAdapter(this, tempChapterOneState);
+        chatRecycler.setAdapter(chatAdapter);
+        Log.d("chatAdapterCountStateA", tempChapterOneState.size() + "");
+        Log.d("chatAdapterCountDataA", dataConversation.size() + "");
+        Log.d("chatAdapterCount", chatAdapter.getItemCount() + "");
+        chatRecycler.smoothScrollToPosition(chatAdapter.getItemCount() - 1);
+    }
+
     private void setRVAnswerAdapter() {
         char[] currentStateArray = PronounceFragment.currentState.toCharArray();
         char lastUser = currentStateArray[currentStateArray.length - 1];
         if (lastUser == '0' || lastUser == '3' || lastUser == '4') {
             answerMessageList.clear();
-
+            Log.d("answerAdapter", "Jalan");
             // Getting data match with bot chat state
             for (HashMap.Entry<String, ChatModel> entry : dataConversation.entrySet()) {
-                if (entry.getValue().checkLayer() == LevelPronounceFragment.checkLayer() + 1) {
+                if (entry.getValue().checkLayer() == checkLayer() + 1) {
                     // Check if same with lastState
-                    String stateString = entry.getKey().substring(0,  entry.getKey().length() - 2);
+                    String stateString = entry.getKey().substring(0, entry.getKey().length() - 2);
                     if (stateString.equalsIgnoreCase(currentState)) {
                         answerMessageList.add(entry.getKey());
+                        Log.d("answerAdapterAdd", "Jalan");
                     }
                 }
             }
-
+            recordButton.setBackgroundResource(R.drawable.mic_off);
             answerAdapter = new AnswerAdapter(this, answerMessageList);
         } else {
             answerAdapter = new AnswerAdapter(this, emptyList);
         }
         answerRecycler.setAdapter(answerAdapter);
+    }
+
+    public static void setButtonOn() {
+        recordButton.setBackgroundResource(R.drawable.mic_on);
+    }
+
+    public static void setButtonOff() {
+        recordButton.setBackgroundResource(R.drawable.mic_off);
     }
 
     private boolean checkDataMap(String key) {
@@ -194,12 +271,6 @@ public class Chat extends AppCompatActivity {
                 }
             }, 500);
         }
-    }
-
-    private void setRVAdapter() {
-        chatAdapter = new ChatAdapter(this, tempChapterOneState);
-        chatRecycler.setAdapter(chatAdapter);
-        chatRecycler.smoothScrollToPosition(chatAdapter.getItemCount() - 1);
     }
 
     private void processSpeechRecord(final String result) {
@@ -222,13 +293,16 @@ public class Chat extends AppCompatActivity {
             }
             if (filteredResult == null) {
                 Toast.makeText(Chat.this, "Jangan cepet cepet lepasnya ya", Toast.LENGTH_SHORT).show();
-                LevelPronounceFragment.removeLastTempChapterOneState();
+                removeLastTempChapterOneState();
                 chatAdapter.notifyDataSetChanged();
                 return;
             }
             if (filteredResult.equalsIgnoreCase(filteredAnswer)) {
+                // Off button
+                recordButton.setBackgroundResource(R.drawable.mic_off);
+
                 // Remove temp record result chat bubble
-                LevelPronounceFragment.removeLastTempChapterOneState();
+                removeLastTempChapterOneState();
                 chatAdapter.notifyDataSetChanged();
 
                 // Set bubble animation to right selected answer

@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
                     setFragment(pronounceFragment);
                     changeIconStateBar(R.id.navigation_pronounciation, R.drawable.navbar_pronounciation_on);
                     return true;
-                case R.id.navigation_vocabulary:
+                case R.id.navigation_multiplayer:
                     setFragment(vocabFragment);
-                    changeIconStateBar(R.id.navigation_vocabulary, R.drawable.navbar_vocabulary_on);
+                    changeIconStateBar(R.id.navigation_multiplayer, R.drawable.navbar_multiplayer_on);
                     return true;
                 case R.id.navigation_profile:
                     setFragment(profileFragment);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private void changeIconStateBar(int pathItem, int pathIcon) {
         bottomMenu.findItem(R.id.navigation_adventure).setIcon(R.drawable.navbar_adventure_off);
         bottomMenu.findItem(R.id.navigation_pronounciation).setIcon(R.drawable.navbar_pronounciation_off);
-        bottomMenu.findItem(R.id.navigation_vocabulary).setIcon(R.drawable.navbar_vocabulary_off);
+        bottomMenu.findItem(R.id.navigation_multiplayer).setIcon(R.drawable.navbar_multiplayer_off);
         bottomMenu.findItem(R.id.navigation_profile).setIcon(R.drawable.navbar_profile_off);
 
         bottomMenu.findItem(pathItem).setIcon(pathIcon);

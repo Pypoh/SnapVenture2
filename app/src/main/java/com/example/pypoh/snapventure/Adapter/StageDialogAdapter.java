@@ -88,7 +88,7 @@ public class StageDialogAdapter extends RecyclerView.Adapter<StageDialogAdapter.
 
     @Override
     public int getItemCount() {
-        return mData.getRiddle().size();
+        return mData.getRiddleEn().size();
     }
 
     public interface OnItemClickListener {

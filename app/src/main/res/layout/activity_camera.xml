@@ -16,6 +16,7 @@
         android:translationZ="10dp">
 
         <ImageView
+            android:id="@+id/camera_hint_button"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_marginLeft="8dp"

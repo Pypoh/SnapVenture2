@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -24,9 +25,11 @@ import com.example.pypoh.snapventure.Adapter.ChapterRecyclerAdapter;
 import com.example.pypoh.snapventure.LevelPronounceFragment;
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.Model.ChapterModel;
+import com.example.pypoh.snapventure.Model.ChatModel;
 import com.example.pypoh.snapventure.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,6 +57,13 @@ public class PronounceFragment extends Fragment {
     private ChapterRecyclerAdapter chapterRecyclerAdapter;
 
     List<ChapterModel> mDataChapter = new ArrayList<>();
+
+    // Main Data Conversation
+    public static HashMap<String, ChatModel> chapterOneDataConversation = new HashMap<>();
+
+    // Main State
+    public static List<String> tempChapterOneState = new ArrayList<>();
+
     public PronounceFragment() {
     }
 
@@ -63,14 +73,51 @@ public class PronounceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pronounce, container, false);
 
-//        setupChapter1(view);
+        setupChapterView(view);
+        chapterOneChatSetup();
         setupChapterRecycler();
 
         return view;
     }
 
-    private void setupChapterRecycler() {
+    private void setupChapterView(View view) {
+        chapterRecycler = view.findViewById(R.id.recycler_pronounce_chapter);
+        chapterRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
+        chapterRecyclerAdapter = new ChapterRecyclerAdapter(this.getContext(), mDataChapter);
+        chapterRecycler.setAdapter(chapterRecyclerAdapter);
+    }
 
+    // Setup Main Data
+    private void chapterOneChatSetup() {
+        chapterOneDataConversation.clear();
+        chapterOneDataConversation.put("3", new ChatModel("3", 1, "Typing..."));
+        chapterOneDataConversation.put("-1", new ChatModel("-1", -1, "This is the end of this conversation"));
+//        dataConversation.put("5", new ChatModel("5",0, "Typing..."));
+        chapterOneDataConversation.put("4", new ChatModel("4", 1, "*result*"));
+        chapterOneDataConversation.put("0", new ChatModel("0", 0, "Hi there, my name is Snappy. Nice to meet you!"));
+        chapterOneDataConversation.put("0-1", new ChatModel("0-1", 1, "Nice to meet you too!"));
+        chapterOneDataConversation.put("0-2", new ChatModel("0-2", 1, "I am sorry, i'm busy right now"));
+        chapterOneDataConversation.put("0-1-0", new ChatModel("0-1-0", 0, "Great! By they way, let me ask you something. Are you a student?"));
+        chapterOneDataConversation.put("0-2-0", new ChatModel("0-2-0", 0, "Uhh sorry, i didn't mean to disturb you. But, can we chat later? i'm gonna text you a moment later"));
+        chapterOneDataConversation.put("0-1-0-1", new ChatModel("0-1-0-1", 1, "Yes, i am a student"));
+        chapterOneDataConversation.put("0-1-0-2", new ChatModel("0-1-0-2", 1, "No, i can not tell you"));
+        chapterOneDataConversation.put("0-2-0-1", new ChatModel("0-2-0-1", 1, "Nevermind, you can chat me right now"));
+        chapterOneDataConversation.put("0-2-0-2", new ChatModel("0-2-0-2", 1, "Okay. Got to go"));
+
+        if (tempChapterOneState.isEmpty()) {
+            tempChapterOneState.add("0");
+            currentState = tempChapterOneState.get(tempChapterOneState.size() - 1);
+        }
+    }
+
+    private void setupChapterRecycler() {
+        // Add 5 Chapter
+        mDataChapter.clear();
+        mDataChapter.add(new ChapterModel(1, 1));
+        mDataChapter.add(new ChapterModel(2, 2));
+        mDataChapter.add(new ChapterModel(3, 2));
+        mDataChapter.add(new ChapterModel(4, 0));
+        mDataChapter.add(new ChapterModel(5, 0));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

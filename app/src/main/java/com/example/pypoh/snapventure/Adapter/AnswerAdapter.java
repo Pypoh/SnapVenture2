@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pypoh.snapventure.Chat;
-import com.example.pypoh.snapventure.LevelPronounceFragment;
 import com.example.pypoh.snapventure.Model.ChatModel;
 import com.example.pypoh.snapventure.R;
 
@@ -43,7 +42,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final String key = mDataSet.get(position);
-        final ChatModel message = LevelPronounceFragment.dataConversation.get(key);
+        final ChatModel message = Chat.dataConversation.get(key);
 
         assert message != null;
         holder.answerMessage.setText(message.getMessage());
@@ -61,8 +60,10 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
             public void onClick(View v) {
                 if (!key.equalsIgnoreCase(selectedKey)) {
                     selectedKey = key;
+                    Chat.setButtonOn();
                 } else {
                     selectedKey = "";
+                    Chat.setButtonOff();
                 }
                 Chat.refreshData();
             }

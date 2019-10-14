@@ -20,8 +20,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +63,7 @@ public class Camera extends AppCompatActivity {
 
     private LinearLayout questionLayout;
     private TextView questionHeader;
+    private Switch languageSwitch;
 
     // Result Dialog
     private Dialog resultDialog;
@@ -105,6 +108,17 @@ public class Camera extends AppCompatActivity {
         questionLayout = findViewById(R.id.question_popup);
         hintButton = findViewById(R.id.camera_hint_button);
         passText = findViewById(R.id.text_pass_button);
+        languageSwitch = questionLayout.findViewById(R.id.switch_language);
+        languageSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                riddlesTextSwitch.setInAnimation(null);
+                riddlesTextSwitch.setOutAnimation(null);
+                changeRiddleLanguage(isChecked);
+                riddlesTextSwitch.setInAnimation(slideRight);
+                riddlesTextSwitch.setOutAnimation(slideLeft);
+            }
+        });
 
         // Set Dialog Data
         riddlesTextSwitch = questionLayout.findViewById(R.id.riddles_text_popup);
@@ -129,7 +143,7 @@ public class Camera extends AppCompatActivity {
         riddlesTextSwitch.setOutAnimation(slideLeft);
 
         // Get nanti posisi
-        riddlesTextSwitch.setText(dataSet.getRiddle().get(position)[0]);
+        riddlesTextSwitch.setText(dataSet.getRiddleEn().get(position)[0]);
 
         // Pass Button
         passText.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +174,7 @@ public class Camera extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("stateProgress", state + "");
-                if (state < dataSet.getRiddle().get(position).length) {
+                if (state < dataSet.getRiddleEn().get(position).length) {
                     cameraView.takePicture();
                     captureButton.setEnabled(false);
                 } else {
@@ -190,6 +204,8 @@ public class Camera extends AppCompatActivity {
                 });
             }
         });
+
+        questionLayout.setVisibility(View.VISIBLE);
     }
 
     private void createPassDialog() {
@@ -207,11 +223,11 @@ public class Camera extends AppCompatActivity {
         passYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (state < dataSet.getRiddle().get(position).length) {
+                if (state < dataSet.getRiddleEn().get(position).length) {
                     statusRiddle[state] = false;
                 }
                 changeRiddle();
-                if (state == dataSet.getRiddle().get(position).length) {
+                if (state == dataSet.getRiddleEn().get(position).length) {
                     // Create Final Result Dialog
                     createFinalResultDialog();
                     Log.d("resultDialog", "Result Riddle Pressed");
@@ -231,15 +247,23 @@ public class Camera extends AppCompatActivity {
 
     private void changeRiddle() {
         increaseState(1);
-        if (state < dataSet.getRiddle().get(position).length) {
-            riddlesTextSwitch.setText(dataSet.getRiddle().get(position)[state]);
+        if (state < dataSet.getRiddleEn().get(position).length) {
+            riddlesTextSwitch.setText(dataSet.getRiddleEn().get(position)[state]);
             changeQuestionHeaderText();
         }
-        Log.d("stateProgress", this.state + "Change Riddle");
+    }
+
+    private void changeRiddleLanguage(boolean isChecked) {
+        if (isChecked) {
+            riddlesTextSwitch.setText(dataSet.getRiddleId().get(position)[state]);
+            return;
+        }
+        riddlesTextSwitch.setText(dataSet.getRiddleEn().get(position)[state]);
+
     }
 
     private void increaseState(int input) {
-        if (state < dataSet.getRiddle().get(position).length) {
+        if (state < dataSet.getRiddleEn().get(position).length) {
             state += input;
         }
         Log.d("stateProgress", state + "Change");
@@ -293,8 +317,8 @@ public class Camera extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     resultDialog.dismiss();
-                    Log.d("stateProgressResult", state + " : " + dataSet.getRiddle().get(position).length);
-                    if (state == dataSet.getRiddle().get(position).length) {
+                    Log.d("stateProgressResult", state + " : " + dataSet.getRiddleEn().get(position).length);
+                    if (state == dataSet.getRiddleEn().get(position).length) {
                         // Create Final Result Dialog
                         createFinalResultDialog();
                         Log.d("resultDialog", "Result Button Pressed");
@@ -482,7 +506,7 @@ public class Camera extends AppCompatActivity {
     }
 
     private void changeQuestionHeaderText() {
-        int totalRiddles = dataSet.getRiddle().get(position).length;
+        int totalRiddles = dataSet.getRiddleEn().get(position).length;
         questionHeader.setText("Question " + (state+1) + "/" + totalRiddles);
 
     }
