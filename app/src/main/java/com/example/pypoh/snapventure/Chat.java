@@ -175,8 +175,6 @@ public class Chat extends AppCompatActivity {
                         }
                         break;
                 }
-
-
                 return false;
             }
         });
@@ -197,7 +195,6 @@ public class Chat extends AppCompatActivity {
                 Log.d("chatAdapterCountState", tempChapterOneState.size() + "");
                 Log.d("chatAdapterCountData", dataConversation.size() + "");
                 break;
-
         }
     }
 

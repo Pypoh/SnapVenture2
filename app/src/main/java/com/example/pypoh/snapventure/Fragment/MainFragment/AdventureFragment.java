@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Fragment.LevelFragment;
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.R;
+import com.github.florent37.expansionpanel.ExpansionLayout;
 
 import java.util.Objects;
 
@@ -27,6 +29,8 @@ public class AdventureFragment extends Fragment {
 
     private Button button;
     private LevelFragment levelFragment = new LevelFragment();
+
+    private ScrollView mainScrollView;
 
     // Garden Stage
     private View gardenView;
@@ -36,6 +40,7 @@ public class AdventureFragment extends Fragment {
     private ImageView gardenImage;
     private TextView gardenText;
     private Button gardenGoBtn;
+    private ExpansionLayout gardenExpansionLayout;
 
     // Kitchen Stage
     private View kitchenView;
@@ -45,6 +50,7 @@ public class AdventureFragment extends Fragment {
     private ImageView kitchenImage;
     private TextView kitchenText;
     private Button kitchenGoBtn;
+    private ExpansionLayout kitchenExpansionLayout;
 
     // Classroom Stage
     private View classroomView;
@@ -54,6 +60,7 @@ public class AdventureFragment extends Fragment {
     private ImageView classroomImage;
     private TextView classroomText;
     private Button classroomGoBtn;
+    private ExpansionLayout classroomExpansionLayout;
 
     // Street Stage
     private View streetView;
@@ -63,6 +70,7 @@ public class AdventureFragment extends Fragment {
     private ImageView streetImage;
     private TextView streetText;
     private Button streetnGoBtn;
+    private ExpansionLayout streetExpansionLayout;
 
     public static int currentPlace;
 
@@ -78,6 +86,8 @@ public class AdventureFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_adventure, container, false);
+
+        mainScrollView = view.findViewById(R.id.scroll_place_adventure);
 
         setupGarden(view);
         setupKitchen(view);
@@ -115,6 +125,16 @@ public class AdventureFragment extends Fragment {
         streetView = view.findViewById(R.id.adventure_stage_street);
         streetExpandHeader = streetView.findViewById(R.id.layout_expansion_panel_main_menu);
         streetExpandHeader.setClipToOutline(true);
+        streetExpansionLayout = streetView.findViewById(R.id.expansionLayout);
+        streetExpansionLayout.addListener(new ExpansionLayout.Listener() {
+            @Override
+            public void onExpansionChanged(ExpansionLayout expansionLayout, boolean expanded) {
+                if (expanded) {
+                    mainScrollView.scrollTo(0, streetExpansionLayout.getBottom());
+                }
+            }
+        });
+
         streetBackground = streetView.findViewById(R.id.expansion_panel_main_background);
         streetBackground.setImageResource(R.color.street_black);
         streetExpansion = streetView.findViewById(R.id.container);
@@ -142,6 +162,15 @@ public class AdventureFragment extends Fragment {
         classroomView = view.findViewById(R.id.adventure_stage_classroom);
         classroomExpandHeader = classroomView.findViewById(R.id.layout_expansion_panel_main_menu);
         classroomExpandHeader.setClipToOutline(true);
+//        classroomExpansionLayout = classroomView.findViewById(R.id.expansionLayout);
+//        classroomExpansionLayout.addListener(new ExpansionLayout.Listener() {
+//            @Override
+//            public void onExpansionChanged(ExpansionLayout expansionLayout, boolean expanded) {
+//                if (expanded) {
+//                    mainScrollView.scrollTo(0, classroomExpansionLayout.getBottom());
+//                }
+//            }
+//        });
         classroomBackground = classroomView.findViewById(R.id.expansion_panel_main_background);
         classroomBackground.setImageResource(R.color.classroom_red);
         classroomExpansion = classroomView.findViewById(R.id.container);
@@ -168,6 +197,15 @@ public class AdventureFragment extends Fragment {
         kitchenView = view.findViewById(R.id.adventure_stage_kitchen);
         kitchenExpandHeader = kitchenView.findViewById(R.id.layout_expansion_panel_main_menu);
         kitchenExpandHeader.setClipToOutline(true);
+//        kitchenExpansionLayout = kitchenView.findViewById(R.id.expansionLayout);
+//        kitchenExpansionLayout.addListener(new ExpansionLayout.Listener() {
+//            @Override
+//            public void onExpansionChanged(ExpansionLayout expansionLayout, boolean expanded) {
+//                if (expanded) {
+//                    mainScrollView.scrollTo(0, kitchenExpansionLayout.getBottom());
+//                }
+//            }
+//        });
         kitchenBackground = kitchenView.findViewById(R.id.expansion_panel_main_background);
         kitchenBackground.setImageResource(R.color.kitchen_yellow);
         kitchenExpansion = kitchenView.findViewById(R.id.container);
@@ -193,6 +231,15 @@ public class AdventureFragment extends Fragment {
         gardenView = view.findViewById(R.id.adventure_stage_garden);
         gardenExpandHeader = gardenView.findViewById(R.id.layout_expansion_panel_main_menu);
         gardenExpandHeader.setClipToOutline(true);
+//        gardenExpansionLayout = gardenView.findViewById(R.id.expansionLayout);
+//        gardenExpansionLayout.addListener(new ExpansionLayout.Listener() {
+//            @Override
+//            public void onExpansionChanged(ExpansionLayout expansionLayout, boolean expanded) {
+//                if (expanded) {
+//                    mainScrollView.scrollTo(0, gardenExpansionLayout.getBottom());
+//                }
+//            }
+//        });
         gardenBackground = gardenView.findViewById(R.id.expansion_panel_main_background);
         gardenBackground.setImageResource(R.color.garden_green);
         gardenExpansion = gardenView.findViewById(R.id.container);

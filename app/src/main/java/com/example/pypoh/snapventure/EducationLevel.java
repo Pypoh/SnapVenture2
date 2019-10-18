@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
+import com.github.florent37.expansionpanel.ExpansionLayout;
 
 public class EducationLevel extends AppCompatActivity {
 
@@ -42,6 +44,12 @@ public class EducationLevel extends AppCompatActivity {
     private ImageView personMiddle;
     private ImageView personHigh;
 
+    // Main Scroll View
+    private ScrollView mainScrollView;
+
+    // Expansion Layout
+    private ExpansionLayout highExpansionLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +58,6 @@ public class EducationLevel extends AppCompatActivity {
 
         // Setup Ids
         setupIds();
-
-
-
-
 
     }
 
@@ -88,7 +92,21 @@ public class EducationLevel extends AppCompatActivity {
         highLevelHeader = highView.findViewById(R.id.text_educational_level_header);
         highLevelHeader.setText("High School");
 
-        // Button
+        // Main Scroll View
+        mainScrollView = findViewById(R.id.main_scroll_view);
+
+        highExpansionLayout = highView.findViewById(R.id.expansionLayout);
+        highExpansionLayout.addListener(new ExpansionLayout.Listener() {
+            @Override
+            public void onExpansionChanged(ExpansionLayout expansionLayout, boolean expanded) {
+                if (expanded) {
+                    mainScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                }
+            }
+        });
+
+
+                // Button
         elementaryButton = elementaryView.findViewById(R.id.button_educational_level);
         elementaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +133,7 @@ public class EducationLevel extends AppCompatActivity {
 //                toMain();
             }
         });
+
     }
 
     private void toMain() {
