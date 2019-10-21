@@ -314,6 +314,9 @@ public class Camera extends AppCompatActivity {
             // Setup Pronounce Text
             TextView pronounce1 = resultDialog.findViewById(R.id.pronounce_1);
             TextView pronounce2 = resultDialog.findViewById(R.id.pronounce_2);
+            TextView resultName = resultDialog.findViewById(R.id.text_result_name);
+            String vowel = checkVowel(dataSet.getAnswer().get(position)[state]);
+            resultName.setText("That is " + vowel + " " + dataSet.getAnswer().get(position)[state]);
             pronounce1.setText(dataSet.getAnswer().get(position)[state]);
             pronounce2.setText(dataSet.getPronounce().get(position)[state]);
             // Text to Speech
@@ -378,6 +381,14 @@ public class Camera extends AppCompatActivity {
         });
 
         resultDialog.show();
+    }
+
+    private String checkVowel(String vowel) {
+        char firstLetter = vowel.charAt(0);
+        if (firstLetter == 'a' || firstLetter == 'i' || firstLetter == 'u' || firstLetter == 'e' || firstLetter == 'o' ) {
+            return "an";
+        }
+        return "a";
     }
 
     private void createFinalResultDialog() {

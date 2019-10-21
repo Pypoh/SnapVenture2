@@ -235,7 +235,7 @@ public class LevelFragment extends Fragment {
         level1Status.add(new Boolean[]{false, false, false});
         level1Status.add(new Boolean[]{false, false, false});
         level1Status.add(new Boolean[]{false, false, false});
-        tempKitchenDataset.add(new LevelModel("id0", 1, 9, level1RiddleEn, level1RiddleId, level1Answer, level1Pronounce, level1Status, 1, "Kitchen", 1, true));
+        tempKitchenDataset.add(new LevelModel("id0", "Basic",1, 9, level1RiddleEn, level1RiddleId, level1Answer, level1Pronounce, level1Status, 1, "Kitchen", 1, true));
 
         // Level 2
         List<String[]> level2RiddleEn = new ArrayList<>();
@@ -302,7 +302,7 @@ public class LevelFragment extends Fragment {
         level2Status.add(new Boolean[]{false, false, false});
         level2Status.add(new Boolean[]{false, false, false});
         level2Status.add(new Boolean[]{false, false, false});
-        tempKitchenDataset.add(new LevelModel("id0", 2, 9, level2RiddleEn, level2RiddleId, level2Answer, level2Pronounce, level2Status, 1, "Kitchen", 2, true));
+        tempKitchenDataset.add(new LevelModel("id0","Intermediate", 2, 9, level2RiddleEn, level2RiddleId, level2Answer, level2Pronounce, level2Status, 1, "Kitchen", 2, true));
 
         // Level 3
         List<String[]> level3RiddleEn = new ArrayList<>();
@@ -322,7 +322,7 @@ public class LevelFragment extends Fragment {
         level3Status.add(new Boolean[]{false, false, false});
         level3Status.add(new Boolean[]{false, false, false});
         level3Status.add(new Boolean[]{false, false, false});
-        tempKitchenDataset.add(new LevelModel("id0", 3, 9, level3RiddleEn, level3RiddleId, level3Answer, level3Pronounce, level3Status, 1, "Kitchen", 3, false));
+        tempKitchenDataset.add(new LevelModel("id0", "Advanced", 3, 9, level3RiddleEn, level3RiddleId, level3Answer, level3Pronounce, level3Status, 1, "Kitchen", 3, false));
 
         // Level 4
         List<String[]> level4RiddleEn = new ArrayList<>();
@@ -342,7 +342,7 @@ public class LevelFragment extends Fragment {
         level4Status.add(new Boolean[]{false, false, false});
         level4Status.add(new Boolean[]{false, false, false});
         level4Status.add(new Boolean[]{false, false, false});
-        tempKitchenDataset.add(new LevelModel("id0", 1, 9, level4RiddleEn, level4RiddleId, level4Answer, level4Pronounce, level4Status, 2, "Kitchen", 4, false));
+        tempKitchenDataset.add(new LevelModel("id0", "Theme - 1", 1, 9, level4RiddleEn, level4RiddleId, level4Answer, level4Pronounce, level4Status, 2, "Kitchen", 4, false));
     }
 
     private void riddleClassroomSetup() {
@@ -353,10 +353,10 @@ public class LevelFragment extends Fragment {
         List<String[]> level1Pronounce = new ArrayList<>();
         List<Boolean[]> level1Status = new ArrayList<>();
         // Riddles
-        level1RiddleEn.add(new String[]{"I’m something that you can write with\n" +
-                "When I’ve been used I’m not as long\n" +
-                "I often have an eraser\n" +
-                "In case you write down something wrong", "This might have a back and legs\n" +
+        level1RiddleEn.add(new String[]{"My name is like an animal name" +
+                "\nBut i'm not an animal " +
+                "\nSometime i'm wired, sometime i'm wireless" +
+                "\nI'm something to point on your screen", "This might have a back and legs\n" +
                 "But never has an armpit\n" +
                 "But it can come after arm\n" +
                 "For something on which you’d sit", "When you are feeling hungry\n" +
@@ -364,10 +364,10 @@ public class LevelFragment extends Fragment {
                 "When you are playing ping pong\n" +
                 "It comes before the word ‘tennis’"});
         level1RiddleId.add(new String[]{
-                "Aku sesuai yang kamu gunakan untuk menulis\n" +
-                        "Ketika aku dipakai, aku tidak memanjang\n" +
-                        "Terkadang aku membutuhkan penghapus\n" +
-                        "Ketika kamu menulis sesuatu yang salah",
+                "Namaku seperti nama salah satu binatang\n" +
+                        "Tetapi aku bukan binatang\n" +
+                        "Kamu menggunakanku untuk menunjuk sesuatu dilayar\n" +
+                        "Terkadang aku menggunakan kabel, terkadang tanpa kabel",
                 "Aku bisa memiliki punggung dan kaki\n" +
                         "Tetapi aku tidak pernah mempunyai ketiak\n" +
                         "Tetapi itu bisa terdapat setelah tangan\n" +
@@ -420,18 +420,18 @@ public class LevelFragment extends Fragment {
                 "Aku dipakai pada kakimu\n" +
                 "Dan diselesikan dengan tali"});
         // Answers
-        level1Answer.add(new String[]{"Pencil", "Chair", "Table"});
+        level1Answer.add(new String[]{"Mouse", "Chair", "Table"});
         level1Answer.add(new String[]{"Book", "Whiteboard", "Sharpener"});
         level1Answer.add(new String[]{"Clock", "Paper", "Shoes"});
         // Pronounce
-        level1Pronounce.add(new String[]{"/ˈpen.səl/", "/tʃer/", "/ˈteɪ.bəl/"});
+        level1Pronounce.add(new String[]{"/maʊs/", "/tʃer/", "/ˈteɪ.bəl/"});
         level1Pronounce.add(new String[]{"/bʊk/", "/ˈwaɪt.bɔːrd/", "/ˈʃɑːr.pən.ɚ/"});
         level1Pronounce.add(new String[]{"/klɑːk/", "/ˈpeɪ.pɚ/", "/ʃuː/"});
         // Status
         level1Status.add(new Boolean[]{false, false, false});
         level1Status.add(new Boolean[]{false, false, false});
         level1Status.add(new Boolean[]{false, false, false});
-        tempClassroomDataset.add(new LevelModel("id0", 1, 9, level1RiddleEn, level1RiddleId, level1Answer, level1Pronounce, level1Status, 1, "Classroom", 1, true));
+        tempClassroomDataset.add(new LevelModel("id0", "Basic", 1, 9, level1RiddleEn, level1RiddleId, level1Answer, level1Pronounce, level1Status, 1, "Classroom", 1, true));
 
         // Level 2
         List<String[]> level2RiddleEn = new ArrayList<>();
@@ -493,7 +493,7 @@ public class LevelFragment extends Fragment {
         level2Status.add(new Boolean[]{false, false, false});
         level2Status.add(new Boolean[]{false, false, false});
         level2Status.add(new Boolean[]{false, false, false});
-        tempClassroomDataset.add(new LevelModel("id0", 2, 9, level2RiddleEn, level2RiddleId, level2Answer, level2Pronounce, level2Status, 1, "Classroom", 2, true));
+        tempClassroomDataset.add(new LevelModel("id0", "Intermediate", 2, 9, level2RiddleEn, level2RiddleId, level2Answer, level2Pronounce, level2Status, 1, "Classroom", 2, true));
 
         // Level 3
         List<String[]> level3RiddleEn = new ArrayList<>();
@@ -513,7 +513,7 @@ public class LevelFragment extends Fragment {
         level3Status.add(new Boolean[]{false, false, false});
         level3Status.add(new Boolean[]{false, false, false});
         level3Status.add(new Boolean[]{false, false, false});
-        tempClassroomDataset.add(new LevelModel("id0", 3, 9, level3RiddleEn, level3RiddleId, level3Answer, level3Pronounce, level3Status, 1, "Classroom", 3, false));
+        tempClassroomDataset.add(new LevelModel("id0", "Advanced", 3, 9, level3RiddleEn, level3RiddleId, level3Answer, level3Pronounce, level3Status, 1, "Classroom", 3, false));
 
         // Level 4
         List<String[]> level4RiddleEn = new ArrayList<>();
@@ -533,7 +533,7 @@ public class LevelFragment extends Fragment {
         level4Status.add(new Boolean[]{false, false, false});
         level4Status.add(new Boolean[]{false, false, false});
         level4Status.add(new Boolean[]{false, false, false});
-        tempClassroomDataset.add(new LevelModel("id0", 1, 9, level4RiddleEn, level4RiddleId, level4Answer, level4Pronounce, level4Status, 2, "Classroom", 4, false));
+        tempClassroomDataset.add(new LevelModel("id0", "Theme - 1", 1, 9, level4RiddleEn, level4RiddleId, level4Answer, level4Pronounce, level4Status, 2, "Classroom", 4, false));
     }
 
     private void riddleStreetSetup() {

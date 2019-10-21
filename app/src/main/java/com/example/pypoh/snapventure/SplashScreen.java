@@ -31,30 +31,36 @@ public class SplashScreen extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        createWarningDialog();
+        startApp();
 
-        warningDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//        createWarningDialog();
+
+//        warningDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialog) {
+//
+//            }
+//        });
+    }
+
+    private void startApp() {
+        new Thread(new Runnable() {
             @Override
-            public void onDismiss(DialogInterface dialog) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Thread.sleep(2000);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        if (mAuth.getCurrentUser() != null){
-                            intent = new Intent(getApplicationContext(), MainActivity.class);
-                        }else {
-                            intent = new Intent(getApplicationContext(), Auth.class);
-                        }
-                        startActivity(intent);
-                        finish();
-                    }
-                }).start();
+            public void run() {
+                try{
+                    Thread.sleep(2000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (mAuth.getCurrentUser() != null){
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                }else {
+                    intent = new Intent(getApplicationContext(), Auth.class);
+                }
+                startActivity(intent);
+                finish();
             }
-        });
+        }).start();
     }
 
     private void createWarningDialog() {

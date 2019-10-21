@@ -11,6 +11,7 @@ import java.util.List;
 public class LevelModel implements Serializable {
 
     private String id;
+    private String levelName;
     private int star;
     private int totalStar;
     private List<String[]> riddleEn;
@@ -25,8 +26,9 @@ public class LevelModel implements Serializable {
 
     private boolean[] selected;
 
-    public LevelModel(String id, int star, int totalStar, List<String[]> riddleEn, List<String[]> riddleId, List<String[]> answer, List<String[]> pronounce, List<Boolean[]> totalCompletedStar, int stageCount, String place, int level, boolean lockStatus) {
+    public LevelModel(String id, String levelName, int star, int totalStar, List<String[]> riddleEn, List<String[]> riddleId, List<String[]> answer, List<String[]> pronounce, List<Boolean[]> totalCompletedStar, int stageCount, String place, int level, boolean lockStatus) {
         this.id = id;
+        this.levelName = levelName;
         this.star = star;
         this.totalStar = totalStar;
         this.riddleEn = riddleEn;

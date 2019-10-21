@@ -47,6 +47,12 @@ public class EducationLevel extends AppCompatActivity {
     // Main Scroll View
     private ScrollView mainScrollView;
 
+    // TextView
+    private TextView tvElementary1, tvElementary2, tvElementary3;
+    private TextView tvMiddle1, tvMiddle2, tvMiddle3;
+    private TextView tvHigh1, tvHigh2, tvHigh3;
+
+
     // Expansion Layout
     private ExpansionLayout highExpansionLayout;
 
@@ -68,13 +74,32 @@ public class EducationLevel extends AppCompatActivity {
         middleView = findViewById(R.id.middle_level);
         highView = findViewById(R.id.high__level);
 
+
         // Background
         elementaryLayout = elementaryView.findViewById(R.id.expansion_educational_level_header_layout);
         elementaryLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.elementary_red));
+        tvElementary1 = elementaryView.findViewById(R.id.text_educational_level1);
+        tvElementary1.setText("\u25CF Elementary School level of difficulty");
+        tvElementary2 = elementaryView.findViewById(R.id.text_educational_level2);
+        tvElementary2.setText("\u25CF Translations are free");
+        tvElementary3 = elementaryView.findViewById(R.id.text_educational_level3);
+        tvElementary3.setText("\u25CF Added silhouette for riddle");
         middleLayout = middleView.findViewById(R.id.expansion_educational_level_header_layout);
         middleLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.middle_blue));
+        tvMiddle1 = middleView.findViewById(R.id.text_educational_level1);
+        tvMiddle1.setText("\u25CF Junior High School level of difficulty");
+        tvMiddle2 = middleView.findViewById(R.id.text_educational_level2);
+        tvMiddle2.setText("\u25CF Riddle will be shown as a text");
+        tvMiddle3 = middleView.findViewById(R.id.text_educational_level3);
+        tvMiddle3.setText("\u25CF Limited Hints");
         highLayout = highView.findViewById(R.id.expansion_educational_level_header_layout);
         highLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.grey_high));
+        tvHigh1 = highView.findViewById(R.id.text_educational_level1);
+        tvHigh1.setText("\u25CF Senior High School level of difficulty");
+        tvHigh2 = highView.findViewById(R.id.text_educational_level2);
+        tvHigh2.setText("\u25CF Snappy will only sends voice message");
+        tvHigh3 = highView.findViewById(R.id.text_educational_level3);
+        tvHigh3.setText("\u25CF Extra Limited Hints");
 
         // Image
         personElementary = elementaryView.findViewById(R.id.person_image_educational_level);

@@ -171,6 +171,9 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
         stageDialog.setContentView(R.layout.dialog_stage);
         stageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        TextView levelName = stageDialog.findViewById(R.id.dialog_stage_level_name);
+        levelName.setText("Basic");
+
         data = new ArrayList<>();
 
         dialogStageList = stageDialog.findViewById(R.id.dialog_stage_list);
