@@ -31,4 +31,6 @@
     <color name="silver_leaderboard">#939089</color>
     <color name="bronze_leaderboard">#B0671E</color>
 
+    <color name="text_auth">#4F4C5D</color>
+
 </resources>

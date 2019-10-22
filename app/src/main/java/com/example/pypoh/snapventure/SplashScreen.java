@@ -3,7 +3,6 @@ package com.example.pypoh.snapventure;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,8 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.pypoh.snapventure.Auth.Auth;
-import com.example.pypoh.snapventure.Auth.Login;
+import com.example.pypoh.snapventure.Auth.AuthActivity;
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -55,7 +53,7 @@ public class SplashScreen extends AppCompatActivity {
                 if (mAuth.getCurrentUser() != null){
                     intent = new Intent(getApplicationContext(), MainActivity.class);
                 }else {
-                    intent = new Intent(getApplicationContext(), Auth.class);
+                    intent = new Intent(getApplicationContext(), AuthActivity.class);
                 }
                 startActivity(intent);
                 finish();

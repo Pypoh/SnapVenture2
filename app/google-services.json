@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "228205086848-hfthlk80q4li3t13ecvf5aqi340go58c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pypoh.snapventure",
+            "certificate_hash": "4f816667fb8b4680f276703cddf1de0e06e91924"
+          }
+        },
+        {
           "client_id": "228205086848-n1ilog1ma8b2k0o3glsenmjf3029npda.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

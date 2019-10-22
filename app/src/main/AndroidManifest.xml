@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Chat"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
@@ -31,16 +31,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainMenu.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".Auth.Register"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Auth.Login"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Auth.Auth"
+            android:name=".Auth.AuthActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashScreen"

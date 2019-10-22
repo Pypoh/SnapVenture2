@@ -6,6 +6,7 @@ import com.example.pypoh.snapventure.Fragment.MainFragment.AdventureFragment;
 import com.example.pypoh.snapventure.Fragment.MainFragment.ProfileFragment;
 import com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment;
 import com.example.pypoh.snapventure.Fragment.MainFragment.VocabFragment;
+import com.google.android.gms.vision.L;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,15 +26,21 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
 
     // Fragment
-    private AdventureFragment adventureFragment = new AdventureFragment();
+//    private AdventureFragment adventureFragment = new AdventureFragment();
     private PronounceFragment pronounceFragment = new PronounceFragment();
-    private VocabFragment vocabFragment = new VocabFragment();
+//    private VocabFragment vocabFragment = new VocabFragment();
+
+    private LessonFragment lessonFragment = new LessonFragment();
+    private PlayFragment playFragment = new PlayFragment();
+    private BattleFragment battleFragment = new BattleFragment();
     private ProfileFragment profileFragment = new ProfileFragment();
 
     // Utils
     boolean doubleBackToExitPressedOnce = false;
 
     private Menu bottomMenu;
+
+    // TODO: GANTI ICON
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,15 +49,15 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_adventure:
-                    setFragment(adventureFragment);
+                    setFragment(lessonFragment);
                     changeIconStateBar(R.id.navigation_adventure, R.drawable.navbar_adventure_on);
                     return true;
                 case R.id.navigation_pronounciation:
-                    setFragment(pronounceFragment);
+                    setFragment(playFragment);
                     changeIconStateBar(R.id.navigation_pronounciation, R.drawable.navbar_pronounciation_on);
                     return true;
                 case R.id.navigation_multiplayer:
-                    setFragment(vocabFragment);
+                    setFragment(battleFragment);
                     changeIconStateBar(R.id.navigation_multiplayer, R.drawable.navbar_multiplayer_on);
                     return true;
                 case R.id.navigation_profile:
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomMenu = navView.getMenu();
 
-        setFragment(adventureFragment);
+        setFragment(lessonFragment);
     }
 
     private void changeIconStateBar(int pathItem, int pathIcon) {
@@ -115,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
-
     }
 
     private boolean checkCurrentFragment() {
