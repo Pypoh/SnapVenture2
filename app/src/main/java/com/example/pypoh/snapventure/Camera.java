@@ -83,7 +83,7 @@ public class Camera extends AppCompatActivity {
     private LevelModel dataSet;
 
     private int state = 0;
-    private Boolean[] statusRiddle;
+    private boolean[] statusRiddle;
 
     // Text to Speech
     private TextToSpeech textToSpeech;
@@ -100,7 +100,7 @@ public class Camera extends AppCompatActivity {
 
         // Get Data
         dataSet = (LevelModel) getIntent().getSerializableExtra("dataClass");
-        statusRiddle = new Boolean[dataSet.getTotalCompletedStar().get(position).length];
+        statusRiddle = new boolean[dataSet.getTotalCompletedStar().get(position).length];
         position = getIntent().getIntExtra("position", 0);
 
         // Get Ids

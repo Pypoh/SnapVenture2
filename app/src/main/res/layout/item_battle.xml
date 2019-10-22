@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp">
+
+    <View
+        android:id="@+id/status_battle"
+        android:layout_width="8dp"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image_battle"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/profilepic_snappy"
+        android:padding="4dp"
+        app:layout_constraintLeft_toRightOf="@id/status_battle"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="20dp">
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+    <TextView
+        android:id="@+id/name_battle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/profile_image_battle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="name"
+        android:layout_marginLeft="20dp"
+        android:textSize="16sp"
+        android:textColor="@color/street_black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/score_battle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1 : 1"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/name_battle"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/result_battle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Win"
+        android:textColor="@color/garden_green"
+        android:textSize="20sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="32dp"
+        android:textStyle="bold"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/grey_backgrond_profile"
+        app:layout_constraintLeft_toRightOf="@id/profile_image_battle"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

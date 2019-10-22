@@ -2,11 +2,8 @@ package com.example.pypoh.snapventure.MainMenu;
 
 import android.os.Bundle;
 
-import com.example.pypoh.snapventure.Fragment.MainFragment.AdventureFragment;
 import com.example.pypoh.snapventure.Fragment.MainFragment.ProfileFragment;
 import com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment;
-import com.example.pypoh.snapventure.Fragment.MainFragment.VocabFragment;
-import com.google.android.gms.vision.L;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 //    private VocabFragment vocabFragment = new VocabFragment();
 
     private LessonFragment lessonFragment = new LessonFragment();
-    private PlayFragment playFragment = new PlayFragment();
     private BattleFragment battleFragment = new BattleFragment();
+    private PlayFragment playFragment = new PlayFragment();
     private ProfileFragment profileFragment = new ProfileFragment();
 
     // Utils

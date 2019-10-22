@@ -47,8 +47,8 @@ public class StageDialogAdapter extends RecyclerView.Adapter<StageDialogAdapter.
 
         holder.bind(mData, OnItemClickListener, position);
         // Set Completed Star per Stage
-        List<Boolean[]> totalStarCompleted = mData.getTotalCompletedStar();
-        Boolean[] statusCompleted = totalStarCompleted.get(position);
+        List<boolean[]> totalStarCompleted = mData.getTotalCompletedStar();
+        boolean[] statusCompleted = totalStarCompleted.get(position);
         int totalStar = 0;
         // Count Total Star
         for (Boolean status : statusCompleted) {

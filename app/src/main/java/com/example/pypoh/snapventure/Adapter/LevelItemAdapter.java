@@ -73,19 +73,19 @@ public class LevelItemAdapter extends RecyclerView.Adapter<LevelItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull LevelItemAdapter.ViewHolder holder, int position) {
-        List<Boolean[]> resultAllStar = mData.getTotalCompletedStar();
-        Boolean[] resultData = mData.getTotalCompletedStar().get(position);
+        List<boolean[]> resultAllStar = mData.getTotalCompletedStar();
+        boolean[] resultData = mData.getTotalCompletedStar().get(position);
         ViewStub viewStub = view.findViewById(R.id.viewstub_level);
 
         // Count Total Star
         int totalStarInLevel = 0;
-        for (Boolean[] starList : resultAllStar) {
+        for (boolean[] starList : resultAllStar) {
             totalStarInLevel += starList.length;
         }
 
         // Count Collected Star
         int completedStage = 0;
-        for (Boolean[] starList : resultAllStar) {
+        for (boolean[] starList : resultAllStar) {
             for (Boolean resultStar : starList) {
                 if (resultStar) completedStage++;
             }

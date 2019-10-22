@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/lesson_image"
+        android:layout_width="108dp"
+        android:layout_height="80dp"
+        android:src="@drawable/logo"
+        android:padding="8dp"/>
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/lesson_image">
+
+        <TextView
+            android:id="@+id/text_lesson_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lesson number"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/street_black"/>
+
+        <ProgressBar
+            android:id="@+id/progress_lesson"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_below="@id/text_lesson_number"
+            />
+
+        <TextView
+            android:id="@+id/text_progress_lesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="% completed"
+            android:layout_below="@id/progress_lesson"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -7,6 +7,8 @@
     <color name="white">#FFFFFF</color>
     <color name="defaultTextColor">#808080</color>
 
+    <color name="light_grey">#909090</color>
+
     <color name="elementary_red">#D3351B</color>
     <color name="middle_blue">#235299</color>
     <color name="grey_high">#676767</color>

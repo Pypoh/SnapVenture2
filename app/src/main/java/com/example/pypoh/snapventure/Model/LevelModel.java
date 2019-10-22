@@ -2,6 +2,7 @@ package com.example.pypoh.snapventure.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -18,15 +19,58 @@ public class LevelModel implements Serializable {
     private List<String[]> riddleId;
     private List<String[]> answer;
     private List<String[]> pronounce;
-    private List<Boolean[]> totalCompletedStar;
+    private List<boolean[]> totalCompletedStar;
     private int stageCount;
     private String place;
     private int level;
     private boolean lockStatus;
+    private int stageNumber;
+
+    private boolean isHeader;
 
     private boolean[] selected;
 
-    public LevelModel(String id, String levelName, int star, int totalStar, List<String[]> riddleEn, List<String[]> riddleId, List<String[]> answer, List<String[]> pronounce, List<Boolean[]> totalCompletedStar, int stageCount, String place, int level, boolean lockStatus) {
+    public LevelModel(String id, String levelName, int star, int totalStar, boolean lockStatus) {
+        this.id = id;
+        this.levelName = levelName;
+        this.star = star;
+        this.totalStar = totalStar;
+        this.isHeader = true;
+        this.lockStatus = lockStatus;
+    }
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
+
+    public int getStageNumber() {
+        return stageNumber;
+    }
+
+    public void setStageNumber(int stageNumber) {
+        this.stageNumber = stageNumber;
+    }
+
+    // Newest
+    public LevelModel(String id, List<String[]> riddleEn, List<String[]> riddleId, List<String[]> answer, List<String[]> pronounce, List<boolean[]> totalCompletedStar, String place, int level, int stageNumber, boolean lockStatus) {
+        this.id = id;
+        this.riddleEn = riddleEn;
+        this.riddleId = riddleId;
+        this.answer = answer;
+        this.pronounce = pronounce;
+        this.totalCompletedStar = totalCompletedStar;
+        this.place = place;
+        this.level = level;
+        this.stageNumber = stageNumber;
+        this.lockStatus = lockStatus;
+        this.isHeader = false;
+    }
+
+    public LevelModel(String id, String levelName, int star, int totalStar, List<String[]> riddleEn, List<String[]> riddleId, List<String[]> answer, List<String[]> pronounce, List<boolean[]> totalCompletedStar, int stageCount, String place, int level, boolean lockStatus) {
         this.id = id;
         this.levelName = levelName;
         this.star = star;
@@ -41,6 +85,15 @@ public class LevelModel implements Serializable {
         this.level = level;
         this.lockStatus = lockStatus;
         this.selected = new boolean[riddleEn.size()];
+        this.isHeader = false;
+    }
+
+    public boolean isHeader() {
+        return isHeader;
+    }
+
+    public void setHeader(boolean header) {
+        isHeader = header;
     }
 
     public String getId() {
@@ -107,15 +160,15 @@ public class LevelModel implements Serializable {
         this.answer = answer;
     }
 
-    public List<Boolean[]> getTotalCompletedStar() {
+    public List<boolean[]> getTotalCompletedStar() {
         return totalCompletedStar;
     }
 
-    public void setTotalCompletedStar(List<Boolean[]> totalCompletedStar) {
+    public void setTotalCompletedStar(List<boolean[]> totalCompletedStar) {
         this.totalCompletedStar = totalCompletedStar;
     }
 
-    public void setTotalCompletedStar(Boolean[] totalCompletedStar, int position) {
+    public void setTotalCompletedStar(boolean[] totalCompletedStar, int position) {
         this.totalCompletedStar.set(position, totalCompletedStar);
     }
 

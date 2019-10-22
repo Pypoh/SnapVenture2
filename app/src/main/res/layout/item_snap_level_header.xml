@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/adventure_stage_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/play_level1_on"
+        />
+
+    <TextView
+        android:id="@+id/adventure_stage_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stage_name"
+        android:textColor="@color/street_black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/adventure_stage_image"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        />
+
+    <TextView
+        android:id="@+id/adventure_stage_stars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/9"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>
