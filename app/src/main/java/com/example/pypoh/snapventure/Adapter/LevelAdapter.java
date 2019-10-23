@@ -1,6 +1,10 @@
 package com.example.pypoh.snapventure.Adapter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pypoh.snapventure.Camera;
 import com.example.pypoh.snapventure.Fragment.LevelFragment;
 import com.example.pypoh.snapventure.Model.LevelModel;
 import com.example.pypoh.snapventure.R;
@@ -54,7 +62,7 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        LevelModel levelData = dataSet.get(position);
+        final LevelModel levelData = dataSet.get(position);
         switch (holder.getItemViewType()) {
             case 1:
                 headerViewHolder headerViewHolder = (headerViewHolder) holder;
@@ -101,14 +109,6 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 // Check Stars
                 int totalStageStar = 0;
                 boolean[] statusStar = levelData.getTotalCompletedStar().get(0);
-                Log.d("totalStageStar", levelData.getTotalCompletedStar().size() + "");
-                Log.d("totalStageStar", levelData.getStageNumber() + " : " + statusStar[0] + " / " + statusStar[1] + " / " + statusStar[2]);
-
-
-                Log.d("totalStageStarStatic", LevelFragment.tempKitchenDataset.get(position).getTotalCompletedStar().get(0)[0] + "");
-                Log.d("totalStageStarStaticPos", position + "");
-                Log.d("totalStageStarStaticAn", LevelFragment.tempKitchenDataset.get(position).getAnswer().get(0)[0] + "");
-
                 // Count total star
                 for (boolean status : statusStar) {
                     Log.d("totalStageStarStatus", status + "");
@@ -135,6 +135,14 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         break;
                     default:
                 }
+
+                // OnClick Listener
+                itemViewHolder.stageLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toCameraPassData(levelData);
+                    }
+                });
 
                 break;
         }
@@ -181,6 +189,7 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private ImageView star1;
         private ImageView star2;
         private ImageView star3;
+        private ConstraintLayout stageLayout;
 
         public itemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -190,8 +199,21 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             star1 = itemView.findViewById(R.id.star_dialog_1);
             star2 = itemView.findViewById(R.id.star_dialog_2);
             star3 = itemView.findViewById(R.id.star_dialog_3);
+            stageLayout = itemView.findViewById(R.id.adventure_layout_stage);
+
 
         }
+    }
+
+    private void toCameraPassData(LevelModel dataSet) {
+//        startButton.setEnabled(false);
+        Intent toCamera = new Intent(mContext, Camera.class);
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA}, 100);
+        toCamera.putExtra("dataSet", dataSet);
+//        toCamera.putExtra("position", stageDialogAdapter.getPositionChecked());
+        mContext.startActivity(toCamera);
     }
 
 }
