@@ -61,7 +61,7 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         final LevelModel levelData = dataSet.get(position);
         switch (holder.getItemViewType()) {
             case 1:
@@ -140,7 +140,7 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 itemViewHolder.stageLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        toCameraPassData(levelData);
+                        toCameraPassData(levelData, position);
                     }
                 });
 
@@ -205,14 +205,14 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    private void toCameraPassData(LevelModel dataSet) {
+    private void toCameraPassData(LevelModel dataSet, int position) {
 //        startButton.setEnabled(false);
         Intent toCamera = new Intent(mContext, Camera.class);
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED)
             ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA}, 100);
         toCamera.putExtra("dataSet", dataSet);
-//        toCamera.putExtra("position", stageDialogAdapter.getPositionChecked());
+        toCamera.putExtra("position", position);
         mContext.startActivity(toCamera);
     }
 

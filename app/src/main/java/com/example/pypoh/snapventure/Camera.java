@@ -51,6 +51,7 @@ import com.otaliastudios.cameraview.PictureResult;
 import com.otaliastudios.cameraview.gesture.Gesture;
 import com.otaliastudios.cameraview.gesture.GestureAction;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -99,7 +100,7 @@ public class Camera extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         // Get Data
-        dataSet = (LevelModel) getIntent().getSerializableExtra("dataClass");
+        dataSet = (LevelModel) getIntent().getSerializableExtra("dataSet");
         statusRiddle = new boolean[dataSet.getTotalCompletedStar().get(position).length];
         position = getIntent().getIntExtra("position", 0);
 
@@ -150,7 +151,7 @@ public class Camera extends AppCompatActivity {
         riddlesTextSwitch.setOutAnimation(slideLeft);
 
         // Get nanti posisi
-        riddlesTextSwitch.setText(dataSet.getRiddleEn().get(position)[0]);
+        riddlesTextSwitch.setText(dataSet.getRiddleEn().get(0)[0]);
 
         // Pass Button
         passText.setOnClickListener(new View.OnClickListener() {
@@ -181,7 +182,7 @@ public class Camera extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("stateProgress", state + "");
-                if (state < dataSet.getRiddleEn().get(position).length) {
+                if (state < dataSet.getRiddleEn().get(0).length) {
                     cameraView.takePicture();
                     captureButton.setEnabled(false);
                 } else {
@@ -237,11 +238,11 @@ public class Camera extends AppCompatActivity {
         passYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (state < dataSet.getRiddleEn().get(position).length) {
+                if (state < dataSet.getRiddleEn().get(0).length) {
                     statusRiddle[state] = false;
                 }
                 changeRiddle();
-                if (state == dataSet.getRiddleEn().get(position).length) {
+                if (state == dataSet.getRiddleEn().get(0).length) {
                     // Create Final Result Dialog
                     createFinalResultDialog();
                     Log.d("resultDialog", "Result Riddle Pressed");
@@ -261,23 +262,23 @@ public class Camera extends AppCompatActivity {
 
     private void changeRiddle() {
         increaseState(1);
-        if (state < dataSet.getRiddleEn().get(position).length) {
-            riddlesTextSwitch.setText(dataSet.getRiddleEn().get(position)[state]);
+        if (state < dataSet.getRiddleEn().get(0).length) {
+            riddlesTextSwitch.setText(dataSet.getRiddleEn().get(0)[state]);
             changeQuestionHeaderText();
         }
     }
 
     private void changeRiddleLanguage(boolean isChecked) {
         if (isChecked) {
-            riddlesTextSwitch.setText(dataSet.getRiddleId().get(position)[state]);
+            riddlesTextSwitch.setText(dataSet.getRiddleId().get(0)[state]);
             return;
         }
-        riddlesTextSwitch.setText(dataSet.getRiddleEn().get(position)[state]);
+        riddlesTextSwitch.setText(dataSet.getRiddleEn().get(0)[state]);
 
     }
 
     private void increaseState(int input) {
-        if (state < dataSet.getRiddleEn().get(position).length) {
+        if (state < dataSet.getRiddleEn().get(0).length) {
             state += input;
         }
         Log.d("stateProgress", state + "Change");
@@ -315,10 +316,10 @@ public class Camera extends AppCompatActivity {
             TextView pronounce1 = resultDialog.findViewById(R.id.pronounce_1);
             TextView pronounce2 = resultDialog.findViewById(R.id.pronounce_2);
             TextView resultName = resultDialog.findViewById(R.id.text_result_name);
-            String vowel = checkVowel(dataSet.getAnswer().get(position)[state]);
-            resultName.setText("That is " + vowel + " " + dataSet.getAnswer().get(position)[state]);
-            pronounce1.setText(dataSet.getAnswer().get(position)[state]);
-            pronounce2.setText(dataSet.getPronounce().get(position)[state]);
+            String vowel = checkVowel(dataSet.getAnswer().get(0)[state]);
+            resultName.setText("That is " + vowel + " " + dataSet.getAnswer().get(0)[state]);
+            pronounce1.setText(dataSet.getAnswer().get(0)[state]);
+            pronounce2.setText(dataSet.getPronounce().get(0)[state]);
             // Text to Speech
             textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                 @Override
@@ -334,8 +335,8 @@ public class Camera extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     resultDialog.dismiss();
-                    Log.d("stateProgressResult", state + " : " + dataSet.getRiddleEn().get(position).length);
-                    if (state == dataSet.getRiddleEn().get(position).length) {
+                    Log.d("stateProgressResult", state + " : " + dataSet.getRiddleEn().get(0).length);
+                    if (state == dataSet.getRiddleEn().get(0).length) {
                         // Create Final Result Dialog
                         createFinalResultDialog();
                         Log.d("resultDialog", "Result Button Pressed");
@@ -347,7 +348,7 @@ public class Camera extends AppCompatActivity {
             speechButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    textToSpeech.speak(dataSet.getAnswer().get(position)[state-1], TextToSpeech.QUEUE_FLUSH, null);
+                    textToSpeech.speak(dataSet.getAnswer().get(0)[state-1], TextToSpeech.QUEUE_FLUSH, null);
                 }
             });
         } else {
@@ -436,21 +437,24 @@ public class Camera extends AppCompatActivity {
         int level = dataSet.getLevel();
 
         // Nembak data ke LevelFragment
+
         switch (AdventureFragment.currentPlace) {
             case 0:
-                LevelFragment.tempGardenDataset.get(level - 1).setTotalCompletedStar(statusRiddle, position);
+                LevelFragment.tempGardenDataset.get(level - 1).setTotalCompletedStar(statusRiddle, 0);
                 break;
             case 1:
-                LevelFragment.tempKitchenDataset.get(level - 1).setTotalCompletedStar(statusRiddle, position);
+                LevelFragment.tempKitchenDataset.get(position).setTotalCompletedStar(statusRiddle);
                 break;
             case 2:
-                LevelFragment.tempClassroomDataset.get(level - 1).setTotalCompletedStar(statusRiddle, position);
+                LevelFragment.tempClassroomDataset.get(level - 1).setTotalCompletedStar(statusRiddle, 0);
                 break;
             case 3:
-                LevelFragment.tempStreetDataset.get(level - 1).setTotalCompletedStar(statusRiddle, position);
+                LevelFragment.tempStreetDataset.get(level - 1).setTotalCompletedStar(statusRiddle, 0);
                 break;
         }
         LevelFragment.levelAdapter.notifyDataSetChanged();
+        Log.d("statusRiddleLast", LevelFragment.tempKitchenDataset.get(position).getTotalCompletedStar().get(0)[0] + " : " + LevelFragment.tempKitchenDataset.get(position).getTotalCompletedStar().get(0)[1] + " : " + LevelFragment.tempKitchenDataset.get(position).getTotalCompletedStar().get(0)[2]);
+
 
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -487,12 +491,12 @@ public class Camera extends AppCompatActivity {
                             for (FirebaseVisionImageLabel result : firebaseVisionImageLabels) {
 //                                Toast.makeText(Camera.this, "Result Online : " + result.getText(), Toast.LENGTH_SHORT).show();
                                 Log.i("Picture", "Result Online Debug : " + result.getText() + " Confidence : " + result.getConfidence());
-                                Log.d("resultImage", dataSet.getAnswer().get(position)[state] + "" + result.getText());
+                                Log.d("resultImage", dataSet.getAnswer().get(0)[state] + "" + result.getText());
                                 // Check Image
-                                if (dataSet.getAnswer().get(position)[state].equalsIgnoreCase(result.getText())) {
+                                if (dataSet.getAnswer().get(0)[state].equalsIgnoreCase(result.getText())) {
                                     statusRiddle[state] = true;
                                     resultRiddle[0] = true;
-                                    Log.d("resultImage", dataSet.getAnswer().get(position)[state] + "" + result.getText() + "Right Answer");
+                                    Log.d("resultImage", dataSet.getAnswer().get(0)[state] + "" + result.getText() + "Right Answer");
                                     break;
                                 }
                             }
@@ -531,7 +535,7 @@ public class Camera extends AppCompatActivity {
     }
 
     private void changeQuestionHeaderText() {
-        int totalRiddles = dataSet.getRiddleEn().get(position).length;
+        int totalRiddles = dataSet.getRiddleEn().get(0).length;
         questionHeader.setText("Question " + (state+1) + "/" + totalRiddles);
 
     }

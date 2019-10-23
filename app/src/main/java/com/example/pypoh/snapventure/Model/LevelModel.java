@@ -26,17 +26,28 @@ public class LevelModel implements Serializable {
     private boolean lockStatus;
     private int stageNumber;
 
+    private int stageLevel;
+
     private boolean isHeader;
 
     private boolean[] selected;
 
-    public LevelModel(String id, String levelName, int star, int totalStar, boolean lockStatus) {
+    public LevelModel(String id, String levelName, int stageLevel, int star, int totalStar, boolean lockStatus) {
         this.id = id;
         this.levelName = levelName;
         this.star = star;
         this.totalStar = totalStar;
         this.isHeader = true;
         this.lockStatus = lockStatus;
+        this.stageLevel = stageLevel;
+    }
+
+    public int getStageLevel() {
+        return stageLevel;
+    }
+
+    public void setStageLevel(int stageLevel) {
+        this.stageLevel = stageLevel;
     }
 
     public String getLevelName() {
@@ -166,6 +177,12 @@ public class LevelModel implements Serializable {
 
     public void setTotalCompletedStar(List<boolean[]> totalCompletedStar) {
         this.totalCompletedStar = totalCompletedStar;
+    }
+
+    public void setTotalCompletedStar(boolean[] totalCompletedStar) {
+        List<boolean[]> tempData = new ArrayList<>();
+        tempData.add(totalCompletedStar);
+        this.totalCompletedStar = tempData;
     }
 
     public void setTotalCompletedStar(boolean[] totalCompletedStar, int position) {
