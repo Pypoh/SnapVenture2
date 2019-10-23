@@ -101,7 +101,13 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 // Check Stars
                 int totalStageStar = 0;
                 boolean[] statusStar = levelData.getTotalCompletedStar().get(0);
-                Log.d("totalStageStar", levelData.getStageNumber() + " : " + statusStar.length + "");
+                Log.d("totalStageStar", levelData.getTotalCompletedStar().size() + "");
+                Log.d("totalStageStar", levelData.getStageNumber() + " : " + statusStar[0] + " / " + statusStar[1] + " / " + statusStar[2]);
+
+
+                Log.d("totalStageStarStatic", LevelFragment.tempKitchenDataset.get(position).getTotalCompletedStar().get(0)[0] + "");
+                Log.d("totalStageStarStaticPos", position + "");
+                Log.d("totalStageStarStaticAn", LevelFragment.tempKitchenDataset.get(position).getAnswer().get(0)[0] + "");
 
                 // Count total star
                 for (boolean status : statusStar) {
