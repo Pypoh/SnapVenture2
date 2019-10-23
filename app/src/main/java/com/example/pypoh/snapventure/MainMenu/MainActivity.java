@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Menu bottomMenu;
 
-    // TODO: GANTI ICON
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -47,15 +45,15 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_adventure:
                     setFragment(lessonFragment);
-                    changeIconStateBar(R.id.navigation_adventure, R.drawable.navbar_adventure_on);
+                    changeIconStateBar(R.id.navigation_adventure, R.drawable.navbar_lesson_on);
                     return true;
                 case R.id.navigation_pronounciation:
                     setFragment(playFragment);
-                    changeIconStateBar(R.id.navigation_pronounciation, R.drawable.navbar_pronounciation_on);
+                    changeIconStateBar(R.id.navigation_pronounciation, R.drawable.navbar_play_on);
                     return true;
                 case R.id.navigation_multiplayer:
                     setFragment(battleFragment);
-                    changeIconStateBar(R.id.navigation_multiplayer, R.drawable.navbar_multiplayer_on);
+                    changeIconStateBar(R.id.navigation_multiplayer, R.drawable.navbar_battle_on);
                     return true;
                 case R.id.navigation_profile:
                     setFragment(profileFragment);
@@ -80,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeIconStateBar(int pathItem, int pathIcon) {
-        bottomMenu.findItem(R.id.navigation_adventure).setIcon(R.drawable.navbar_adventure_off);
-        bottomMenu.findItem(R.id.navigation_pronounciation).setIcon(R.drawable.navbar_pronounciation_off);
-        bottomMenu.findItem(R.id.navigation_multiplayer).setIcon(R.drawable.navbar_multiplayer_off);
+        bottomMenu.findItem(R.id.navigation_adventure).setIcon(R.drawable.navbar_lesson_off);
+        bottomMenu.findItem(R.id.navigation_pronounciation).setIcon(R.drawable.navbar_play_off);
+        bottomMenu.findItem(R.id.navigation_multiplayer).setIcon(R.drawable.navbar_battle_off);
         bottomMenu.findItem(R.id.navigation_profile).setIcon(R.drawable.navbar_profile_off);
 
         bottomMenu.findItem(pathItem).setIcon(pathIcon);

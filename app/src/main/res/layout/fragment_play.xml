@@ -8,52 +8,45 @@
     tools:context=".MainMenu.BattleFragment"
     android:orientation="vertical">
 
+    <include layout="@layout/user_header"/>
+
     <LinearLayout
-        android:id="@+id/snap_mode"
-        android:layout_width="match_parent"
-        android:layout_height="168dp"
-        android:background="@color/colorPrimary"
-        android:layout_margin="16dp"
-        android:gravity="center">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="24dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Snap"
-            android:textColor="@color/white"
-            android:textSize="32sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/pronounce_mode"
-        android:layout_width="match_parent"
-        android:layout_height="168dp"
-        android:background="@color/colorPrimary"
-        android:layout_margin="16dp"
-        android:gravity="center">
+            android:text="Game"
+            android:textSize="32sp"
+            android:textColor="@color/street_black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pronounce"
-            android:textColor="@color/white"
-            android:textSize="32sp"/>
+            android:text="Modes"
+            android:textStyle="bold"
+            android:textSize="32sp"
+            android:textColor="@color/street_black"/>
+
+
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/quiz_mode"
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:id="@+id/recycler_mode"
         android:layout_width="match_parent"
-        android:layout_height="168dp"
-        android:background="@color/colorPrimary"
-        android:layout_margin="16dp"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+    </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quiz"
-            android:textColor="@color/white"
-            android:textSize="32sp"/>
-    </LinearLayout>
-
+    <me.relex.circleindicator.CircleIndicator2
+        android:id="@+id/modes_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:ci_drawable="@drawable/yellow_radius"/>
 </LinearLayout>

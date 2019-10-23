@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/navigation_adventure"
-        android:icon="@drawable/navbar_adventure_off"
-        android:title="Adventure" />
+        android:icon="@drawable/navbar_lesson_off"
+        android:title="Lessons" />
 
     <item
         android:id="@+id/navigation_pronounciation"
-        android:icon="@drawable/navbar_pronounciation_off"
-        android:title="Pronounce" />
+        android:icon="@drawable/navbar_play_off"
+        android:title="Play" />
 
     <item
         android:id="@+id/navigation_multiplayer"
-        android:icon="@drawable/navbar_multiplayer_off"
-        android:title="Multiplayer" />
+        android:icon="@drawable/navbar_battle_off"
+        android:title="Battle" />
 
     <item
         android:id="@+id/navigation_profile"

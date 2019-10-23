@@ -113,11 +113,12 @@
                 android:layout_height="wrap_content"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="16dp"
                 android:textColor="@color/street_black"
                 android:textAlignment="center"
-                android:text="location"/>
+                android:translationZ="8dp"
 
+                android:text="location"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/levelRecycler"
                 android:layout_width="match_parent"
