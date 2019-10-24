@@ -88,7 +88,7 @@ public class RegisterFragment extends Fragment {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DocumentReference userRef = db.collection("users").document(userId);
 
-        UserModel userModel = new UserModel(name, email, 0);
+        UserModel userModel = new UserModel(userId, name, email, 0);
 
         userRef.set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

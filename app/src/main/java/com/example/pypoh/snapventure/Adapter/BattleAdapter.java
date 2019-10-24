@@ -36,11 +36,32 @@ public class BattleAdapter extends RecyclerView.Adapter<BattleAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        BattleModel battleData = mDataBattle.get(position);
+        holder.nameBattle.setText(battleData.getName());
+        holder.scoreBattle.setText(battleData.getScore1() + " : " + battleData.getScore2());
+        holder.resultBattle.setText(battleData.getResult());
 
+        switch (battleData.getStatus()) {
+            case 1:
+                holder.resultBattle.setTextColor(mContext.getResources().getColor(R.color.garden_green));
+                holder.statusBattle.setBackgroundColor(mContext.getResources().getColor(R.color.garden_green));
+                break;
+            case 2:
+                holder.resultBattle.setTextColor(mContext.getResources().getColor(R.color.classroom_red));
+                holder.statusBattle.setBackgroundColor(mContext.getResources().getColor(R.color.classroom_red));
+                break;
+            case 3:
+                break;
+            case 0:
+                holder.resultBattle.setText("");
+        }
     }
 
     @Override
     public int getItemCount() {
+        if (mDataBattle.size() > 3) {
+            return 3;
+        }
         return mDataBattle.size();
     }
 

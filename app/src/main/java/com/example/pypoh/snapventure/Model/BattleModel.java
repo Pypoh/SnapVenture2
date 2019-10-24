@@ -1,18 +1,36 @@
 package com.example.pypoh.snapventure.Model;
 
 public class BattleModel {
-    private int status; // 0 = win, 1 = lose, 3 = draw
+    private int status; // 1 = win, 2 = lose, 3 = draw
     private String image;
     private String name;
-    private String score;
+    private int score1;
+    private int score2;
     private String result;
 
-    public BattleModel(int status, String image, String name, String score, String result) {
+    public BattleModel(int status, String image, String name, int score1, int score2, String result) {
         this.status = status;
         this.image = image;
         this.name = name;
-        this.score = score;
+        this.score1 = score1;
+        this.score2 = score2;
         this.result = result;
+    }
+
+    public int getScore1() {
+        return score1;
+    }
+
+    public void setScore1(int score1) {
+        this.score1 = score1;
+    }
+
+    public int getScore2() {
+        return score2;
+    }
+
+    public void setScore2(int score2) {
+        this.score2 = score2;
     }
 
     public String getImage() {
@@ -29,14 +47,6 @@ public class BattleModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
     }
 
     public String getResult() {

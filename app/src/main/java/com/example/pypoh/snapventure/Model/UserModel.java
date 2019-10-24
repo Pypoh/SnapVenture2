@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserModel {
 
+    @SerializedName("id")
+    private String id;
     @SerializedName("name")
     private String name;
     @SerializedName("email")
@@ -11,13 +13,23 @@ public class UserModel {
     @SerializedName("level")
     private int level;
 
-    public UserModel(String name, String email, int level) {
+    public UserModel(String id, String name, String email, int level) {
+        this.id = id;
         this.name = name;
         this.email = email;
+        this.level = level;
     }
 
     public UserModel() {
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -43,4 +55,6 @@ public class UserModel {
     public void setLevel(int level) {
         this.level = level;
     }
+
+
 }

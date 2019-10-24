@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +101,16 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    public void setSecondFragment(Fragment fragment, String args) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Bundle bundleArgs = new Bundle();
+        bundleArgs.putString("KEY_ARG", args);
+        fragment.setArguments(bundleArgs);
+        ft.replace(R.id.main_frame, fragment);
+//        ft.addToBackStack(null);
+        ft.commit();
+    }
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce || !checkCurrentFragment()) {
@@ -123,4 +134,5 @@ public class MainActivity extends AppCompatActivity {
         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag("MAIN_FRAGMENT");
         return currentFragment != null && currentFragment.isVisible();
     }
+
 }
