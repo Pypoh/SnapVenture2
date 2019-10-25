@@ -1,12 +1,14 @@
 package com.example.pypoh.snapventure.BattlePages;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -22,6 +24,7 @@ import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.Model.QuestionModel;
 import com.example.pypoh.snapventure.Model.RoomModel;
 import com.example.pypoh.snapventure.Model.UserModel;
+import com.example.pypoh.snapventure.QuizActivity;
 import com.example.pypoh.snapventure.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -64,15 +67,40 @@ public class MatchingFragment extends Fragment {
     private List<String> allPlayerID = new ArrayList<>();
     private List<String> questionIds = new ArrayList<>();
 
-    private String opponentID= "";
+    private String opponentID = "";
 
     private OpponentFragment opponentFragment = new OpponentFragment();
 
-    private List<UserModel> userModels = new ArrayList<>();
-    private List<UserModel> opponentModels = new ArrayList<>();
-    private List<QuestionModel> questionDataSet = new ArrayList<>();
+    public static List<UserModel> userModels = new ArrayList<>();
+    public static List<UserModel> opponentModels = new ArrayList<>();
+    public static List<QuestionModel> questionDataSet = new ArrayList<>();
+    public static List<RoomModel> roomData = new ArrayList<>();
 
     private BottomNavigationView bottomNavigationView;
+
+    private int stateRound = 0;
+
+    private LayoutInflater layoutInflater;
+    private ViewGroup viewGroup;
+
+    // New Quiz Layout
+    private TextView player1Name;
+    private TextView player1Score;
+    private TextView player2Name;
+    private TextView player2Score;
+    private TextView round;
+    private TextView questionHeader;
+    private TextView questionText;
+    private TextView answerA;
+    private TextView answerB;
+    private TextView answerC;
+    private TextView answerD;
+
+    private CardView answerACard;
+    private CardView answerBCard;
+    private CardView answerCCard;
+    private CardView answerDCard;
+
 
     public MatchingFragment() {
         // Required empty public constructor
@@ -83,6 +111,9 @@ public class MatchingFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_matching, container, false);
+
+        layoutInflater = inflater;
+        viewGroup = container;
 
         bottomNavigationView = getActivity().findViewById(R.id.nav_view);
         bottomNavigationView.setVisibility(View.GONE);
@@ -127,7 +158,7 @@ public class MatchingFragment extends Fragment {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         allPlayerID.add(document.getId());
                     }
-                    
+
                     opponentID = getRandomData(allPlayerID);
                     playMatch(opponentID);
                 } else {
@@ -153,8 +184,9 @@ public class MatchingFragment extends Fragment {
                     int questionLength = 5;
 
                     List<String> questionTemp = questionIds.subList(0, questionLength);
-                    questionIds.clear();
-                    questionIds.addAll(questionTemp);
+                    questionIds = questionTemp;
+//                    questionIds.clear();
+//                    questionIds.addAll(questionTemp);
 
                     // get question details data
                     getQuestionsData();
@@ -166,7 +198,8 @@ public class MatchingFragment extends Fragment {
     }
 
     private void getQuestionsData() {
-        for (String questionId : questionData) {
+        questionDataSet.clear();
+        for (String questionId : questionIds) {
             DocumentReference questionRef = db.collection("battle_questions").document(questionId);
             questionRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -174,8 +207,6 @@ public class MatchingFragment extends Fragment {
                     QuestionModel questionModel = documentSnapshot.toObject(QuestionModel.class);
                     questionDataSet.add(questionModel);
 
-                    // Proceed to Create Room
-                    createRoom();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -183,15 +214,24 @@ public class MatchingFragment extends Fragment {
 
                 }
             });
+        }
 
+        if (!questionDataSet.isEmpty()) {
+            // Proceed to Create Room
+            createRoom();
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    createRoom();
+                }
+            }, 1000);
         }
     }
 
     private void insertQuestion() {
         DocumentReference documentReference = db.collection("battle_questions").document();
-
         documentReference.set(new QuestionModel("This is a question", "Answer A", "Answer B", "Answer C", "Answer D", "answerA"));
-
     }
 
     private void playMatch(String opponentID) {
@@ -199,7 +239,6 @@ public class MatchingFragment extends Fragment {
             getPlayersData(opponentID);
             Log.d("TestData", opponentID);
         }
-
     }
 
     private String getRandomData(List<String> allPlayerID) {
@@ -207,7 +246,7 @@ public class MatchingFragment extends Fragment {
         Random randomGenerator = new Random();
         if (!allPlayerID.isEmpty()) {
             opponentID = allPlayerID.get(randomGenerator.nextInt(allPlayerID.size()));
-            Log.d("RandomDataTest", mUser.getUid() + " : " +opponentID);
+            Log.d("RandomDataTest", mUser.getUid() + " : " + opponentID);
             if (opponentID.equals(mUser.getUid())) {
                 getRandomData(allPlayerID);
                 Log.d("RandomDataEq", "Yes");
@@ -219,6 +258,7 @@ public class MatchingFragment extends Fragment {
     }
 
     private void getPlayersData(final String opponentID) {
+        userModels.clear();
         DocumentReference userRef = db.collection("users").document(mUser.getUid());
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -240,6 +280,7 @@ public class MatchingFragment extends Fragment {
     }
 
     private void getOpponentData(String opponentID) {
+        opponentModels.clear();
         DocumentReference opponentRef = db.collection("users").document(opponentID);
         opponentRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -263,19 +304,28 @@ public class MatchingFragment extends Fragment {
 
         if (userData != null && opponentData != null) {
             DocumentReference roomRef = db.collection("rooms").document();
-            RoomModel roomModel = new RoomModel(userData.getId(), opponentData.getId(), 0, 0, "OnGoing", userData.getId());
+            final RoomModel roomModel = new RoomModel(userData.getId(), opponentData.getId(), 0, 0, "OnGoing", userData.getId());
             roomRef.set(roomModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Room Created", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "Room Created", Toast.LENGTH_SHORT).show();
+                        Log.d("roomCreation", "Room Created");
+                        roomData.add(roomModel);
+                        getActivity().getWindow().setStatusBarColor(getContext().getResources().getColor(R.color.colorPrimary));
                         foundLayout.setVisibility(View.VISIBLE);
                         player1Text.setText(userData.getName());
                         player2Text.setText(opponentData.getName());
-                        getActivity().getWindow().setStatusBarColor(getContext().getResources().getColor(R.color.colorPrimary));
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                toQuiz();
+                            }
+                        }, 3000);
+//                        startNewLayoutQuizView(stateRound);
                     } else {
-                        Toast.makeText(getContext(), "Room Not Created", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "Room Not Created", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -284,11 +334,53 @@ public class MatchingFragment extends Fragment {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    createRoom();
+                    findPlayer();
                 }
-            }, 500);
+            }, 1000);
         }
     }
+
+    private void toQuiz() {
+        Intent toQuiz = new Intent(getContext(), QuizActivity.class);
+        startActivity(toQuiz);
+    }
+
+//    private void startNewLayoutQuizView(int stateRound) {
+//        FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.matching_container);
+//        View view = layoutInflater.inflate(R.layout.fragment_quiz_battle, container, false);
+//        LayoutInflater.from(getActivity())
+//                .inflate(R.layout.fragment_quiz_battle, container, false);
+//
+//        // setup View Ids
+//        player1Name = view.findViewById(R.id.text_player1_name);
+//        player1Score = view.findViewById(R.id.text_player1_score);
+//        player2Name = view.findViewById(R.id.text_player2_name);
+//        player2Score = view.findViewById(R.id.text_player2_score);
+//        round = view.findViewById(R.id.text_round);
+//        questionHeader = view.findViewById(R.id.text_question_header);
+//        questionText = view.findViewById(R.id.text_question);
+//        answerA = view.findViewById(R.id.text_answer_a);
+//        answerB = view.findViewById(R.id.text_answer_b);
+//        answerC = view.findViewById(R.id.text_answer_c);
+//        answerD = view.findViewById(R.id.text_answer_d);
+//        answerACard = view.findViewById(R.id.answer_card_a);
+//        answerBCard = view.findViewById(R.id.answer_card_b);
+//        answerCCard = view.findViewById(R.id.answer_card_c);
+//        answerDCard = view.findViewById(R.id.answer_card_d);
+//
+//        // Start Quiz
+////        startQuiz();
+//    }
+
+//    private void startQuiz() {
+//        // Model
+//        UserModel user = userModels.get(0);
+//        UserModel opponent = userModels.get(0);
+//        final QuestionModel question = questionDataSet.get(stateRound);
+//        RoomModel room = roomData.get(0);
+//
+//
+//    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

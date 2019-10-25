@@ -18,6 +18,9 @@ public class QuestionModel {
         this.correctAnswerID = correctAnswerID;
     }
 
+    public QuestionModel() {
+    }
+
     public String getQuestion() {
         return question;
     }
