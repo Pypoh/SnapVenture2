@@ -84,6 +84,12 @@ public class Chat extends AppCompatActivity {
         getSupportActionBar().setTitle("Chapter Number");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
         Log.d("chatAdapterCountIntasd", "asdfasdf");

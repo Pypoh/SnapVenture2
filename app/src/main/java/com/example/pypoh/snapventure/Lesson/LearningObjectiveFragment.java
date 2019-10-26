@@ -47,6 +47,7 @@ public class LearningObjectiveFragment extends Fragment {
 
     private void toLesson() {
         Intent toLesson = new Intent(getContext(), LessonActivity.class);
+        toLesson.putExtra("LESSON_NAME_KEY", LessonTitles.selectedLesson.getLessonNames());
         startActivity(toLesson);
         getActivity().finish();
     }

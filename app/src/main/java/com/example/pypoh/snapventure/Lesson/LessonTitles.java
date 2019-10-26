@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Adapter.LessonTitleAdapter;
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
@@ -28,6 +29,8 @@ public class LessonTitles extends Fragment {
     private List<LessonModel> lessonsData = new ArrayList<>();
 
     private LearningObjectiveFragment learningObjectiveFragment = new LearningObjectiveFragment();
+
+    public static LessonModel selectedLesson;
 
 
     public LessonTitles() {
@@ -53,7 +56,21 @@ public class LessonTitles extends Fragment {
         lessonTitleAdapter.setOnItemClickListener(new LessonTitleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(LessonModel lessonModel) {
-                changeFragment(learningObjectiveFragment);
+                switch (lessonModel.getLessonNames()) {
+                    case "Introduction":
+                        Toast.makeText(getContext(), "This is an example for completed lesson", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Greetings":
+                        selectedLesson = lessonModel;
+                        changeFragment(learningObjectiveFragment);
+                        break;
+                    case "Review":
+                    case "Final Test":
+                        Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
+
             }
         });
 
