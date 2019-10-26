@@ -58,6 +58,8 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.ViewHolder>{
                 break;
         }
 
+        holder.modeDesc.setText(modeData.getModeDesc());
+
 //        holder.modeCard.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

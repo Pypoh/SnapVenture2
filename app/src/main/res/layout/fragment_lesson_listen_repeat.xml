@@ -26,7 +26,7 @@
             android:id="@+id/content_header_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose the right answer"
+            android:text="Listen and Repeat"
             android:textSize="14sp"
             android:layout_below="@id/content_header"/>
 
@@ -38,7 +38,15 @@
             app:cardCornerRadius="25dp"
             app:strokeColor="@color/grey_backgrond_profile"
             android:layout_below="@id/content_header_desc"
-            app:strokeWidth="2dp"></com.google.android.material.card.MaterialCardView>
+            app:strokeWidth="2dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/lesson_listen_repeat"
+                android:padding="16dp"/>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -61,8 +69,8 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:padding="12dp"
-                    android:src="@drawable/find_voice" />
+                    android:padding="16dp"
+                    android:src="@drawable/lesson_listen_repeat_play" />
 
             </androidx.cardview.widget.CardView>
 

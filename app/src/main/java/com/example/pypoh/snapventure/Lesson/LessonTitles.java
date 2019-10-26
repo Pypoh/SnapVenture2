@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Adapter.LessonTitleAdapter;
+import com.example.pypoh.snapventure.MainMenu.LessonFragment;
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.Model.LessonModel;
 import com.example.pypoh.snapventure.R;
@@ -42,10 +44,21 @@ public class LessonTitles extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lesson_titles, container, false);
 
-        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started_introduction_on, 1, "Introduction", 100, "Learn how to introduce yourself"));
-        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started_greeting_off, 1, "Greetings", 0, "Greet someone"));
-        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started_review_off, 1, "Review", 0, "Remember what you have learn"));
-        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started_test_off, 1, "Final Test", 0, "Let's see what you got"));
+        if (lessonsData.isEmpty()) {
+            addData();
+        }
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+        ((MainActivity)getActivity()).setTitle(LessonFragment.selectedLessonName);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).onBackPressed();
+            }
+        });
 
         setupViews(view);
 
@@ -75,6 +88,13 @@ public class LessonTitles extends Fragment {
         });
 
         return view;
+    }
+
+    private void addData() {
+        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started_introduction_on, 1, "Introduction", 100, "Learn how to introduce yourself"));
+        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started_greeting_off, 1, "Greetings", 0, "Greet someone"));
+        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started_review_off, 1, "Review", 0, "Remember what you have learn"));
+        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started_test_off, 1, "Final Test", 0, "Let's see what you got"));
     }
 
     private void setupViews(View view) {

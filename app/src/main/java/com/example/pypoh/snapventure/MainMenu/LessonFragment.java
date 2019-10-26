@@ -52,6 +52,8 @@ public class LessonFragment extends Fragment{
 
     private LessonTitles lessonTitlesFragment = new LessonTitles();
 
+    public static String selectedLessonName;
+
     private View view;
     public LessonFragment() {
         // Required empty public constructor
@@ -89,6 +91,7 @@ public class LessonFragment extends Fragment{
             public void onItemClick(LessonModel lessonModel) {
                 switch (lessonModel.getLessonNumber()) {
                     case 1:
+                        selectedLessonName = lessonModel.getLessonNames();
                         changeFragment(lessonTitlesFragment);
                         break;
                     case 2:

@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         setFragment(lessonFragment);
     }
 
+    public static void setFragmentToPlay() {
+
+    }
+
     private void changeIconStateBar(int pathItem, int pathIcon) {
         bottomMenu.findItem(R.id.navigation_adventure).setIcon(R.drawable.navbar_lesson_off);
         bottomMenu.findItem(R.id.navigation_pronounciation).setIcon(R.drawable.navbar_play_off);

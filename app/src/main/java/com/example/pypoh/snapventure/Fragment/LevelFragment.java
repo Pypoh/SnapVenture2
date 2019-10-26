@@ -171,7 +171,7 @@ public class LevelFragment extends Fragment {
 
     private void newRiddleKitchenSetup() {
         // Header Beginner
-        tempKitchenDataset.add(new LevelModel("head1", "Beginner", 1, 6, 9, true));
+        tempKitchenDataset.add(new LevelModel("head1", "Beginner", 1, 6, 9, false));
 
         // Main Data
         List<String[]> stage1RiddleEn = new ArrayList<>();
@@ -279,6 +279,7 @@ public class LevelFragment extends Fragment {
         stage3Status.add(new boolean[]{true, false, false});
         tempKitchenDataset.add(new LevelModel("id3", stage3RiddleEn, stage3RiddleId, stage3Answer, stage3Pronounce, stage3Status, "Kitchen", 1,3, false));
 
+
         // Header Intermediate
         tempKitchenDataset.add(new LevelModel("head2", "Intermediate", 2, 0, 9, false));
 
@@ -287,41 +288,26 @@ public class LevelFragment extends Fragment {
         List<String[]> stage4Answer = new ArrayList<>();
         List<String[]> stage4Pronounce = new ArrayList<>();
         List<boolean[]> stage4Status = new ArrayList<>();
-
+        
         // Stage 4
         // Riddles
-        stage4RiddleEn.add(new String[]{"This gets filled with water\n" +
-                "But it’s not a glass or jug\n" +
-                "It’s in your kitchen though\n" +
-                "At the bottom there’s a hole", "This is something in your kitchen\n" +
-                "Meat, milk and yogurt it does hold\n" +
-                "The reason you put them in this\n" +
-                "Is because it helps keep them cold", "I am a piece of furniture\n" +
-                "At a table I’m often found\n" +
-                "When I’m there then I have four legs\n" +
-                "But at a desk I swivel round"});
-        stage4RiddleId.add(new String[]{"Aku terisi dengan air\n" +
-                "Tetapi aku bukan gelas ataupun kendi\n" +
-                "Aku berada di dapurmu\n" +
-                "Dibawah aku, terdapat sebuah lubang", "Aku berada di dapur\n" +
-                "Aku menampung daging, susu, dan yogurt\n" +
-                "Alasan kamu menaruh mereka padaku\n" +
-                "Untuk menjaga agar mereka tetap dingin", "Aku merupakan sebuah mebel\n" +
-                "Aku sering ditemukan dekat meja makan\n" +
-                "Ketika aku disana, aku punya empat kaki\n" +
-                "Tetapi di meja kantor, aku bisa beruputar-putar"
+        stage4RiddleEn.add(new String[]{"You put me in your mouth but never eats me. What am I?", "I have a friend that's almost always with me on the table. I have multiple tips, but I'm not that sharp. What am I?", "I'm hot, I'm on fire. Sometimes I run on gas, sometime electricity, and even kerosene. What am I?"});
+        stage4RiddleId.add(new String[]{
+                "Kamu menaruh diriku dimulutmu, tetapi kamu tidak pernah memakan aku, Siapakah Aku?",
+                "Aku mempunyai teman yang sering bersamaku diatas meja, Aku memiliki ujung?",
+                "Aku panas, Aku terbakar, terkadang aku menggunakan gas, terkadang listrik, bahkan minyak tanah, Siapakah aku?"
         });
 
         // Answers
-        stage4Answer.add(new String[]{"Mouse", "Refrigerator", "Chair"});
+        stage4Answer.add(new String[]{"Spoon", "Fork", "Stove"});
 
         // Pronounce
-        stage4Pronounce.add(new String[]{"/sɪŋk/", "/rɪˈfrɪdʒəreɪtə/", "/tʃer/"});
+        stage4Pronounce.add(new String[]{"/spuːn/", "/fɔːrk/", "/stoʊv/"});
 
         // Status
         stage4Status.add(new boolean[]{false, false, false});
-        tempKitchenDataset.add(new LevelModel("id4", stage4RiddleEn, stage4RiddleId, stage4Answer, stage4Pronounce, stage4Status, "Kitchen", 2,4, false));
-
+        tempKitchenDataset.add(new LevelModel("id4", stage4RiddleEn, stage4RiddleId, stage4Answer, stage4Pronounce, stage4Status, "Kitchen", 1,4, false));
+        
         List<String[]> stage5RiddleEn = new ArrayList<>();
         List<String[]> stage5RiddleId = new ArrayList<>();
         List<String[]> stage5Answer = new ArrayList<>();
@@ -356,34 +342,49 @@ public class LevelFragment extends Fragment {
         // Status
         stage5Status.add(new boolean[]{false, false, false});
         tempKitchenDataset.add(new LevelModel("id5", stage5RiddleEn, stage5RiddleId, stage5Answer, stage5Pronounce, stage5Status, "Kitchen", 2,5, false));
-
+        
         List<String[]> stage6RiddleEn = new ArrayList<>();
         List<String[]> stage6RiddleId = new ArrayList<>();
         List<String[]> stage6Answer = new ArrayList<>();
         List<String[]> stage6Pronounce = new ArrayList<>();
         List<boolean[]> stage6Status = new ArrayList<>();
 
-        // Stage 6
+        // Stage 4
         // Riddles
-        stage6RiddleEn.add(new String[]{"You put me in your mouth but never eats me. What am I?", "I have a friend that's almost always with me on the table. I have multiple tips, but I'm not that sharp. What am I?", "I'm hot, I'm on fire. Sometimes I run on gas, sometime electricity, and even kerosene. What am I?"});
-        stage6RiddleId.add(new String[]{
-                "Kamu menaruh diriku dimulutmu, tetapi kamu tidak pernah memakan aku, Siapakah Aku?",
-                "Aku mempunyai teman yang sering bersamaku diatas meja, Aku memiliki ujung?",
-                "Aku panas, Aku terbakar, terkadang aku menggunakan gas, terkadang listrik, bahkan minyak tanah, Siapakah aku?"
+        stage6RiddleEn.add(new String[]{"This gets filled with water\n" +
+                "But it’s not a glass or jug\n" +
+                "It’s in your kitchen though\n" +
+                "At the bottom there’s a hole", "This is something in your kitchen\n" +
+                "Meat, milk and yogurt it does hold\n" +
+                "The reason you put them in this\n" +
+                "Is because it helps keep them cold", "I am a piece of furniture\n" +
+                "At a table I’m often found\n" +
+                "When I’m there then I have four legs\n" +
+                "But at a desk I swivel round"});
+        stage6RiddleId.add(new String[]{"Aku terisi dengan air\n" +
+                "Tetapi aku bukan gelas ataupun kendi\n" +
+                "Aku berada di dapurmu\n" +
+                "Dibawah aku, terdapat sebuah lubang", "Aku berada di dapur\n" +
+                "Aku menampung daging, susu, dan yogurt\n" +
+                "Alasan kamu menaruh mereka padaku\n" +
+                "Untuk menjaga agar mereka tetap dingin", "Aku merupakan sebuah mebel\n" +
+                "Aku sering ditemukan dekat meja makan\n" +
+                "Ketika aku disana, aku punya empat kaki\n" +
+                "Tetapi di meja kantor, aku bisa beruputar-putar"
         });
 
         // Answers
-        stage6Answer.add(new String[]{"Spoon", "Fork", "Stove"});
+        stage6Answer.add(new String[]{"Sink", "Refrigerator", "Chair"});
 
         // Pronounce
-        stage6Pronounce.add(new String[]{"/spuːn/", "/fɔːrk/", "/stoʊv/"});
+        stage6Pronounce.add(new String[]{"/sɪŋk/", "/rɪˈfrɪdʒəreɪtə/", "/tʃer/"});
 
         // Status
         stage6Status.add(new boolean[]{false, false, false});
         tempKitchenDataset.add(new LevelModel("id6", stage6RiddleEn, stage6RiddleId, stage6Answer, stage6Pronounce, stage6Status, "Kitchen", 2,6, false));
-
+        
         // Header Advanced
-        tempKitchenDataset.add(new LevelModel("head3", "Advanced", 3, 0, 9, false));
+        tempKitchenDataset.add(new LevelModel("head3", "Advanced", 3, 0, 9, true));
 
         List<String[]> stage7RiddleEn = new ArrayList<>();
         List<String[]> stage7RiddleId = new ArrayList<>();
@@ -423,7 +424,7 @@ public class LevelFragment extends Fragment {
 
         // Status
         stage7Status.add(new boolean[]{false, false, false});
-        tempKitchenDataset.add(new LevelModel("id7", stage7RiddleEn, stage7RiddleId, stage7Answer, stage7Pronounce, stage7Status, "Kitchen", 3,7, false));
+        tempKitchenDataset.add(new LevelModel("id7", stage7RiddleEn, stage7RiddleId, stage7Answer, stage7Pronounce, stage7Status, "Kitchen", 3,7, true));
 
         List<String[]> stage8RiddleEn = new ArrayList<>();
         List<String[]> stage8RiddleId = new ArrayList<>();
@@ -463,7 +464,7 @@ public class LevelFragment extends Fragment {
 
         // Status
         stage8Status.add(new boolean[]{false, false, false});
-        tempKitchenDataset.add(new LevelModel("id8", stage8RiddleEn, stage8RiddleId, stage8Answer, stage8Pronounce, stage8Status, "Kitchen", 3,8, false));
+        tempKitchenDataset.add(new LevelModel("id8", stage8RiddleEn, stage8RiddleId, stage8Answer, stage8Pronounce, stage8Status, "Kitchen", 3,8, true));
 
         List<String[]> stage9RiddleEn = new ArrayList<>();
         List<String[]> stage9RiddleId = new ArrayList<>();
@@ -503,7 +504,7 @@ public class LevelFragment extends Fragment {
 
         // Status
         stage9Status.add(new boolean[]{false, false, false});
-        tempKitchenDataset.add(new LevelModel("id9", stage9RiddleEn, stage9RiddleId, stage9Answer, stage9Pronounce, stage9Status, "Kitchen", 3,9, false));
+        tempKitchenDataset.add(new LevelModel("id9", stage9RiddleEn, stage9RiddleId, stage9Answer, stage9Pronounce, stage9Status, "Kitchen", 3,9, true));
     }
 
     private void newClassroomKitchenSetup() {

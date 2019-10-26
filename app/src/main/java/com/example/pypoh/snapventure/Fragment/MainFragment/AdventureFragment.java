@@ -184,8 +184,9 @@ public class AdventureFragment extends Fragment {
         classroomGoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentPlace = 2;
-                changeFragment(levelFragment);
+                placeToast("Classroom");
+//                currentPlace = 2;
+//                changeFragment(levelFragment);
             }
         });
     }

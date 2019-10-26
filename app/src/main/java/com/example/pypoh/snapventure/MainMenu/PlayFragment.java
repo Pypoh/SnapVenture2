@@ -87,9 +87,9 @@ public class PlayFragment extends Fragment {
     }
 
     private void setupMainData() {
-        mainData.add(new ModeModel("Snap", "ini deskripsi yaaaa", 1));
-        mainData.add(new ModeModel("Pronounce", "ini deskripsi yaaaa", 2));
-        mainData.add(new ModeModel("Quiz", "ini deskripsi yaaaa", 3));
+        mainData.add(new ModeModel("Snap", "Solve the riddle and find the object. Explore!", 1));
+        mainData.add(new ModeModel("Pronounce", "Choose your own story, Speak to chat!", 2));
+        mainData.add(new ModeModel("Quiz", "Increase your knowledge. Solve the question!", 3));
     }
 
     private void setupViews(View view) {

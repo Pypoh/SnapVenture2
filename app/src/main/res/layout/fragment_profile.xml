@@ -49,8 +49,7 @@
                     android:layout_width="72dp"
                     android:layout_height="72dp"
                     tools:ignore="MissingConstraints"
-                    android:background="@drawable/rounded_layout_grey"
-                    >
+                    android:background="@drawable/rounded_layout_grey">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -110,7 +109,24 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <LinearLayout
+                    android:id="@+id/badge_layout"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    tools:ignore="MissingConstraints"
+                    android:background="@drawable/rounded_layout_grey">
+
+                    <ImageView
+                        android:id="@+id/badge_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/pangkat_2"
+                        android:layout_margin="16dp"/>
+
+                </LinearLayout>
+
                 <TextView
+                    android:layout_marginLeft="16dp"
                     android:id="@+id/edulevel_text_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,17 +136,18 @@
                     android:textStyle="bold"
                     android:textColor="@color/street_black"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/badge_layout"
                     app:layout_constraintBottom_toTopOf="@id/currentlevel_text_profile"/>
 
                 <TextView
+                    android:layout_marginLeft="16dp"
                     android:id="@+id/currentlevel_text_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current : Elementary"
+                    android:text="Intermediate"
                     android:textSize="16sp"
                     android:textColor="@color/street_black"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/badge_layout"
                     app:layout_constraintTop_toBottomOf="@id/edulevel_text_profile"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 

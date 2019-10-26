@@ -10,7 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/content_header"
+            android:layout_marginLeft="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exercise"
+            android:textColor="@color/street_black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_marginLeft="32dp"
+            android:id="@+id/content_header_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fill the blank"
+            android:textSize="14sp"
+            android:layout_below="@id/content_header"/>
+
         <ScrollView
+            android:layout_below="@id/content_header_desc"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -52,6 +73,7 @@
                             android:layout_height="wrap_content">
 
                             <EditText
+                                android:enabled="false"
                                 android:backgroundTint="@color/street_black"
                                 android:id="@+id/fill_input1"
                                 android:layout_width="96dp"
@@ -77,6 +99,7 @@
                             android:layout_height="wrap_content">
 
                             <EditText
+                                android:enabled="false"
                                 android:backgroundTint="@color/street_black"
                                 android:id="@+id/fill_input2"
                                 android:layout_width="96dp"
@@ -102,6 +125,7 @@
                             android:layout_height="wrap_content">
 
                             <EditText
+                                android:enabled="false"
                                 android:backgroundTint="@color/street_black"
                                 android:id="@+id/fill_input3"
                                 android:layout_width="96dp"
@@ -137,6 +161,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:enabled="false"
                                 android:backgroundTint="@color/street_black"
                                 android:layout_toRightOf="@id/text_question4"
                                 android:id="@+id/fill_input4"
@@ -154,6 +179,7 @@
                             android:layout_height="wrap_content">
 
                             <EditText
+                                android:enabled="false"
                                 android:backgroundTint="@color/street_black"
                                 android:id="@+id/fill_input5"
                                 android:layout_width="96dp"
@@ -178,7 +204,91 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:paddingBottom="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/content_card"
+                    android:layout_marginTop="32dp">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How"
+                        android:background="@drawable/rounded_button_full"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:layout_marginRight="32dp"
+                        android:textSize="16sp"
+                        android:includeFontPadding="false"/>
+
+                    <Button
+                        android:layout_marginRight="32dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nice"
+                        android:background="@drawable/rounded_button_full"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        android:includeFontPadding="false"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How"
+                        android:background="@drawable/rounded_button_full"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        android:includeFontPadding="false"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingBottom="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/content_card">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to meet you"
+                        android:background="@drawable/rounded_button_full"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:layout_marginRight="32dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:textSize="16sp"
+                        android:includeFontPadding="false"/>
+
+                    <Button
+                        android:layout_marginRight="32dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="I'm fine"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:background="@drawable/rounded_button_full"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        android:includeFontPadding="false"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             </LinearLayout>
 

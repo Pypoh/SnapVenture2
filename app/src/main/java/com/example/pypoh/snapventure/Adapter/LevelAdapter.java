@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -67,7 +68,7 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             case 1:
                 headerViewHolder headerViewHolder = (headerViewHolder) holder;
                 // Set Star Count Image
-                switch (levelData.getLevel()) {
+                switch (levelData.getStageLevel()) {
                     case 1:
                         if (!levelData.isLockStatus()) {
                             headerViewHolder.headerImage.setImageResource(R.drawable.play_level1_on);
@@ -106,6 +107,15 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                 itemViewHolder.textStageNumber.setText("Stage " + levelData.getStageNumber());
 
+                Log.d("levelLockStatus", levelData.isLockStatus() + "");
+
+                if (levelData.isLockStatus()) {
+                    itemViewHolder.statusLine.setBackgroundColor(mContext.getResources().getColor(R.color.grey_background));
+                    Log.d("levelLockStatusSet", levelData.isLockStatus() + " Set");
+                } else {
+                    itemViewHolder.statusLine.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+                }
+
                 // Check Stars
                 int totalStageStar = 0;
                 boolean[] statusStar = levelData.getTotalCompletedStar().get(0);
@@ -140,7 +150,11 @@ public class LevelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 itemViewHolder.stageLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        toCameraPassData(levelData, position);
+                        if (!levelData.isLockStatus()) {
+                            toCameraPassData(levelData, position);
+                        } else {
+                            Toast.makeText(mContext, "This stage still locked", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

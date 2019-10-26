@@ -38,7 +38,15 @@
                     android:layout_marginTop="16dp"
                     app:cardCornerRadius="25dp"
                     app:strokeColor="@color/grey_backgrond_profile"
-                    app:strokeWidth="2dp"></com.google.android.material.card.MaterialCardView>
+                    app:strokeWidth="2dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/lesson_greeting"
+                        android:padding="16dp"/>
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_content"
