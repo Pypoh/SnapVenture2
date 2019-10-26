@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LessonActivity"
+    tools:context=".Lesson.LessonActivity"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -25,14 +25,34 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
+    <com.shuhart.stepview.StepView
+        android:id="@+id/lesson_step_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
+        android:layout_height="72dp"
+        app:sv_textSize="16sp"
         android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginRight="32dp"
+        app:sv_selectedCircleRadius="20dp"
+        app:sv_selectedStepNumberColor="@color/white"
+        app:sv_selectedCircleColor="@color/colorPrimary"
+        app:sv_nextTextColor="@color/street_black"
+        app:sv_doneCircleRadius="20dp"
+        app:sv_doneCircleColor="@color/colorPrimary"
+        app:sv_doneTextColor="@color/white"
+        app:sv_doneStepLineColor="@color/colorPrimary"
+        app:sv_doneStepMarkColor="@color/white"
+        app:sv_nextStepCircleEnabled="true"
+        app:sv_nextStepLineColor="@color/street_black"
+        app:sv_nextStepCircleColor="@color/grey_backgrond_profile"
+        app:sv_stepsNumber="5"
+        app:sv_animationType="All"
+        />
+
+    <FrameLayout
+        android:id="@+id/main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.pypoh.snapventure;
+package com.example.pypoh.snapventure.Lesson;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import com.example.pypoh.snapventure.Fragment.MainFragment.AdventureFragment;
 import com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment;
 import com.example.pypoh.snapventure.Model.ChatModel;
 import com.example.pypoh.snapventure.Model.LevelModel;
+import com.example.pypoh.snapventure.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

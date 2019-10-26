@@ -1,10 +1,10 @@
 package com.example.pypoh.snapventure.MainMenu;
 
-import android.content.Context;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Adapter.LessonAdapter;
+import com.example.pypoh.snapventure.Lesson.LessonTitles;
 import com.example.pypoh.snapventure.Model.LessonModel;
 import com.example.pypoh.snapventure.Model.UserModel;
 import com.example.pypoh.snapventure.R;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LessonFragment extends Fragment{
 
@@ -47,6 +49,8 @@ public class LessonFragment extends Fragment{
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore db;
+
+    private LessonTitles lessonTitlesFragment = new LessonTitles();
 
     private View view;
     public LessonFragment() {
@@ -72,14 +76,33 @@ public class LessonFragment extends Fragment{
             getUserData();
         }
 
-        lessonsData.add(new LessonModel(null, 1, 30f));
-//        lessonsData.add(new LessonModel(null, 2, 30f));
+        lessonsData.add(new LessonModel(R.drawable.lessons_getting_started, 1, "Getting Started", 25));
+        lessonsData.add(new LessonModel(R.drawable.lessons_grammar, 2, "Grammar", 0));
+        lessonsData.add(new LessonModel(R.drawable.lessons_reading, 3, "Reading",  0));
+
+        Log.d("testInt", R.drawable.lessons_getting_started + "");
 
         lessonAdapter = new LessonAdapter(getContext(), lessonsData);
         lessonRecycler.setAdapter(lessonAdapter);
+        lessonAdapter.setOnItemClickListener(new LessonAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(LessonModel lessonModel) {
+                switch (lessonModel.getLessonNumber()) {
+                    case 1:
+                        changeFragment(lessonTitlesFragment);
+                        break;
+                    case 2:
+                        Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        Toast.makeText(getContext(), "Under Development.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
 
-        eventLessonAdapter = new LessonAdapter(getContext(), eventLessonsData);
-        eventLessonRecycler.setAdapter(eventLessonAdapter);
+//        eventLessonAdapter = new LessonAdapter(getContext(), eventLessonsData);
+//        eventLessonRecycler.setAdapter(eventLessonAdapter);
 
         return view;
     }
@@ -88,8 +111,8 @@ public class LessonFragment extends Fragment{
         lessonRecycler = view.findViewById(R.id.recycler_lessons);
         lessonRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        eventLessonRecycler = view.findViewById(R.id.recycler_event_lesson);
-        eventLessonRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+//        eventLessonRecycler = view.findViewById(R.id.recycler_event_lesson);
+//        eventLessonRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void setupHeader(View view) {
@@ -114,5 +137,10 @@ public class LessonFragment extends Fragment{
             }
         });
 //        setupHeader(view);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void changeFragment(Fragment fragment) {
+        ((MainActivity) Objects.requireNonNull(getActivity())).setSecondFragment(fragment);
     }
 }

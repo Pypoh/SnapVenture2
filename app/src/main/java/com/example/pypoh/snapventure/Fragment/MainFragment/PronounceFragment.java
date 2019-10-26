@@ -1,7 +1,5 @@
 package com.example.pypoh.snapventure.Fragment.MainFragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -22,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.pypoh.snapventure.Adapter.ChapterRecyclerAdapter;
-import com.example.pypoh.snapventure.LevelPronounceFragment;
+import com.example.pypoh.snapventure.Lesson.LevelPronounceFragment;
 import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.Model.ChapterModel;
 import com.example.pypoh.snapventure.Model.ChatModel;

@@ -5,10 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,11 +17,10 @@ import com.example.pypoh.snapventure.Model.ChatModel;
 import com.example.pypoh.snapventure.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment.currentState;
-import static com.example.pypoh.snapventure.LevelPronounceFragment.tempChapterOneState;
+import static com.example.pypoh.snapventure.Lesson.LevelPronounceFragment.tempChapterOneState;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 

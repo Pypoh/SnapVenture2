@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Adapter.BattleAdapter;
 import com.example.pypoh.snapventure.BattlePages.MatchingFragment;
@@ -28,8 +30,8 @@ import java.util.Objects;
 
 public class BattleFragment extends Fragment {
 
-    private Button playRandomBtn;
-    private Button playFriendBtn;
+    private CardView playRandomBtn;
+    private CardView playFriendBtn;
 
     private List<BattleModel> onGoingData = new ArrayList<>();
     private RecyclerView onGoingRecycler;
@@ -40,7 +42,6 @@ public class BattleFragment extends Fragment {
     private BattleAdapter endedBattleAdapter;
 
     private MatchingFragment matchingFragment = new MatchingFragment();
-
 
     public BattleFragment() {
     }
@@ -94,7 +95,7 @@ public class BattleFragment extends Fragment {
         playFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
             }
         });
 

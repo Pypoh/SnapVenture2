@@ -343,6 +343,7 @@ public class MatchingFragment extends Fragment {
     private void toQuiz() {
         Intent toQuiz = new Intent(getContext(), QuizActivity.class);
         startActivity(toQuiz);
+        this.getActivity().finish();
     }
 
 //    private void startNewLayoutQuizView(int stateRound) {

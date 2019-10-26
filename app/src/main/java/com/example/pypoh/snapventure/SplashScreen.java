@@ -3,6 +3,7 @@ package com.example.pypoh.snapventure;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -29,16 +30,15 @@ public class SplashScreen extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        startApp();
 
-//        createWarningDialog();
+        createWarningDialog();
 
-//        warningDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//            @Override
-//            public void onDismiss(DialogInterface dialog) {
-//
-//            }
-//        });
+        warningDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                startApp();
+            }
+        });
     }
 
     private void startApp() {

@@ -49,7 +49,7 @@
                     android:progressDrawable="@drawable/custom_progress_bar_horizontal"
                     android:layout_width="96dp"
                     android:layout_height="16dp"
-                    android:progress="30"
+                    android:progress="10"
 
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -65,6 +65,7 @@ public class LoginFragment extends Fragment {
                 if (task.isSuccessful()) {
                     toMain();
                 } else {
+                    loginBtn.setEnabled(true);
                     Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -84,6 +85,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loginUserEmailPass(editEmail.getText().toString().trim(), editPassword.getText().toString().trim());
+                loginBtn.setEnabled(false);
             }
         });
 

@@ -78,6 +78,7 @@ public class RegisterFragment extends Fragment {
                             user = mAuth.getCurrentUser();
                             insertUserData(editName.getText().toString(), editEmail.getText().toString());
                         } else {
+                            signUpBtn.setEnabled(true);
                             Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -107,6 +108,7 @@ public class RegisterFragment extends Fragment {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                signUpBtn.setEnabled(false);
                 signUp(editEmail.getText().toString(), editPassword.getText().toString());
             }
         });

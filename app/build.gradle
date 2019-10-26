@@ -55,4 +55,7 @@ dependencies {
     // Circle Indicator
     implementation 'me.relex:circleindicator:2.1.4'
 
+    // StepView
+    implementation 'com.shuhart.stepview:stepview:1.5.0'
+
 }

@@ -4,12 +4,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.pypoh.snapventure.BattlePages.MatchingFragment;
+import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.Model.QuestionModel;
 import com.example.pypoh.snapventure.Model.RoomModel;
 import com.example.pypoh.snapventure.Model.UserModel;
@@ -35,6 +37,8 @@ public class QuizActivity extends AppCompatActivity {
     private CardView answerDCard;
 
     private int stateRound = 0;
+
+    private boolean answered = false;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -86,40 +90,52 @@ public class QuizActivity extends AppCompatActivity {
         answerACard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkAnswer("answerA", question.getCorrectAnswerID())) {
-                    setCorrectAnswerCardBackground(answerACard, answerA);
-                } else {
-                    setCorrectAnswerCard(answerACard, answerA, question.getCorrectAnswerID());
+                if (!answered) {
+                    if (checkAnswer("answerA", question.getCorrectAnswerID())) {
+                        setCorrectAnswerCardBackground(answerACard, answerA);
+                    } else {
+                        setCorrectAnswerCard(answerACard, answerA, question.getCorrectAnswerID());
+                    }
+                    answered = true;
                 }
             }
         });
         answerBCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkAnswer("answerB", question.getCorrectAnswerID())) {
-                    setCorrectAnswerCardBackground(answerACard, answerA);
-                } else {
-                    setCorrectAnswerCard(answerBCard, answerB, question.getCorrectAnswerID());
+                if (!answered) {
+                    if (checkAnswer("answerB", question.getCorrectAnswerID())) {
+                        setCorrectAnswerCardBackground(answerACard, answerA);
+                    } else {
+                        setCorrectAnswerCard(answerBCard, answerB, question.getCorrectAnswerID());
+                    }
+                    answered = true;
                 }
             }
         });
         answerCCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkAnswer("answerC", question.getCorrectAnswerID())) {
-                    setCorrectAnswerCardBackground(answerACard, answerA);
-                } else {
-                    setCorrectAnswerCard(answerCCard, answerC, question.getCorrectAnswerID());
+                if (!answered) {
+                    if (checkAnswer("answerC", question.getCorrectAnswerID())) {
+                        setCorrectAnswerCardBackground(answerACard, answerA);
+                    } else {
+                        setCorrectAnswerCard(answerCCard, answerC, question.getCorrectAnswerID());
+                    }
+                    answered = true;
                 }
             }
         });
         answerDCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkAnswer("answerD", question.getCorrectAnswerID())) {
-                    setCorrectAnswerCardBackground(answerACard, answerA);
-                } else {
-                    setCorrectAnswerCard(answerDCard, answerD, question.getCorrectAnswerID());
+                if (!answered) {
+                    if (checkAnswer("answerD", question.getCorrectAnswerID())) {
+                        setCorrectAnswerCardBackground(answerACard, answerA);
+                    } else {
+                        setCorrectAnswerCard(answerDCard, answerD, question.getCorrectAnswerID());
+                    }
+                    answered = true;
                 }
             }
         });
@@ -156,5 +172,13 @@ public class QuizActivity extends AppCompatActivity {
     private void setCorrectAnswerCardBackground (CardView answerCard, TextView answer) {
         answerCard.setCardBackgroundColor(this.getResources().getColor(R.color.garden_green));
         answer.setTextColor(this.getResources().getColor(R.color.white));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent toMain = new Intent(QuizActivity.this, MainActivity.class);
+        startActivity(toMain);
+        finish();
     }
 }

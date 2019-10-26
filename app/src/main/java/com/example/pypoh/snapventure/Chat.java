@@ -23,15 +23,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pypoh.snapventure.Adapter.AnswerAdapter;
 import com.example.pypoh.snapventure.Adapter.ChatAdapter;
 import com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment;
-import com.example.pypoh.snapventure.MainMenu.MainActivity;
 import com.example.pypoh.snapventure.Model.ChatModel;
 
 import java.util.ArrayList;
@@ -41,8 +38,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import static com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment.currentState;
-import static com.example.pypoh.snapventure.LevelPronounceFragment.dataConversation;
-import static com.example.pypoh.snapventure.LevelPronounceFragment.tempChapterOneState;
 
 public class Chat extends AppCompatActivity {
 

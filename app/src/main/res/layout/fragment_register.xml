@@ -194,16 +194,18 @@
                     android:layout_marginRight="28dp"
                     android:hint="password"
                     android:textColorHint="@color/street_black"
-                    app:hintTextAppearance="@style/HintTextStyle">
+                    app:hintTextAppearance="@style/HintTextStyle"
+                    app:passwordToggleEnabled="true">
 
                     <EditText
                         android:id="@+id/edit_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:maxLines="1"
                         android:textColor="@color/text_auth"
-                        android:backgroundTint="@color/transparent"/>
+                        android:backgroundTint="@color/transparent"
+                        />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
@@ -252,13 +254,14 @@
                     android:layout_marginRight="28dp"
                     android:hint="re-type password"
                     android:textColorHint="@color/street_black"
-                    app:hintTextAppearance="@style/HintTextStyle">
+                    app:hintTextAppearance="@style/HintTextStyle"
+                    app:passwordToggleEnabled="true">
 
                     <EditText
                         android:id="@+id/edit_repassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:maxLines="1"
                         android:textColor="@color/text_auth"
                         android:backgroundTint="@color/transparent"/>

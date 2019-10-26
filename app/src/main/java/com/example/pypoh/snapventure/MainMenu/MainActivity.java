@@ -2,6 +2,7 @@ package com.example.pypoh.snapventure.MainMenu;
 
 import android.os.Bundle;
 
+import com.example.pypoh.snapventure.BattlePages.MatchingFragment;
 import com.example.pypoh.snapventure.Fragment.MainFragment.ProfileFragment;
 import com.example.pypoh.snapventure.Fragment.MainFragment.PronounceFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -113,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_frame);
+        if (fragment instanceof MatchingFragment) {
+            return;
+        }
         if (doubleBackToExitPressedOnce || !checkCurrentFragment()) {
             super.onBackPressed();
             return;

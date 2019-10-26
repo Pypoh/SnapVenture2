@@ -57,9 +57,10 @@ public class AuthFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 _btnGuest.setEnabled(false);
-                Intent playAsGuest = new Intent(getContext(), EducationLevel.class);
-                playAsGuest.putExtra("AuthCode", "3");
-                startActivity(playAsGuest);
+//                Intent playAsGuest = new Intent(getContext(), EducationLevel.class);
+//                playAsGuest.putExtra("AuthCode", "3");
+//                startActivity(playAsGuest);
+                Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
             }
         });
 
